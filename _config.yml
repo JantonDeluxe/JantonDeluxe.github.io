@@ -20,7 +20,9 @@ description: Informatikprojekt
 
 # List of links in the navigation bar
 navbar-links:
-  GitHub: "https://github.com/JantonDeluxe/luft-waffle"
+  Tagebuch: ""
+  Beschreibung: ""
+  Repository: "https://github.com/JantonDeluxe/luft-waffle"
   Theme:
     - Beautiful Jekyll-Demo: "http://deanattali.com/beautiful-jekyll/"
     - Beautiful Jekyll-Github: "https://github.com/daattali/beautiful-jekyll#readme"
@@ -70,20 +72,20 @@ social-network-links:
 
 # How to display the link to the website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "jantondeluxe.github.io"  # eg. "deanattali.com/beautiful-jekyll"
+url-pretty: "JantonDeluxe.github.io" 
 
 # --- Misc --- #
 
 # Excerpt Word Length
 # Truncates the excerpt to the specified number of words on the index page
-excerpt_length: 50
+excerpt_length: 0
 
 # Character used to separate site title and description in HTML document title
 # and RSS feed title
 title-separator: "-"
 
 # Ruby Date Format
-date_format: "%B %-d, %Y"
+date_format: "%-d %B %Y"
 
 # --- Don't need to touch anything below here (but you can if you want) --- #
 
