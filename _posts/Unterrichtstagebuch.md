@@ -1,3 +1,9 @@
+---
+layout: page
+title: Unterrichtstagebuch
+subtitle: Was wir an welchem Tag gemacht haben
+---
+
 ### Inhaltsverzeichnis
 >* [13. August](https://github.com/JantonDeluxe/luft-waffle/wiki/Unterrichtstagebuch#13-august)
 >* [14. August](https://github.com/JantonDeluxe/luft-waffle/wiki/Unterrichtstagebuch#14-august)
