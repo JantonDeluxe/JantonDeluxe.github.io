@@ -20,8 +20,8 @@ description: Informatikprojekt
 
 # List of links in the navigation bar
 navbar-links:
-  Tagebuch: ""
-  Beschreibung: ""
+  Tagebuch: "https://jantondeluxe.github.io/2019-10-06-unterrichstagebuch/"
+  Beschreibung: "https://jantondeluxe.github.io/2019-10-06-projektbbeschreibung/"
   Repository: "https://github.com/JantonDeluxe/luft-waffle"
   Theme:
     - Beautiful Jekyll-Demo: "http://deanattali.com/beautiful-jekyll/"
