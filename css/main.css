@@ -309,6 +309,7 @@ footer .theme-by {
 /* --- Post preview --- */
 
 .post-preview {
+  text-align: center;
   padding: 20px 0;
   border-bottom: 1px solid #eee;
 }
