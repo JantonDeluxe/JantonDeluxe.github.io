@@ -451,3 +451,7 @@ Diesen einfachen Webserver haben wir dann in den Code integriert und getestet, o
 Heute haben wir den Code aus dem Webserver-Beispiel auf das nötigste reduziert. Das Board erstellt jetzt ebenfals sein eigenes Netzwerk und ist nicht mehr auf ein bestehendes Netzwerk angewiesen. Außerdem haben wir ein Darstellungsproblem der IP-Adresse auf dem OLED-Display behoben.
 
 ## FERIEN
+Webseite mit template
+Webserver: 
+Variablen über knöpfe ändern
+Dateien speichern https://42project.net/esp8266-flash-dateisystem-spiffs-beispielhaft-benutzen/
