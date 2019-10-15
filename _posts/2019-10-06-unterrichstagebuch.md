@@ -188,12 +188,9 @@ Heute haben wir angefangen, Daten vom Höhenmesser auf dem Display anzuzeigen. D
 
 [Kombiniertes Programm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/Kombi/Kombi.ino)
 
-Display-Fotos
+Das sieht dann so aus:
   
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Start.jpeg?raw=true)
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/BMP.jpeg?raw=true)
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpeg?raw=true)
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Hoehe.jpeg?raw=true)
+![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/45DB887A-5F1C-4270-9310-210C16FA2DC9.jpeg?raw=true)
 
 
 ## 12. September
