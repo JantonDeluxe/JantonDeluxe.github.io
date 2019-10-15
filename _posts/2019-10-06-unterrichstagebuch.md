@@ -455,3 +455,4 @@ Webseite mit template
 Webserver: 
 Variablen über knöpfe ändern
 Dateien speichern https://42project.net/esp8266-flash-dateisystem-spiffs-beispielhaft-benutzen/
+Realtime Graphics https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/
