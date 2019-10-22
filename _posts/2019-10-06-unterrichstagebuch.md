@@ -457,3 +457,6 @@ Variablen über knöpfe ändern
 Dateien speichern https://42project.net/esp8266-flash-dateisystem-spiffs-beispielhaft-benutzen/
 Realtime Graphics https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/
 Variablen übergeben mit Pointern: https://www.w3schools.com/cpp/cpp_pointers.asp
+
+## 22.10.2019 
+Baseline-Wert als Durchschnitt von 100 Messungen nehemen Quelle: https://www.arduinoforum.de/arduino-Thread-Gewichteten-Durchschnitt-berechnen-20-Werte-in-fortlaufender-Variable-speichern
