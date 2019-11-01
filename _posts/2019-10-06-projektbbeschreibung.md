@@ -25,13 +25,21 @@ GM009605 OLED-Display mit SSD1306-Controller
 
 ### Höhenmesser
 
-Für die Benutzung des BMP180 benötigt man zwei Libraries:
+Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch: Programmbiliotheken. Diese enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
+
 ```c++
-#include <SFE_BMP180.h>
 #include <Wire.h>
+#include <SFE_BMP180.h>
 ```
-"SFE_BMP180" ist die Höhenmesser-Library, "Wire" sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] Für diese Kommunikation
+
+*Wire* sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere dieser Schaltkreise über die gleiche Leitung verbunden werden können.[[2]][I²C]
+
+*SFE_BMP180* ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
+
+
+
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
+[I²C]:https://www.ipd.kit.edu/mitarbeiter/buchmann/microcontroller/i2c.htm
 
