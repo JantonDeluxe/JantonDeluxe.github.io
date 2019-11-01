@@ -23,6 +23,17 @@ GM009605 OLED-Display mit SSD1306-Controller
 
 ## Software <a name="3"></a>
 
+### Serielle Schnittstelle
+Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle des Arduino. Diese Überträgt per Micro-USB-Kabel Daten an den PC, die mit dem seriellen Monitor in der Arduino IDE ausgelesen werden können.
+`Serial.begin()` startet die Übertragung, in diesem Falle mit einer Übertragungsgeschwindigkeit von 115200 Bits pro Sekunde. Die Ausgabe `Serial.println("")` verhindert Darstellungsfehler zu Beginn der Übertragung.
+
+```c++
+ Serial.begin(115200);
+ delay(100);
+ Serial.println("");
+ Serial.println("Datenübertragung gestartet!");
+```
+
 ### Höhenmesser
 *Bei der Einbindung des Höhenmessers haben wir uns am [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino) von Mike Grusin aus der SFE_BMP180-Library orientiert.*
 
@@ -49,6 +60,7 @@ SFE_BMP180 pressure;
 
 #### Sensor starten
 Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `begin()` aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle `pressure`, zugeordnet ist, handelt es sich genau genommen um eine Methode.
+
 `pressure.begin()` startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
 
 ```c++
@@ -62,10 +74,62 @@ Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `be
 ```
 
 #### Druck messen
-  
-#### Ausgangsdruck berechnen 
-Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck speichern wir solange Druckwerte im Array `Array` bis die vorgegebene Anzahl der Messungen erreicht ist. 
+Zum Messen des Drucks verwenden wir die Funktion `getPressure()`. Nach dem Deklarieren der Variablen muss dazu zuerst eine Temperatur-Messung durchgeführt werden. 
 
+Mit `pressure.startTemperature()` wird die Messung begonnen. Bei einem Fehler gibt die Funktion den Wert 0, sonst die Zeit, die für die Messung gebraucht wird in Millisekunden aus. Solange wird gewartet. `pressure.getTemperature(T)` verändert dann den Wert der Variable T, sodass er dem Temperaturwert entspricht. Ist das erfolgreich gibt die Funktion den Wert 1, sonst den Wert 0 aus.
+
+Jetzt kann der Druck gemessen werden: `pressure.startPressure` beginnt die Messung (in diesem Fall auf Genauigkeitsstufe 3 von 3) und gibt entweder 0 als Fehler oder die Wartezeit in Millisekunden aus. `pressure.getPressure` berechnet dann auf Basis von `T` den Druck `P` in Milibar. Die Temperatur muss eingerechnet werden, da sich nach dem allgemeinen Gasgesetz der Druck bei ändernder Temperatur und gleichbleibendem Volumen ebenfalls verändert.  Ist das erfolgreich gibt die Funktion den Wert 1, sonst den Wert 0 aus. Wird 0 ausgegeben, sendet die Funktion die entsprechende Fehlermeldung seriell an einen Angeschlossenen Computer.
+
+```c++
+double getPressure()
+{
+  // Variablen
+  char status;
+  double T,P,p0,a;
+  
+  // Temperatur messen
+  status = pressure.startTemperature();
+  if (status != 0)
+  {
+    // Warten bis Messung fertig
+    delay(status);
+
+     // Temperatur erhalten
+    status = pressure.getTemperature(T);
+    if (status != 0)
+    {
+      
+      // Druck messen
+      status = pressure.startPressure(3);
+      if (status != 0)
+      {
+        // Warten bis Messung fertig
+        delay(status);
+
+        //Druck erhalten
+        status = pressure.getPressure(P,T);
+        if (status != 0)
+        {
+          return(P);
+        }
+        else Serial.println("Fehler beim Erhalten des Drucks");
+      }
+      else Serial.println("Fehler beim Starten der Druckmessung");
+    }
+    else Serial.println("Fehler beim Erhalten der Temperatur");
+  }
+  else Serial.println("Fehler beim Starten der Temperaturmessung");
+}
+```
+#### Ausgangsdruck berechnen 
+Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable, das Array `Array` und die Konstante `messungen`.
+
+```c++
+const int messungen = 100;
+float Array[messungen];
+float ausgangsdruck = 0.0;
+```
+Im Array `Array` speichern wir dann solange Druckwerte, bis die vorgegebene Anzahl der Messungen (`messungen`) erreicht ist. 
 ```c++
  for (int i = 0; i < messungen; i++)
   {
@@ -73,7 +137,7 @@ Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gem
   }
 ```
 
-Solange wird ebenfalls zur der Variable `ausgangsdruck` die jeweils neueste Messung addiert.
+Solange wird ebenfalls zur Variable `ausgangsdruck` die jeweils neueste Messung addiert.
 
 ```c++
   for (int i = 0; i < messungen; i++)
@@ -82,7 +146,7 @@ Solange wird ebenfalls zur der Variable `ausgangsdruck` die jeweils neueste Mess
   }
 ```
 
-Wenn das fertig ist, wird die Summe aller Messungen durch die Anzahl der Messungen geteilt und man erhält den Durchschnitt der Messungen. Die Berechnung dieses Durchschnitts ist wichtig, da einzelne Druckmessungen immer ein wenig schwanken und damit die Höhenberechnung ungenau machen würden.
+Wenn die Anzahl der Messungen erreicht ist, wird die Summe aller Messungen durch die Anzahl der Messungen geteilt und man erhält den Durchschnitt der Messungen. Die Berechnung dieses Durchschnitts ist wichtig, da einzelne Druckmessungen immer ein wenig schwanken und damit die Höhenberechnung ungenau machen würden.
 
 ```c++
   ausgangsdruck = ausgangsdruck / messungen;
