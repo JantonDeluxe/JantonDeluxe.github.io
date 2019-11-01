@@ -8,6 +8,7 @@ subtitle: Wie funktioniert der Höhenmesser?
 >* [Ziel](#1)
 >* [Hardware](#2)
 >* [Software](#3)
+>* [Quellen](#4)
 
 ## Ziel<a name="1"></a>
 Höhenmesser, der günstiger ist, als die 50€ off-the-shelf-Dinger.
@@ -29,6 +30,8 @@ Für die Benutzung des BMP180 benötigt man zwei Libraries:
 #include <SFE_BMP180.h>
 #include <Wire.h>
 ```
-SFE_BMP180 ist die Höhenmesser-Library, Wire sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt. Für diese Kommunikation
+"SFE_BMP180" ist die Höhenmesser-Library, "Wire" sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] Für diese Kommunikation
 
+## Quellen
+[BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
 
