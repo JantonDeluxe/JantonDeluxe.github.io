@@ -23,6 +23,7 @@ GM009605 OLED-Display mit SSD1306-Controller
 
 ## Software <a name="3"></a>
 Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
+
 ***
 ### Serielle Schnittstelle
 Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle des Arduino. Diese Überträgt per Micro-USB-Kabel Daten an den PC, die mit dem seriellen Monitor in der Arduino IDE ausgelesen werden können.
@@ -65,6 +66,7 @@ Objekte sind......
 SFE_BMP180 pressure;
 ```
 
+
 #### Sensor starten
 Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `begin()` aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle `pressure`, zugeordnet ist, handelt es sich genau genommen um eine Methode.
 
@@ -79,6 +81,7 @@ Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `be
     while (1);
   }
 ```
+
 
 #### Druck messen
 Zum Messen des Drucks verwenden wir die Funktion `getPressure()`. Nach dem Deklarieren der Variablen muss dazu zuerst eine Temperatur-Messung durchgeführt werden. 
@@ -128,6 +131,8 @@ double getPressure()
   else Serial.println("Fehler beim Starten der Temperaturmessung");
 }
 ```
+
+
 #### Ausgangsdruck berechnen 
 Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable, das Array `Array` und die Konstante `messungen`.
 
@@ -159,6 +164,9 @@ Wenn die Anzahl der Messungen erreicht ist, wird die Summe aller Messungen durch
   ausgangsdruck = ausgangsdruck / messungen;
 ```
 
+
+### Höhe berechnen
+Zum Berechnen der Höhe benötigen wir die lokale Variable `P`, die den Druckwert in mbar enthält, sowie die globalen Variablen `a`, die de balblabla;)
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
