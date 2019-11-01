@@ -41,15 +41,14 @@ Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinen
 ```
 
 Um die Funktionen der SFE_BMP180-Library abrufen zukönnen muss als nächstes ein Objekt für diese Bibliothek erstellt werden. Der Name dieses Objektes ist egal, deshalb haben wir den Namen "pressure" übernommen.
-
-> Objekte sind......
+Objekte sind......
 
 ```c++
 SFE_BMP180 pressure;
 ```
 
-Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion *begin()* aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle *pressure*, zugeordnet ist, handelt es sich genau genommen um eine Methode.
-*begin()* startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
+Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `begin()` aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle `pressure`, zugeordnet ist, handelt es sich genau genommen um eine Methode.
+`pressure.begin()` startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
 
 ```c++
  if (pressure.begin())
@@ -60,7 +59,30 @@ Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion *be
     while (1);
   }
   ```
+  
+Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck speichern wir solange Druckwerte im Array `Array` bis die vorgegebene Anzahl der Messungen erreicht ist. 
 
+```c++
+ for (int i = 0; i < messungen; i++)
+  {
+    Array[i] = getPressure();
+  }
+```
+
+Solange wird ebenfalls zur die Variable `durchschnitt` die jeweils neueste Messung addiert.
+
+```c++
+  for (int i = 0; i < messungen; i++)
+  {
+    durchschnitt = durchschnitt + Array[i];
+  }
+```
+
+Wenn das fertig ist, wird die Summe aller Messungen durch die Anzahl der Messungen geteilt und man erhält den Durchschnitt der Messungen. Die Berechnung dieses Durchschnitts ist wichtig, da einzelne Druckmessungen immer ein wenig schwanken und damit die Höhenberechnung ungenau machen würden.
+
+```c++
+  durchschnitt = durchschnitt / messungen;
+```
 
 
 ## Quellen
