@@ -26,10 +26,9 @@ GM009605 OLED-Display mit SSD1306-Controller
 ### Höhenmesser
 *Bei der Einbindung des Höhenmessers haben wir uns am [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino) von Mike Grusin aus der SFE_BMP180-Library orientiert.*
 
+#### Bibliotheken einbinden
 Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Programmbiliotheken:
-
 * **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
-
 * **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
 
 Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
@@ -40,6 +39,7 @@ Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinen
 #include <Wire.h>
 ```
 
+#### Objekt erstellen
 Um die Funktionen der SFE_BMP180-Library abrufen zukönnen muss als nächstes ein Objekt für diese Bibliothek erstellt werden. Der Name dieses Objektes ist egal, deshalb haben wir den Namen "pressure" übernommen.
 Objekte sind......
 
@@ -47,6 +47,7 @@ Objekte sind......
 SFE_BMP180 pressure;
 ```
 
+#### Sensor starten
 Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `begin()` aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle `pressure`, zugeordnet ist, handelt es sich genau genommen um eine Methode.
 `pressure.begin()` startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
 
@@ -58,8 +59,11 @@ Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `be
     Serial.println("BMP180 fehlt!");
     while (1);
   }
-  ```
+```
+
+#### Druck messen
   
+#### Ausgangsdruck berechnen 
 Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck speichern wir solange Druckwerte im Array `Array` bis die vorgegebene Anzahl der Messungen erreicht ist. 
 
 ```c++
@@ -69,19 +73,19 @@ Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gem
   }
 ```
 
-Solange wird ebenfalls zur die Variable `durchschnitt` die jeweils neueste Messung addiert.
+Solange wird ebenfalls zur der Variable `ausgangsdruck` die jeweils neueste Messung addiert.
 
 ```c++
   for (int i = 0; i < messungen; i++)
   {
-    durchschnitt = durchschnitt + Array[i];
+    ausgangsdruck = ausgangsdruck + Array[i];
   }
 ```
 
 Wenn das fertig ist, wird die Summe aller Messungen durch die Anzahl der Messungen geteilt und man erhält den Durchschnitt der Messungen. Die Berechnung dieses Durchschnitts ist wichtig, da einzelne Druckmessungen immer ein wenig schwanken und damit die Höhenberechnung ungenau machen würden.
 
 ```c++
-  durchschnitt = durchschnitt / messungen;
+  ausgangsdruck = ausgangsdruck / messungen;
 ```
 
 
