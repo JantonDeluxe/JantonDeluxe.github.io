@@ -28,28 +28,28 @@ GM009605 OLED-Display mit SSD1306-Controller
 
 Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Programmbiliotheken. 
 
-* *Wire* sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt]
-* *SFE_BMP180* ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
+> Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
+* *Wire* sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt]
+
+> I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
+
+* *SFE_BMP180* ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
 
 ```c++
 #include <Wire.h>
 #include <SFE_BMP180.h>
 ```
-> I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
-
-> Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
 
 
-Um die Funktionen der SFE_BMP180-Library abrufen zukönnen muss als nächstes ein Objekt für diese Bibliothek erstellt werden. 
+Um die Funktionen der SFE_BMP180-Library abrufen zukönnen muss als nächstes ein Objekt für diese Bibliothek erstellt werden. Der Name dieses Objektes ist egal, deshalb haben wir den Namen "pressure" übernommen.
+
+> Objekte sind......
 
 ```c++
 SFE_BMP180 pressure;
 ```
-
-Der Name dieses Objektes ist egal, deshalb haben wir den Namen "pressure" übernommen. Objekte sind.......
-
 
 Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion *begin()* aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle *pressure*, zugeordnet ist, handelt es sich genau genommen um eine Methode.
 *begin()* startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
