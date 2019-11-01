@@ -60,6 +60,7 @@ In der Stunde haben wir angefangen den Laptop für unser Projekt einzurichten:
   (_Voreinstellungen_ -> _zusätzliche Boardverwalter-URLs_ -> Link einfügen)
 
 - [D1 mini Pro-Treiber](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers) installiert
+- [BMP180-Library](https://github.com/LowPowerLab/SFE_BMP180) installiert [(Tutorial)](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use/installing-a-library)
 
 Der alte Höhenmesser sollte über das zum Sensor gehörende [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/BMP180_altitude_example/BMP180_altitude_example.ino) die aktuelle Höhe messen und auf den Anzeigen darstellen. Zusätzlich konnte die maximale Höhe berechnet werden und durch das Blinken der im Arduino eingebauten LED ausgegeben werden. Das funktioniert, ist aber nicht sehr "nutzerfreundlich". Der Code ist leider in den vier Jahren verloren gegangen, basierte aber bis auf das Berechnen des Maximalwerts und dem Blinken der LED auf dem Example Sketch.
 
