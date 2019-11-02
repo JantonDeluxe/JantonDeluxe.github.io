@@ -70,6 +70,7 @@ Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle 
  Serial.println("");
  Serial.println("Datenübertragung gestartet!");
 ```
+Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermeldungen und Zwischenwerte anzuzeigen. Alle anderen Daten werden entweder über das Display oder die Website angezeigt.
 ***
 
 ### Höhenmesser
@@ -219,6 +220,8 @@ if (a < lowest) lowest = a;
 if (a > highest) highest = a;
 ```
 
+***
+
 ### Anzeige auf Display
 Für das Betreiben des OLED-Displays werden neben der Wire-Library noch zwei weitere Libraries benötigt:
 * **SSD1306Ascii** ermöglicht die einfache Darstellung von Buchstaben und Zahlen auf dem Display
@@ -244,6 +247,8 @@ oled.begin(&Adafruit128x64, I2C_ADDRESS);
 oled.set400kHz();
 oled.setFont(font5x7);
 ```
+
+***
 
 ### WLAN-Verbindung oder Access Point
 
