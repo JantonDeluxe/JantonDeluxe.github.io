@@ -7,8 +7,15 @@ subtitle: Wie funktioniert der Höhenmesser?
 ### Inhaltsverzeichnis
 >* [Ziel](#1)
 >* [Hardware](#2)
->  - Mikrocontroller
+>    - Mikrocontroller
+>    - Höhenmesser
+>    - Display
 >* [Software](#3)
+>    - Serielle Schnittstelle
+>    - Höhenmessung
+>    - Anzeige auf Display
+>    - WLAN-Verbindung oder Access Point
+>    - Webserver
 >* [Quellen](#4)
 
 ## Ziel<a name="1"></a>
