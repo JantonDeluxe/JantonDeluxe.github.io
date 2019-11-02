@@ -160,6 +160,7 @@ double getPressure()
   
 #### Ausgangsdruck berechnen 
 Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable `ausgangsdruck`, das Array `Array` und die Konstante `messungen`.
+Ein Array ist.....KJHGKJHGKJ
 
 ```c++
 const int messungen = 100;
@@ -209,6 +210,38 @@ if (a < lowest) lowest = a;
 
 if (a > highest) highest = a;
 ```
+
+### Anzeige auf Display
+Für das Betreiben des OLED-Displays werden neben der Wire-Library noch zwei weitere Libraries benötigt:
+* **SSD1306Ascii** ermöglicht die einfache Darstellung von Buchstaben und Zahlen auf dem Display
+* **SSD1306AsciiWire** ermöglicht die Kommuniktion mit dem Dispay via I²C.
+
+Wie beim Höhenmesser muss wieder ein Objekt erstellt werden, damit die Funktionen der Library verwendet werden können. In diesem Fall haben wir es `oled` genannt.
+
+```c++
+SSD1306AsciiWire oled;
+```
+
+Zum Ansteuern des Displays muss nun die I²C-Adresse definiert werden. Beim Höhenmesser tut die Library das für uns, beim Display muss die Adresse manuell ermittelt werden. Dafür gibt es den [I²C-Scanner](https://playground.arduino.cc/Main/I2cScanner/), der nach I²C-Adressen der angeschlossenen Komponenten sucht. Dabei geholfen hat uns dieses [Tutorial](https://www.instructables.com/id/Monochrome-096-i2c-OLED-display-with-arduino-SSD13/). Im Falle des Display ist die Adresse 0x3C.
+
+```c++
+#define I2C_ADDRESS 0x3C 
+```
+
+Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die größe der Schriftart.
+
+```c++
+Wire.begin();
+oled.begin(&Adafruit128x64, I2C_ADDRESS);
+oled.set400kHz();
+oled.setFont(font5x7);
+```
+
+### WLAN-Verbindung oder Access Point
+
+### Webserver
+
+
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
