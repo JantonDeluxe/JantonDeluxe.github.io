@@ -20,20 +20,30 @@ Wemos D1 mini Pro (Arduino)
 
 ### Höhenmesser
 Als Höhenmesser verwenden wir dem Bosch BMP180, einen günstigen Drucksensor mit relativ hoher Genauigkeit (theoretisch 0,25 m). Eingesetzt wird dieser Sensor auch in Smartphones oder einfachen Wetterstationen.
+
 Er basiert auf dem piezoresistiven Effekt: Bei Druck oder Zug (in diesem Fall durch den Luftdruck) verändert sich der elektrische Widerstand eines Materials (hier: Silizium). Durch diese Änderung lässt sich dann der ausgeübte Druck bestimmen.
 Der Höhenmesser besitzt ebenfalls ein Thermometer.
 Die so gemessenen Werte werden von einem digital-to-analog converter in ein digitales Signal umgewandelt. Dieses wird dann von einer Kontrolleinheit mit Hilfe der auf dem Board gespeicherten Kalibrierungswerte ausgeglichen, sodass die Werte über das I²C-Interface ausgegeben werden können.
 
 I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Doppelleitung benötigt. Die erste dieser Leitungen überträgt den Takt, die zweite die Daten.[[²]][I²C]
 
+#### Verkabelung
+
 #### Fehlerquellen:
 * Wind kann momentane Druckunterschiede erzeugen, die nicht dem eigentlichen Umgebungsdruck entsprechen
 * Wetterlagen kommen mit unterschiedlichen Umgebungsdrücken einher (Hoch-/ Tiefdruckgebiet)
 * Feuchtigkeit kann die Messungen verfälschen.
-* Licht: Der Chip auf dem Höhenmesser ist lichtempfindlich, sollte also vor allzu starker Sonneneinstrahlung geschützt werden. [[1]][Sparkfun]
+* Das Silizium im Drucksensor ist lichtempfindlich, sollte also vor allzu starker Sonneneinstrahlung geschützt werden. [[1]][Sparkfun]
 
 ### OLED-Display
-GM009605 OLED-Display mit SSD1306-Controller
+GM009605 OLED-Display 
+
+0,96′ Bildschirmdiagonale
+Auflösung von 128×64 Pixel
+Monochrom
+SSD1306-Controller
+
+#### Verkabelung
 
 ## Software <a name="3"></a>
 Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
