@@ -22,7 +22,7 @@ description: Informatikprojekt
 navbar-links:
   Tagebuch: "https://jantondeluxe.github.io/2019-10-06-unterrichstagebuch/"
   Beschreibung: "https://jantondeluxe.github.io/2019-10-06-projektbbeschreibung/"
-  Quellcode: "https://jantondeluxe.github.io/2019-09-01-quellcode/"
+  Quellcode: "https://jantondeluxe.github.io/2019-10-05-quellcode/"
   Repository: "https://github.com/JantonDeluxe/luft-waffle"
 
 # Image to show in the navigation bar - image must be a square (width = height)
