@@ -47,7 +47,8 @@ Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle 
 Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Programmbiliotheken:
 * **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
 
-* **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
+* **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] 
+I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
 
 Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
@@ -134,14 +135,14 @@ double getPressure()
 
 
 #### Ausgangsdruck berechnen 
-Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable, das Array `Array` und die Konstante `messungen`.
+Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable `ausgangsdruck`, das Array `Array` und die Konstante `messungen`.
 
 ```c++
 const int messungen = 100;
 float Array[messungen];
 float ausgangsdruck = 0.0;
 ```
-Im Array `Array` speichern wir dann solange Druckwerte, bis die vorgegebene Anzahl der Messungen (`messungen`) erreicht ist. 
+Im Array speichern wir dann solange Druckwerte, bis die vorgegebene Anzahl der Messungen erreicht ist. 
 ```c++
  for (int i = 0; i < messungen; i++)
   {
@@ -161,14 +162,20 @@ Solange wird ebenfalls zur Variable `ausgangsdruck` die jeweils neueste Messung 
 Wenn die Anzahl der Messungen erreicht ist, wird die Summe aller Messungen durch die Anzahl der Messungen geteilt und man erhält den Durchschnitt der Messungen. Die Berechnung dieses Durchschnitts ist wichtig, da einzelne Druckmessungen immer ein wenig schwanken und damit die Höhenberechnung ungenau machen würden.
 
 ```c++
-  ausgangsdruck = ausgangsdruck / messungen;
+ausgangsdruck = ausgangsdruck / messungen;
 ```
 
 
 ### Höhe berechnen
-Zum Berechnen der Höhe benötigen wir die lokale Variable `P`, die den Druckwert in mbar enthält, sowie die globalen Variablen `a`, die de balblabla;)
+Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen Höhenformel den zurückgelegten Höhenunterschied basierend auf dem aktuellen Druck und dem Ausgangsdruck.[[3]][Höhenformel]
+![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
+
+```c++
+a = pressure.altitude(P, ausgangsdruck);
+```
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
 [I²C]:https://www.ipd.kit.edu/mitarbeiter/buchmann/microcontroller/i2c.htm
+[Höhenformel]:https://learn.sparkfun.com/tutorials/bmp180-barometric-pressure-sensor-hookup-/all
 
