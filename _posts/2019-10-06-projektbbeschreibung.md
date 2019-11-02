@@ -19,7 +19,20 @@ subtitle: Wie funktioniert der Höhenmesser?
 >* [Quellen](#4)
 
 ## Ziel<a name="1"></a>
-Höhenmesser, der günstiger ist, als die 50€ off-the-shelf-Dinger.
+Wasserraketen können ziemlich hoch fliegen. Aber wie hoch genau?
+
+Das haben wir uns schon vor vier Jahren gefragt und uns nach einem Höhenmesser umgegeuckt. Off-the-shelf kostet so ein geigneter Höhenmesser mindesten 50 Euro und das mit einem sehr beschränkten Funktionsumfang. Deshalb haben wir angefangen, einen Höhenmesser auf Basis eines Arduino nano selber zu bauen. 
+
+Dieser [alte Höhenmesser](http://jan.krummrey.de/2015/09/13/hoehenmesser-fur-unsere-wasserrakete/) hatte jedoch einige Schwachstellen, weshalb wir ihn nie zuende gebaut haben: 
+- durch die zwei 7-Segment-Anzeigen konnte immer nur eine Information mit maximal zwei Ziffern angezeigt werden 
+- es konnten keine Daten ausgelesen werden, da der Arduino nano sich bei USB Verbindungen resettet
+- es konnten keine längeren Messreihen wie Flugverläufe gespeichert werden, da der Speicher dafür nicht ausgereicht hat
+- der Arduino nano hat kein WLAN, weshalb man sich immer per USB-Kabel verbinden muss, was schwer möglich ist, wenn der Sensor in einer Rakete eingebaut ist
+
+![Alter Höhenmesser](https://i1.wp.com/jan.krummrey.de/wp-content/uploads/2015/09/11951281_10153345040958153_9145140276330392700_n.jpg)
+
+
+hatten wir bereits probiert einenHöhenmesser, der günstiger ist, als die 50€ off-the-shelf-Dinger.
 Höhe (aktuell und max. messen) und ausgeben (auf display und auf webserver)
 
 ## Hardware <a name="2"></a>
@@ -71,6 +84,7 @@ Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle 
  Serial.println("Datenübertragung gestartet!");
 ```
 Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermeldungen und Zwischenwerte anzuzeigen. Alle anderen Daten werden entweder über das Display oder die Website angezeigt.
+
 ***
 
 ### Höhenmesser
