@@ -47,8 +47,8 @@ Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle 
 Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Programmbiliotheken:
 * **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
 
-* **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[1]][BMP180-Datenblatt] 
-I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[2]][I²C]
+* **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[¹]][BMP180-Datenblatt] 
+I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[²]][I²C]
 
 Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
@@ -167,12 +167,15 @@ ausgangsdruck = ausgangsdruck / messungen;
 
 
 ### Höhe berechnen
-Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen Höhenformel den zurückgelegten Höhenunterschied basierend auf dem aktuellen Druck und dem Ausgangsdruck.[[3]][Höhenformel]
+Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen Höhenformel den zurückgelegten Höhenunterschied basierend auf dem aktuellen Druck und dem Ausgangsdruck. Dieses Ergebnis setzten wir dann der Höhenvariable `a` gleich
+
 ![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
 
 ```c++
 a = pressure.altitude(P, ausgangsdruck);
 ```
+
+In der Theorie sollte der BMP180 mit dieser Methode eine Genauigkeit von 25 cm erreichen. In der Praxis liegt die Ungenauigkeit bei eitwas über 1 Meter. Die Genauigkeit verschlechtert sich mit der Zeit unter anderem auf grund von Wetterveränderungen, die eine Veränderung des Luftdrucks mit sich bringen. So kann die Ungenauigkeit nach einem Tag 30 Meter betragen. Der Höhenmesser sollte also vor dem Benutzen neugestartet werden, damit ein aktueller Ausgangsdruck gemessen werden kann.[[³]][Höhenformel]
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
