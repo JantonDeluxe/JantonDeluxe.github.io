@@ -15,10 +15,24 @@ Höhenmesser, der günstiger ist, als die 50€ off-the-shelf-Dinger.
 Höhe (aktuell und max. messen) und ausgeben (auf display und auf webserver)
 
 ## Hardware <a name="2"></a>
+### Mikrocontroller
 Wemos D1 mini Pro (Arduino)
 
-Bosch BMP180
+### Höhenmesser
+Als Höhenmesser verwenden wir dem Bosch BMP180, einen günstigen Drucksensor mit relativ hoher Genauigkeit (theoretisch 0,25 m). Eingesetzt wird dieser Sensor auch in Smartphones oder einfachen Wetterstationen.
+Er basiert auf dem piezoresistiven Effekt: Bei Druck oder Zug (in diesem Fall durch den Luftdruck) verändert sich der elektrische Widerstand eines Materials (hier: Silizium). Durch diese Änderung lässt sich dann der ausgeübte Druck bestimmen.
+Der Höhenmesser besitzt ebenfalls ein Thermometer.
+Die so gemessenen Werte werden von einem digital-to-analog converter in ein digitales Signal umgewandelt. Dieses wird dann von einer Kontrolleinheit mit Hilfe der auf dem Board gespeicherten Kalibrierungswerte ausgeglichen, sodass die Werte über das I²C-Interface ausgegeben werden können.
 
+I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Doppelleitung benötigt. Die erste dieser Leitungen überträgt den Takt, die zweite die Daten.[[²]][I²C]
+
+#### Fehlerquellen:
+* Wind kann momentane Druckunterschiede erzeugen, die nicht dem eigentlichen Umgebungsdruck entsprechen
+* Wetterlagen kommen mit unterschiedlichen Umgebungsdrücken einher (Hoch-/ Tiefdruckgebiet)
+* Feuchtigkeit kann die Messungen verfälschen.
+* Licht: Der Chip auf dem Höhenmesser ist lichtempfindlich, sollte also vor allzu starker Sonneneinstrahlung geschützt werden. [[1]][Sparkfun]
+
+### OLED-Display
 GM009605 OLED-Display mit SSD1306-Controller
 
 ## Software <a name="3"></a>
@@ -48,7 +62,6 @@ Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Prog
 * **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
 
 * **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[¹]][BMP180-Datenblatt] 
-I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Leitung benötigt.[[²]][I²C]
 
 Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
@@ -132,8 +145,9 @@ double getPressure()
   else Serial.println("Fehler beim Starten der Temperaturmessung");
 }
 ```
-
-
+  
+  
+  
 #### Ausgangsdruck berechnen 
 Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable `ausgangsdruck`, das Array `Array` und die Konstante `messungen`.
 
@@ -165,8 +179,8 @@ Wenn die Anzahl der Messungen erreicht ist, wird die Summe aller Messungen durch
 ausgangsdruck = ausgangsdruck / messungen;
 ```
 
-
-### Höhe berechnen
+  
+#### Höhe berechnen
 Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen Höhenformel den zurückgelegten Höhenunterschied basierend auf dem aktuellen Druck und dem Ausgangsdruck. Dieses Ergebnis setzten wir dann der Höhenvariable `a` gleich
 
 ![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
@@ -177,8 +191,17 @@ a = pressure.altitude(P, ausgangsdruck);
 
 In der Theorie sollte der BMP180 mit dieser Methode eine Genauigkeit von 25 cm erreichen. In der Praxis liegt die Ungenauigkeit bei eitwas über 1 Meter. Die Genauigkeit verschlechtert sich mit der Zeit unter anderem auf grund von Wetterveränderungen, die eine Veränderung des Luftdrucks mit sich bringen. So kann die Ungenauigkeit nach einem Tag 30 Meter betragen. Der Höhenmesser sollte also vor dem Benutzen neugestartet werden, damit ein aktueller Ausgangsdruck gemessen werden kann.[[³]][Höhenformel]
 
+#### Maximalwerte berechnen
+Wenn die Höhe `a` größer als die Variable `highest` bzw. kleiner als `lowest` ist, wird dieser Höhenwert übernommen und damit zum neuen Maximum oder Minimum. Das Minimum benötigen wir nicht wirklich, berechnen es aber trotzdem für den Fall, dass es doch gebraucht wird.
+
+```c++
+if (a < lowest) lowest = a;
+
+if (a > highest) highest = a;
+```
+
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
 [I²C]:https://www.ipd.kit.edu/mitarbeiter/buchmann/microcontroller/i2c.htm
-[Höhenformel]:https://learn.sparkfun.com/tutorials/bmp180-barometric-pressure-sensor-hookup-/all
+[Sparkfun]:https://learn.sparkfun.com/tutorials/bmp180-barometric-pressure-sensor-hookup-/all
 
