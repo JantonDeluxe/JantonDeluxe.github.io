@@ -7,6 +7,7 @@ subtitle: Wie funktioniert der Höhenmesser?
 ### Inhaltsverzeichnis
 >* [Ziel](#1)
 >* [Hardware](#2)
+>  - Mikrocontroller
 >* [Software](#3)
 >* [Quellen](#4)
 
@@ -228,7 +229,7 @@ Zum Ansteuern des Displays muss nun die I²C-Adresse definiert werden. Beim Höh
 #define I2C_ADDRESS 0x3C 
 ```
 
-Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die größe der Schriftart.
+Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die Größe der Schriftart.
 
 ```c++
 Wire.begin();
