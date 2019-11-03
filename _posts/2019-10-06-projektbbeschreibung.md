@@ -23,15 +23,15 @@ Wasserraketen können ziemlich hoch fliegen. Aber wie hoch genau?
 
 Das haben wir uns schon vor vier Jahren gefragt und uns nach einem Höhenmesser umgegeuckt. Off-the-shelf kostet so ein geigneter Höhenmesser mindesten 50 Euro und das mit einem sehr beschränkten Funktionsumfang. Deshalb haben wir angefangen, einen Höhenmesser auf Basis eines Arduino nano selber zu bauen. 
 
-![Alter Höhenmesser](https://i1.wp.com/jan.krummrey.de/wp-content/uploads/2015/09/11951281_10153345040958153_9145140276330392700_n.jpg | width=100)
+![Alter Höhenmesser](https://i1.wp.com/jan.krummrey.de/wp-content/uploads/2015/09/11951281_10153345040958153_9145140276330392700_n.jpg =250x250)
 
 Der [alte Höhenmesser](http://jan.krummrey.de/2015/09/13/hoehenmesser-fur-unsere-wasserrakete/) konnte über das zum Sensor gehörende [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/BMP180_altitude_example/BMP180_altitude_example.ino) die aktuelle Höhe messen und auf zwei 7-Segment-Anzeigen darstellen. Zusätzlich konnte er die maximale Höhe berechnen und durch das Blinken der im Arduino eingebauten LED ausgeben. Das funktioniert, ist aber nicht sehr "nutzerfreundlich". 
 
 Dazu kamen noch einige konstruktionsbedingte Schwachstellen, weshalb wir ihn nie zuende gebaut haben: 
-- durch die zwei 7-Segment-Anzeigen konnte immer nur eine Information mit maximal zwei Ziffern angezeigt werden 
-- der Arduino nano hat kein WLAN, weshalb man sich immer per USB-Kabel verbinden muss, was unmöglich ist, wenn der Sensor in einer Rakete eingebaut ist
-- es konnten keine gespeicherten Daten ausgelesen werden, da der Arduino nano sich bei USB Verbindungen resettet
-- es konnten keine längeren Messreihen wie Flugverläufe gespeichert werden, da der Speicher dafür nicht ausgereicht hat
+* durch die zwei 7-Segment-Anzeigen konnte immer nur eine Information mit maximal zwei Ziffern angezeigt werden 
+* der Arduino nano hat kein WLAN, weshalb man sich immer per USB-Kabel verbinden muss, was unmöglich ist, wenn der Sensor in einer Rakete eingebaut ist
+* es konnten keine gespeicherten Daten ausgelesen werden, da der Arduino nano sich bei USB Verbindungen resettet
+* es konnten keine längeren Messreihen wie Flugverläufe gespeichert werden, da der Speicher dafür nicht ausgereicht hat
 
 Der Code ist in den vier Jahren verloren gegangen, basierte aber bis auf das Berechnen des Maximalwerts und dem Blinken der LED auf dem Example Sketch.
 
@@ -44,8 +44,16 @@ Wenn möglich soll der neue Höhenmesser die alten Probleme beheben und mehr kö
 6. Flugverlauf grafisch darstellen
 
 ## Hardware <a name="2"></a>
+Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende Hardware zurück führen. Deshalb haben wir einige Änderungen vorgenommen.
 ### Mikrocontroller
-Wemos D1 mini Pro (Arduino)
+Als Mikrocontroller-Board benutzen wir einen [Wemos D1 mini Pro V1.0.0](https://wiki.wemos.cc/products:retired:d1_mini_pro_v1.0.0) von Aliexpress.
+Der D1 mini Pro verwendet einen [ESP8266EX](https://www.espressif.com/en/products/hardware/esp8266ex/overview)-Mikrochip von espressif Systems. Das ist ein 32 bit-Mikrocontroller (*Tensilica L106*) mit eingebauter WLAN-Schnittstelle (802.11 b/g/n Unterstützung). Eingebaut ist eine Keramik-Antenne, man könnte aber auch eine externe Antenne anschließen. Damit lassen sich Daten nun auch kabellos per WLAN übertragen.
+Dazu besitzt das Board nun 16 Megabyte Flash-Speicher statt den 32 Kilobyte beim Arduino nano. Das Speichern von längeren Datenreihen ist jetzt also möglich.
+Das Board ist Arduino-kompatibel, das heißt man kann es wie jeden beliebigen Arduino über die microUSB-Schnittstelle mit der Arduino IDE programmieren. Dafür müssen jedoch einige Einstellungen verändert werden. Wie das funktioniert beschreiben wir im Unterrichtstagebuch vom 21. bis 27. August.
+
+![Board-Zeichnung](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/board.JPG?raw=true)
+
+
 
 ### Höhenmesser
 Als Höhenmesser verwenden wir dem Bosch BMP180, einen günstigen Drucksensor mit relativ hoher Genauigkeit (theoretisch 0,25 m). Eingesetzt wird dieser Sensor auch in Smartphones oder einfachen Wetterstationen.
