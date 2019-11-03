@@ -23,7 +23,7 @@ Wasserraketen können ziemlich hoch fliegen. Aber wie hoch genau?
 
 Das haben wir uns schon vor vier Jahren gefragt und uns nach einem Höhenmesser umgegeuckt. Off-the-shelf kostet so ein geigneter Höhenmesser mindesten 50 Euro und das mit einem sehr beschränkten Funktionsumfang. Deshalb haben wir angefangen, einen Höhenmesser auf Basis eines Arduino nano selber zu bauen. 
 
-![Alter Höhenmesser](https://i1.wp.com/jan.krummrey.de/wp-content/uploads/2015/09/11951281_10153345040958153_9145140276330392700_n.jpg| width=100)
+![Alter Höhenmesser](https://i1.wp.com/jan.krummrey.de/wp-content/uploads/2015/09/11951281_10153345040958153_9145140276330392700_n.jpg | width=100)
 
 Der [alte Höhenmesser](http://jan.krummrey.de/2015/09/13/hoehenmesser-fur-unsere-wasserrakete/) konnte über das zum Sensor gehörende [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/BMP180_altitude_example/BMP180_altitude_example.ino) die aktuelle Höhe messen und auf zwei 7-Segment-Anzeigen darstellen. Zusätzlich konnte er die maximale Höhe berechnen und durch das Blinken der im Arduino eingebauten LED ausgeben. Das funktioniert, ist aber nicht sehr "nutzerfreundlich". 
 
