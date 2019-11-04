@@ -47,12 +47,14 @@ Wenn möglich soll der neue Höhenmesser die alten Probleme beheben und mehr kö
 Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende Hardware zurück führen. Deshalb haben wir einige Änderungen vorgenommen.
 ### Mikrocontroller
 Als Mikrocontroller-Board benutzen wir einen [Wemos D1 mini Pro V1.0.0](https://wiki.wemos.cc/products:retired:d1_mini_pro_v1.0.0) von Aliexpress.
-Der D1 mini Pro verwendet einen [ESP8266EX](https://www.espressif.com/en/products/hardware/esp8266ex/overview)-Mikrochip von espressif Systems. Das ist ein 32 bit-Mikrocontroller (*Tensilica L106*) mit eingebauter WLAN-Schnittstelle (802.11 b/g/n Unterstützung). Eingebaut ist eine Keramik-Antenne, man könnte aber auch eine externe Antenne anschließen. Damit lassen sich Daten nun auch kabellos per WLAN übertragen.
-Dazu besitzt das Board nun 16 Megabyte Flash-Speicher statt den 32 Kilobyte beim Arduino nano. Das Speichern von längeren Datenreihen ist jetzt also möglich.
-Das Board ist Arduino-kompatibel, das heißt man kann es wie jeden beliebigen Arduino über die microUSB-Schnittstelle mit der Arduino IDE programmieren. Dafür müssen jedoch einige Einstellungen verändert werden. Wie das funktioniert beschreiben wir im Unterrichtstagebuch vom 21. bis 27. August.
+
+Der D1 mini Pro verwendet einen [ESP8266EX](https://www.espressif.com/en/products/hardware/esp8266ex/overview)-Mikrochip von espressif Systems. Das ist ein 32 bit-Mikroprozessor (Tensilica L106) mit integrierter WLAN-Schnittstelle (802.11 b/g/n Unterstützung). Eingebaut ist eine Keramik-Antenne, man könnte aber auch eine externe Antenne anschließen. Damit lassen sich Daten nun auch kabellos per WLAN übertragen.
+
+Dazu besitzt das Board 16 Megabyte Flash-Speicher statt den 32 Kilobyte beim Arduino nano. Das Speichern von längeren Datenreihen ist jetzt also möglich.
+Das Board ist Arduino-kompatibel, das heißt man kann es wie jeden beliebigen Arduino mit der Arduino IDE programmieren. Dafür müssen jedoch einige Einstellungen verändert werden. Wie das funktioniert beschreiben wir im Unterrichtstagebuch vom 21. bis 27. August.
+Zum Verbinden mit einem PC verwendetet man den eingebauten microUSB-Port. Das USB-Signal wird dann von der USB-to-UART-Bridge in ein serielles Signal umgewandelt, das der Prozessor verarbeiten kann.
 
 ![Board-Zeichnung](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/board.JPG?raw=true)
-
 
 
 ### Höhenmesser
@@ -65,6 +67,13 @@ Die so gemessenen Werte werden von einem digital-to-analog converter in ein digi
 I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt, dafür da, integrierte Schaltkreise (wie den Höhenmesser und den Arduino) zu verbinden. Der größte Vorteil dieses Busses ist, dass mehrere Schaltkreise über die gleiche Leitung verbunden werden können, man also nur eine Doppelleitung benötigt. Die erste dieser Leitungen überträgt den Takt, die zweite die Daten.[[²]][I²C]
 
 #### Verkabelung
+
+|BMP180|D1 mini Pro|Funktion |
+|------|:---------:|--------:|
+|GND   |GND        |Masse    |
+|VIN   |3V3        |3,3 Volt |
+|SDA   |D1         |I²C-Data |   
+|SCL   |D2         |I²C-Clock|
 
 #### Fehlerquellen:
 * Wind kann momentane Druckunterschiede erzeugen, die nicht dem eigentlichen Umgebungsdruck entsprechen
