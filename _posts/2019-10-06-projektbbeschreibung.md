@@ -48,14 +48,13 @@ Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende 
 ### Mikrocontroller
 Als Mikrocontroller-Board benutzen wir einen [Wemos D1 mini Pro V1.0.0](https://wiki.wemos.cc/products:retired:d1_mini_pro_v1.0.0) von Aliexpress.
 
+![Board-Zeichnung](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/board.JPG?raw=true)
+
 Der D1 mini Pro verwendet einen [ESP8266EX](https://www.espressif.com/en/products/hardware/esp8266ex/overview)-Mikrochip von espressif Systems. Das ist ein 32 bit-Mikroprozessor (Tensilica L106) mit integrierter WLAN-Schnittstelle (802.11 b/g/n Unterstützung). Eingebaut ist eine Keramik-Antenne, man könnte aber auch eine externe Antenne anschließen. Damit lassen sich Daten nun auch kabellos per WLAN übertragen.
 
 Dazu besitzt das Board 16 Megabyte Flash-Speicher statt den 32 Kilobyte beim Arduino nano. Das Speichern von längeren Datenreihen ist jetzt also möglich.
 Das Board ist Arduino-kompatibel, das heißt man kann es wie jeden beliebigen Arduino mit der Arduino IDE programmieren. Dafür müssen jedoch einige Einstellungen verändert werden. Wie das funktioniert beschreiben wir im Unterrichtstagebuch vom 21. bis 27. August.
 Zum Verbinden mit einem PC verwendetet man den eingebauten microUSB-Port. Das USB-Signal wird dann von der USB-to-UART-Bridge in ein serielles Signal umgewandelt, das der Prozessor verarbeiten kann.
-
-![Board-Zeichnung](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/board.JPG?raw=true)
-
 
 ### Höhenmesser
 Als Höhenmesser verwenden wir dem Bosch BMP180, einen günstigen Drucksensor mit relativ hoher Genauigkeit (theoretisch 0,25 m). Eingesetzt wird dieser Sensor auch in Smartphones oder einfachen Wetterstationen.
@@ -90,7 +89,16 @@ Monochrom
 SSD1306-Controller
 
 #### Verkabelung
+Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb haben wir die beiden Schaltkreise in Reihe geschaltet. Das funktioniert, da das I²C-Protokoll mehrere Geräte über eine Doppelleitung ansteuern kann.
 
+|Display|D1 mini Pro|Funktion |
+|-------|:---------:|--------:|
+|GND    |GND        |Masse    |
+|VDD    |3V3        |3,3 Volt |
+|SDA    |D1         |I²C-Data |   
+|SCK    |D2         |I²C-Clock|
+
+   
 ## Software <a name="3"></a>
 Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
 
