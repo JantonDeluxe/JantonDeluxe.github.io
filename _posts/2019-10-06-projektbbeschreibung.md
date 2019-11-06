@@ -358,12 +358,13 @@ Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
 ### Webserver
 Für ESP8266-Webserver gibt es die Library **ESP8266WebServer**.
 
+#### Port setzen
 Zuerst muss der HTTP-Port gesetzt werden unter dem der Webserver erreichbar ist. Der Standard ist 80.
 
 ```c++
 ESP8266WebServer server(80);
 ```
-
+#### Konfiguration
 Wie beim WLAN konfiuriert man zunächst bei welcher URI, welche Funktion abgerufen werden soll. Dann kann der Server gestartet werden.
 ```c++
 server.on("/", handleRoot);
@@ -372,15 +373,8 @@ server.onNotFound(handleNotFound);
 server.begin();
 ```
 
-`handleRoot` schickt die Homepage. Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haben wir ein Header file erstellt, dass
-```c++
-void handleRoot() {
-  String s = MAIN_page;
-  server.send(200, "text/html", s);
-}
-```
-
-
+#### handleData
+`handleData` sendet die Daten, die über chart.js graphisch dargestellt werden in Form eines Strings. Dieser enthät im die aktuelle Zeit (Sekunden seit dem booten) und den Höhenwert. Diese beiden Werte werden durch ein Semicolon getrennt.
 ```c++
 void handleData(){
   double d = *pointerzwei;
@@ -390,13 +384,44 @@ void handleData(){
   server.send(200, "text/plain", kombi);
 }
 ```
-
-
+#### handleNotFound
+Wird eine unbekannte URI aufgerufen greift die Funktion `handleNotFound` und sendet den HTTP-Fehlercode 404.
 ```c++
 void handleNotFound(){              
   server.send(404, "text/plain", "404: Not found"); 
 }
 ```
+
+#### Website
+
+***
+*Für diesen Teil haben wir uns am Tutorial "ESP8266 data logging with real time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/) orientiert.*
+***
+
+##### handleRoot
+`handleRoot` schickt den HTTP-Code 200 ("OK") und den Code für die Homepage als String `s`. 
+```c++
+void handleRoot() {
+  String s = MAIN_page;
+  server.send(200, "text/html", s);
+}
+```
+
+#### Header
+Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haverwenden wir das header file `index`, dass den Code der Website enthält. Header sind .....
+```c++
+#include "index.h"
+```
+Den Code enthält das header file in Form einer Konstaten mit dem Namen `MAIN_page`. Da diese Datei zu groß für den Arbeitsspeicher des Boards ist (80 kb), muss diese Datei im Flash-Speicher (16 mb) gespeichert werden. Dafür gibt es den Variablenmodifikator [PROGMEN](https://www.arduino.cc/reference/de/language/variables/utilities/progmem/), der dafür sorgt, dass Daten im Flash gespeichert werden.
+Die Trennzeichen (delimiter) `R"=====(xyz)====="` sorgen dafür, dass Sonderzeichen, Absätze usw. keine Syntaxfehler verursachen.
+```c++
+const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
+```
+
+
+
+
+
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
