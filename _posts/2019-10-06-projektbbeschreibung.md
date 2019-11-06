@@ -98,6 +98,10 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 |SDA    |D1         |I²C-Data |   
 |SCK    |D2         |I²C-Clock|
 
+### Diagramm
+![Diagramm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Z-Uno%20bmp180-oled_Steckplatine.png?raw=true)
+Anstelle des D1 mini Pro haben wir hier einen D1 mini genommen, der die gleichen Anschlüsse hat.
+
    
 ## Software <a name="3"></a>
 Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
