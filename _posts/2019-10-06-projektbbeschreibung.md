@@ -403,6 +403,7 @@ void handleRoot() {
 
 ***
 *Für diesen Teil haben wir uns am Tutorial "ESP8266 data logging with real time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/) orientiert. Bei der Anpassung an unsere Daten hat uns Nick Lamprecht mit seinen Java Skript-Kenntnissen geholfen. Alle Beiträge sind [hier](https://github.com/JantonDeluxe/luft-waffle/pulls?q=is%3Apr+is%3Aclosed) zu finden.*
+
 ***
 
 #### Header
