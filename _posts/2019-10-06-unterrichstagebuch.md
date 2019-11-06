@@ -69,8 +69,8 @@ Zusätzlich muss man für unser spezielles Board weitere Zusatzeinstellungen in 
 _Werkzeuge_ -> _Board_ -> "LOLIN(WEMOS) D1 mini Pro" auswählen.
 
 Sehr geholfen haben uns bei der Installation diesese beiden Tutorials: 
-- (https://arduino-projekte.info/installation-eps8266-modul-wie-z-b-wemos/)
-- (https://arduino-projekte.info/installation-wemos-d1-mini-lite-wemos-d1-mini-pro/)
+- https://arduino-projekte.info/installation-eps8266-modul-wie-z-b-wemos/
+- https://arduino-projekte.info/installation-wemos-d1-mini-lite-wemos-d1-mini-pro/
 
 Wenn wir diesen Schritt nicht vergessen hätten, hätte das Hochladen des Programms trotzdem nicht funktioniert, da auf der Hersteller-Website des D1 eine veraltete Boardverwalter-URL angegeben war, was uns nur durch Zufall aufgefallen ist. 
 
