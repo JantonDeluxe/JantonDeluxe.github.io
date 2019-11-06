@@ -126,7 +126,7 @@ Das sieht dann so aus:
 ## 12. September
 Heute haben wir zunächst die Fehlermeldungen getestet und dann Fehlercodes aufgestellt, da die angezeigten Fehlermeldungen zu lang für das Display waren. Dabei haben wir gleich die Beschreibung unseres Codes oben erweitert:
   
-Anmerkung: Letztendlich lassen wir die Fehlermeldungen über die serielle Schnittstelle ausgeben. Da spielt die länge keine Rolle mehr, weshalb wir die Fehlercodes gelöscht haben.
+Anmerkung: Letztendlich lassen wir die Fehlermeldungen über die serielle Schnittstelle ausgeben. Da spielt die Länge keine Rolle mehr, weshalb wir die Fehlercodes gelöscht haben.
 
 Danach haben wir angefangen, die maximale Höhe zu berechnen und anzuzeigen. Das ganze funktioniert sehr gut, sieht aber nicht so aus. Deshalb haben wir angefangen, uns zu überlegen, wie ein besseres Layout aussehen könnte.
 
