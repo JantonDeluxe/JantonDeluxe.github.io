@@ -435,7 +435,7 @@ Der Grundaufbau der Website ist wie folgt. Zur besseren Verständlichkeit gehen 
 ###### Head
 Der Seitentitel, der z.B. in der Titelleiste eines Browser-Tabs angezeigt wird lautet "Höhenmesser".
 
-Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler. Das Skript befindet sich auf einem CDN-Server (CDN = *Content Delivery Network*) von dem aus es abgerufen wird.
+Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine "Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler". Das Skript befindet sich auf einem CDN-Server (CDN = *Content Delivery Network*) von dem aus es abgerufen wird.
 
 Die `user-select`-Eigenschaft von CSS verhindert hier, dass innerhalb der Grafik Text ausgewählt werden kann.
 
