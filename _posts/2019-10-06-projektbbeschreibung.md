@@ -321,7 +321,7 @@ Die Zugangsdaten zum jeweiligen Netzwerk definiert man als Konstanten:
 const char *ssid = "xyz";  
 const char *password = "xyz";
 ```
-Im Setup können dann die benötigten IP-Adressen definiert werden. `ip` ist die Adresse unter der das Gerät verfügbar ist, `dns` ist, `gateway` ist, `subnet` ist 
+Im Setup können dann die benötigten IP-Adressen definiert werden. Das ist von Vorteil, damit das Gerät immer unter der gleichen IP-Adresse erreichbar ist.
 ```c++
 IPAddress ip(192, 168, 178, 220);
 IPAddress dns(192, 168, 178, 1);
@@ -329,7 +329,25 @@ IPAddress gateway(192, 168, 178, 1);
 IPAddress subnet(255, 255, 255, 0);
 WiFi.config(ip, dns, gateway, subnet);
 ```
-  
+Nach der Konfiguration kann die WLAN-Verbindung bzw. der Access-Point gestartet werden.
+
+Verbindung zu bestehendem Netzwerk:
+```c++
+WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Verbunden mit:");
+  Serial.println(ssid);
+```
+
+Starten eines eigenen Netzwerks:
+```c++
+ WiFi.softAP(ssid, password);         
+  Serial.println("AccessPoint gestartet!");   
+```
 Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
 
 ### Webserver
