@@ -71,8 +71,8 @@ I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt,
 |------|:---------:|--------:|
 |GND   |GND        |Masse    |
 |VIN   |3V3        |3,3 Volt |
-|SDA   |D1         |I²C-Data |   
-|SCL   |D2         |I²C-Clock|
+|SDA   |D2         |I²C-Data |   
+|SCL   |D1         |I²C-Clock|
 
 #### Fehlerquellen:
 * Wind kann momentane Druckunterschiede erzeugen, die nicht dem eigentlichen Umgebungsdruck entsprechen
@@ -95,11 +95,12 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 |-------|:---------:|--------:|
 |GND    |GND        |Masse    |
 |VDD    |3V3        |3,3 Volt |
-|SDA    |D1         |I²C-Data |   
-|SCK    |D2         |I²C-Clock|
+|SDA    |D2         |I²C-Data |   
+|SCK    |D1         |I²C-Clock|
 
 ### Diagramm
-![Diagramm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Z-Uno%20bmp180-oled_Steckplatine.png?raw=true)
+![Diagramm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Z-Uno%20bmp180-oled_Steckplatine.png?raw=true)#
+
 Anstelle des D1 mini Pro haben wir hier einen D1 mini genommen, der die gleichen Anschlüsse hat.
 
    
@@ -355,8 +356,47 @@ Starten eines eigenen Netzwerks:
 Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
 
 ### Webserver
+Für ESP8266-Webserver gibt es die Library **ESP8266WebServer**.
+
+Zuerst muss der HTTP-Port gesetzt werden unter dem der Webserver erreichbar ist. Der Standard ist 80.
+
+```c++
+ESP8266WebServer server(80);
+```
+
+Wie beim WLAN konfiuriert man zunächst bei welcher URI, welche Funktion abgerufen werden soll. Dann kann der Server gestartet werden.
+```c++
+server.on("/", handleRoot);
+server.on("/readData", handleData);
+server.onNotFound(handleNotFound);
+server.begin();
+```
+
+`handleRoot` schickt die Homepage. Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haben wir ein Header file erstellt, dass
+```c++
+void handleRoot() {
+  String s = MAIN_page;
+  server.send(200, "text/html", s);
+}
+```
 
 
+```c++
+void handleData(){
+  double d = *pointerzwei;
+  double t = millis() / 1000;
+  String teil = String(String(t) + ";");
+  String kombi = String(teil + String(d));
+  server.send(200, "text/plain", kombi);
+}
+```
+
+
+```c++
+void handleNotFound(){              
+  server.send(404, "text/plain", "404: Not found"); 
+}
+```
 
 ## Quellen
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
