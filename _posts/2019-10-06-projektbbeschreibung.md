@@ -432,19 +432,20 @@ Der Grundaufbau der Website ist wie folgt. Zur besseren Verständlichkeit gehen 
    
 </html>
 ```
-###### Head
+##### Head
 Der Seitentitel, der z.B. in der Titelleiste eines Browser-Tabs angezeigt wird lautet "Höhenmesser".
-
+```html
+<title>H&ouml;henmesser</title>
+```
 Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine "Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler". Das Skript befindet sich auf einem CDN-Server (CDN = *Content Delivery Network*) von dem aus es abgerufen wird.
+```html
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+```
 
 Die `user-select`-Eigenschaft von CSS verhindert hier, dass innerhalb der Grafik Text ausgewählt werden kann.
-
 Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Dafür werden Funktionen der 
 ```html
-<head>
-  <title>H&ouml;henmesser</title>
-   <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-  <style>
+<style>
   canvas{
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -475,7 +476,6 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
     color: white;
   }
   </style>
-</head>
 ```
 ```html
 <body>
