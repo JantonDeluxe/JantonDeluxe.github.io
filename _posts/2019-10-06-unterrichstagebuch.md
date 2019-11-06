@@ -136,7 +136,7 @@ In unseren ersten Versuchen wurde erstmal nur die Temperatur zum Start-Zeitpunkt
 Dann haben wir versucht mit Hilfe von Pointern die Temperatur aus der Definition von getPressure() zu verwenden, was elegant, aber für uns auch sehr zeitaufwändig war: Kurz vor Ende der Stunde waren wir fertig, das ganze hat jedoch nicht funktioniert hat, weil die Library dafür nicht ausgelegt ist.
 
 ## 25. September
-Heute haben wir das Temperatur-Problem auf eine relativ einfache Weise gelöst. Statt T aus der Definition von getPressure() direkt zu verwenden, haben wir die Temperaturmessung aus getPressure() kopiert und vereinfacht. Die Temperatur wird jetzt provisorisch unter dem Maximum angezeigt.
+Heute haben wir das Temperatur-Problem auf eine relativ einfache Weise gelöst. Statt `T` aus der Definition von `getPressure()` direkt zu verwenden, haben wir die Temperaturmessung aus `getPressure()` kopiert und vereinfacht. Die Temperatur wird jetzt provisorisch unter dem Maximum angezeigt.
 
 ## 26. September
 Heute haben wir das neue Layout gebaut. Der baseline-Druck steht weiterhin oben rechts, jetzt aber in einer Reihe und mit der Einheit mbar statt mb. Darunter kommen, immernoch im setup, die Teile der Anzeige, die sich nicht verändern - also "Hoehe:", "Max:" und Platz für sonstigen Text. Die veränderlichen Teile der Anzeige stehen im Hauptteil des Codes.
