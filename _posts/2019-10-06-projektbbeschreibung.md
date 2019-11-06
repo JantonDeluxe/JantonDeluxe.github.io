@@ -408,7 +408,7 @@ void handleRoot() {
 ```
 
 #### Header
-Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haverwenden wir das header file `index`, dass den Code der Website enthält. Header sind .....
+Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haverwenden wir das header file `index`, dass den Code der Website enthält. Header sind ..... Damit die Arduino IDE das header file einem Programm zuordnen kann, muss die Datei im selben Ordner wie die .ino Datei, die den "Hauptcode" enthält gespeichert werden.
 ```c++
 #include "index.h"
 ```
@@ -417,9 +417,30 @@ Die Trennzeichen (delimiter) `R"=====()====="` sorgen dafür, dass Sonderzeichen
 ```c++
 const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
 ```
+#### HTML/ JavaScript
+
+Der Grundaufbau der Website ist wie folgt. Zur besseren Verständlichkeit gehen wir Schritt für Schritt vor.
 ```html
 <!doctype html>
 <html>
+   
+<head>  
+</head>
+   
+<body>
+</body>
+   
+</html>
+```
+###### Head
+Der Seitentitel, der z.B. in der Titelleiste eines Browser-Tabs angezeigt wird lautet "Höhenmesser".
+
+Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler. Das Skript befindet sich auf einem CDN-Server (CDN = *Content Delivery Network*) von dem aus es abgerufen wird.
+
+Die `user-select`-Eigenschaft von CSS verhindert hier, dass innerhalb der Grafik Text ausgewählt werden kann.
+
+Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Dafür werden Funktionen der 
+```html
 <head>
   <title>H&ouml;henmesser</title>
    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -430,7 +451,7 @@ const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
     -ms-user-select: none;
   }
 
-  /* Data Table Styling */
+  // Aussehen der Tabelle
   #dataTable {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -456,7 +477,7 @@ const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
   </style>
 </head>
 ```
-
+```html
 <body>
     <div style="text-align:center;">
     <h1 style="font-family:verdana;color:#999999">H&ouml;henmesser</h1>
