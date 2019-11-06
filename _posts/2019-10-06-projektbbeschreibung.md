@@ -87,9 +87,6 @@ GM009605 OLED-Display
 Auflösung von 128×64 Pixel
 Monochrom
 SSD1306-Controller
-Größe: 27 mm x 27 mm x 4,5 mm
-
-Das Display benötigt 3-5V Gleichstrom und verfügt über 4 Anschlüsse (GND, Vcc, SCL, SDA) . Es verfügt über ein SSD1306 Treibermodul und kann über I2C angesteuert werden. Es ist für den Anschluss mit Microcontrollern gebaut, die mit Arduino funktionieren.
 
 #### Verkabelung
 Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb haben wir die beiden Schaltkreise in Reihe geschaltet. Das funktioniert, da das I²C-Protokoll mehrere Geräte über eine Doppelleitung ansteuern kann.
@@ -97,9 +94,9 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 |Display|D1 mini Pro|Funktion |
 |-------|:---------:|--------:|
 |GND    |GND        |Masse    |
-|VDD    |3V3        |3,3 Volt | 
-|SCL    |D1         |I²C-Clock|
-|SDA    |D2         |I²C-Data |  
+|VDD    |3V3        |3,3 Volt |
+|SDA    |D1         |I²C-Data |   
+|SCK    |D2         |I²C-Clock|
 
    
 ## Software <a name="3"></a>
@@ -289,18 +286,51 @@ Zum Ansteuern des Displays muss nun die I²C-Adresse definiert werden. Beim Höh
 #define I2C_ADDRESS 0x3C 
 ```
 
-Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die Größe der Schriftart.
+Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die Größe der Schriftart. `oled.clear` leert den Bildschirm, um Darstellungsfehler zu verhindern. Dann vergrößern wir die Schriftgröße auf das doppelte und geben "Start" aus. Um den Setupprozess abzuschließen setzten wir die Schriftgröße wieder auf den Standard zurück und leeren nach einer Verzögerung das Display.
 
 ```c++
 Wire.begin();
 oled.begin(&Adafruit128x64, I2C_ADDRESS);
 oled.set400kHz();
 oled.setFont(font5x7);
+oled.clear();
+oled.set2X();
+oled.println("START");
+oled.set1X();
+delay(500);
+oled.clear();
 ```
 
+Die Anzeigen der einzelnen Informationen sind dann alle ähnlich aufgebaut: Erst wird die Fontgröße und dann der Ort, an dem der Text dargestellt werden festgelegt. Die Parameter sind dabei die Spalten und Zeilen.
+Dabei gilt es zu beachten, dass die angegebenen Zahlen negativ sein könnten. Das sieht dann in der Darstellung sehr komisch aus, wenn die Zahlen hin und her springen. Deshalb fügen wir ein Leerzeichen hinzu, wenn die zahl positiv ist.
+
+```c++
+oled.set2X();
+oled.setCursor(40, 2);               
+if (a >= 0.0) oled.print(" ");      
+oled.print(a);
+oled.print("m");
+```
 ***
 
 ### WLAN-Verbindung oder Access Point
+Für das Erstellen eines eigenen WLAN-Access-Points oder das Verbinden mit bestehennden Netzwerken benötigt man die Library **ESP8266WiFi**.
+
+Die Zugangsdaten zum jeweiligen Netzwerk definiert man als Konstanten:
+```c++
+const char *ssid = "xyz";  
+const char *password = "xyz";
+```
+Im Setup können dann die benötigten IP-Adressen definiert werden. `ip` ist die Adresse unter der das Gerät verfügbar ist, `dns` ist, `gateway` ist, `subnet` ist 
+```c++
+IPAddress ip(192, 168, 178, 220);
+IPAddress dns(192, 168, 178, 1);
+IPAddress gateway(192, 168, 178, 1);
+IPAddress subnet(255, 255, 255, 0);
+WiFi.config(ip, dns, gateway, subnet);
+```
+  
+Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
 
 ### Webserver
 
