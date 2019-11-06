@@ -392,13 +392,7 @@ void handleNotFound(){
 }
 ```
 
-#### Website
-
-***
-*Für diesen Teil haben wir uns am Tutorial "ESP8266 data logging with real time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/) orientiert.*
-***
-
-##### handleRoot
+#### handleRoot
 `handleRoot` schickt den HTTP-Code 200 ("OK") und den Code für die Homepage als String `s`. 
 ```c++
 void handleRoot() {
@@ -406,6 +400,10 @@ void handleRoot() {
   server.send(200, "text/html", s);
 }
 ```
+
+***
+*Für diesen Teil haben wir uns am Tutorial "ESP8266 data logging with real time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/) orientiert. Bei der Anpassung an unsere Daten hat uns Nick Lamprecht mit seinen Java Skript-Kenntnissen geholfen. Alle Beiträge sind [hier](https://github.com/JantonDeluxe/luft-waffle/pulls?q=is%3Apr+is%3Aclosed) zu finden.*
+***
 
 #### Header
 Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haverwenden wir das header file `index`, dass den Code der Website enthält. Header sind ..... Damit die Arduino IDE das header file einem Programm zuordnen kann, muss die Datei im selben Ordner wie die .ino Datei, die den "Hauptcode" enthält gespeichert werden.
