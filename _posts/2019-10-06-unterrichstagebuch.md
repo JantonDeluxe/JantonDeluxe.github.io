@@ -110,8 +110,6 @@ Mit dem ersten Example Skecth haben wir dann den Zeitraum gemessen, in dem die M
 ## 29. August
 Heute haben wir das OLED-Display verkabelt und ein [Testprogramm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/OLEDtest/OLEDtest.ino) geschrieben.
 
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Zusammengesteckt%20auf%20Breadboard1.jpeg?raw=true)
-
 Und das hat funktioniert:
 ![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/hallo!.jpeg?raw=true)
 
