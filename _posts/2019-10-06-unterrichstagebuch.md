@@ -449,10 +449,12 @@ Das Ergebnis sieht dann so aus:
 Diesen einfachen Webserver haben wir dann in den Code integriert und getestet, ob Kompatibilitätsprobleme auftreten. Das war nicht der Fall. 
 
 ## 2. Oktober
-Heute haben wir den Code aus dem Webserver-Beispiel auf das nötigste reduziert. Das Board erstellt jetzt ebenfals sein eigenes Netzwerk und ist nicht mehr auf ein bestehendes Netzwerk angewiesen. Außerdem haben wir ein Darstellungsproblem der IP-Adresse auf dem OLED-Display behoben.
+Heute haben wir den Code aus dem Webserver-Beispiel auf das nötigste reduziert. Das Board kann jetzt ebenfals sein eigenes Netzwerk erstellen und ist nicht mehr auf ein bestehendes Netzwerk angewiesen. Außerdem haben wir ein Darstellungsproblem der IP-Adresse auf dem OLED-Display behoben.
 
-## FERIEN
-Webseite mit template
+## Ferien
+In den Herbstferien haben wir eine Webseite für das Projekt erstellt. Wir verwenden jetzt das GitHub-Template [beautiful jekyll](https://deanattali.com/beautiful-jekyll/) von Dean Attali. Die "Installation" wird in der [Read-Me-Datei](https://github.com/daattali/beautiful-jekyll/blob/master/README.md) des dazugehörigen GitHub-Repositorys beschrieben.
+
+Ebenfalls haben wir weiter am Webserver herumgebastelt. So haben wir z.B. Variablen über Buttons auf einer Website geändert und Messwerte mit Hilfe von Poitern als Text ausgegeben.
 Webserver: 
 Variablen über knöpfe ändern
 Dateien speichern https://42project.net/esp8266-flash-dateisystem-spiffs-beispielhaft-benutzen/
@@ -460,4 +462,20 @@ Realtime Graphics https://circuits4you.com/2019/01/11/esp8266-data-logging-with-
 Variablen übergeben mit Pointern: https://www.w3schools.com/cpp/cpp_pointers.asp
 
 ## 22.10.2019 
-Baseline-Wert als Durchschnitt von 100 Messungen nehemen Quelle: https://www.arduinoforum.de/arduino-Thread-Gewichteten-Durchschnitt-berechnen-20-Werte-in-fortlaufender-Variable-speichern
+Heute haben wir den Baseline-Wert als Durchschnitt von 100 Messungen definiert. Damit sollte sich die Genauigkeit der Messungen erhöhen. Quelle: https://www.arduinoforum.de/arduino-Thread-Gewichteten-Durchschnitt-berechnen-20-Werte-in-fortlaufender-Variable-speichern
+Zusammen mit Nick haben wir angefangen Probleme beim Anpassen des HTML-/Java Skript-Codes an unseren vorhandenen Code zu beheben.
+
+## 23.10.2019
+Heute sind wir mit der Anpassung fertig geworden und haben den Höhenmesser getestet. Dafür sind wir die Treppen hoch und runtergelaufen und haben die messwerte kontrolliert. 
+
+## 24.10.2019
+Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData` haben wir z.B. von 8 auf 4 Zeilen vereinfacht und mehrfach vorkommende Variablen mit Hilfe von Pointern zu globalen Variablen zusammengefasst.
+
+## 29.10.2019
+Heute haben wir an der Projektbeschreibung und dem Projekttagebuch weitergeschrieben.
+
+## 5.11.2019
+Heute haben wir eine Übersicht zu den Komponenten und Anschlüssen des D1 mini Pro erstellt und an der Projektbeschreibung weitergeschrieben.
+
+## 6.11.2019
+Heute haben wir mit [Fritzing](https://fritzing.org/home/) ein Diagramm der Verkabelungen erstellt und an der Projektbeschreibung weitergeschrieben.
