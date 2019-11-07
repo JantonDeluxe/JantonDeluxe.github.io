@@ -87,6 +87,12 @@ GM009605 OLED-Display
 Auflösung von 128×64 Pixel
 Monochrom
 SSD1306-Controller
+3-5V Gleichstrom
+Modulgröße: 27 mm x 27 mm x 4,5 mm
+Anschlüsse: GND, VDD, SCK, SDA
+Gemacht für Arduino—Mikrocontroller
+
+Das Display verfügt über einen SSD1306—Controller und muss an eine 3—5V Gleichstromquelle angeschlossen werden (in diesem Fall 3,3Volt).  Daten und Strom werden mithilfe von 4 Anschlüssen vermittelt. 
 
 #### Verkabelung
 Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb haben wir die beiden Schaltkreise in Reihe geschaltet. Das funktioniert, da das I²C-Protokoll mehrere Geräte über eine Doppelleitung ansteuern kann.
