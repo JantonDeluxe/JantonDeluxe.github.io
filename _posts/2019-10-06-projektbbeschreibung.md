@@ -6,17 +6,18 @@ subtitle: Wie funktioniert der Höhenmesser?
 
 ### Inhaltsverzeichnis
 >* [Ziel](#1)
->* [Hardware](#2)
->    - Mikrocontroller
->    - Höhenmesser
->    - Display
->* [Software](#3)
->    - Serielle Schnittstelle
->    - Höhenmessung
->    - Anzeige auf Display
->    - WLAN-Verbindung oder Access Point
->    - Webserver
->* [Quellen](#4)
+>* [Funktionen](#2)
+>* [Hardware](#3)
+>    - [Mikrocontroller](#4)
+>    - [Höhenmesser](#5)
+>    - [Display](#6)
+>* [Software](#7)
+>    - [Serielle Schnittstelle](#8)
+>    - [Höhenmessung](#9)
+>    - [Anzeige auf Display](#10)
+>    - [WLAN-Verbindung oder Access Point](#11)
+>    - [Webserver](#12)
+>* [Quellen](#13)
 
 ## Ziel<a name="1"></a>
 Wasserraketen können ziemlich hoch fliegen. Aber wie hoch genau?
@@ -43,9 +44,11 @@ Wenn möglich soll der neue Höhenmesser die alten Probleme beheben und mehr kö
 5. Geschwindigkeit und Beschleunigung ausrechnen
 6. Flugverlauf grafisch darstellen
 
-## Hardware <a name="2"></a>
+## Funktionen <a name="2"></a>
+
+## Hardware <a name="3"></a>
 Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende Hardware zurück führen. Deshalb haben wir einige Änderungen vorgenommen.
-### Mikrocontroller
+### Mikrocontroller <a name="4"></a>
 Als Mikrocontroller-Board benutzen wir einen [Wemos D1 mini Pro V1.0.0](https://wiki.wemos.cc/products:retired:d1_mini_pro_v1.0.0) von Aliexpress.
 
 ![Board-Zeichnung](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/board.JPG?raw=true)
@@ -56,7 +59,7 @@ Dazu besitzt das Board 16 Megabyte Flash-Speicher statt den 32 Kilobyte beim Ard
 Das Board ist Arduino-kompatibel, das heißt man kann es wie jeden beliebigen Arduino mit der Arduino IDE programmieren. Dafür müssen jedoch einige Einstellungen verändert werden. Wie das funktioniert beschreiben wir im Unterrichtstagebuch vom 21. bis 27. August.
 Zum Verbinden mit einem PC verwendetet man den eingebauten microUSB-Port. Das USB-Signal wird dann von der USB-to-UART-Bridge in ein serielles Signal umgewandelt, das der Prozessor verarbeiten kann.
 
-### Höhenmesser
+### Höhenmesser <a name="5"></a>
 Als Höhenmesser verwenden wir dem Bosch BMP180, einen günstigen Drucksensor mit relativ hoher Genauigkeit (theoretisch 0,25 m). Eingesetzt wird dieser Sensor auch in Smartphones oder einfachen Wetterstationen.
 
 Er basiert auf dem piezoresistiven Effekt: Bei Druck oder Zug (in diesem Fall durch den Luftdruck) verändert sich der elektrische Widerstand eines Materials (hier: Silizium). Durch diese Änderung lässt sich dann der ausgeübte Druck bestimmen.
@@ -80,7 +83,7 @@ I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt,
 * Feuchtigkeit kann die Messungen verfälschen.
 * Das Silizium im Drucksensor ist lichtempfindlich, sollte also vor allzu starker Sonneneinstrahlung geschützt werden. [[1]][Sparkfun]
 
-### OLED-Display
+### OLED-Display <a name="6"></a>
 GM009605 OLED-Display 
 
 0,96′ Bildschirmdiagonale
@@ -110,11 +113,11 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 Anstelle des D1 mini Pro haben wir hier einen D1 mini genommen, der die gleichen Anschlüsse hat.
 
    
-## Software <a name="3"></a>
+## Software <a name="7"></a>
 Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
 
 ***
-### Serielle Schnittstelle
+### Serielle Schnittstelle <a name="8"></a>
 Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle des Arduino. Diese Überträgt per Micro-USB-Kabel Daten an den PC, die mit dem seriellen Monitor in der Arduino IDE ausgelesen werden können.
 
 `Serial.begin()` startet die Übertragung, in diesem Falle mit einer Übertragungsgeschwindigkeit von 115200 Bits pro Sekunde.
@@ -131,7 +134,7 @@ Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermel
 
 ***
 
-### Höhenmesser
+### Höhenmessung <a name="9"></a>
 *Bei der Einbindung des Höhenmessers haben wir uns am [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino) von Mike Grusin aus der SFE_BMP180-Library orientiert.*
 
 #### Bibliotheken einbinden
@@ -280,7 +283,7 @@ if (a > highest) highest = a;
 
 ***
 
-### Anzeige auf Display
+### Anzeige auf Display <a name="10"></a>
 Für das Betreiben des OLED-Displays werden neben der Wire-Library noch zwei weitere Libraries benötigt:
 * **SSD1306Ascii** ermöglicht die einfache Darstellung von Buchstaben und Zahlen auf dem Display
 * **SSD1306AsciiWire** ermöglicht die Kommuniktion mit dem Dispay via I²C.
@@ -324,7 +327,7 @@ oled.print("m");
 ```
 ***
 
-### WLAN-Verbindung oder Access Point
+### WLAN-Verbindung oder Access Point <a name="11"></a>
 Für das Erstellen eines eigenen WLAN-Access-Points oder das Verbinden mit bestehennden Netzwerken benötigt man die Library **ESP8266WiFi**.
 
 Die Zugangsdaten zum jeweiligen Netzwerk definiert man als Konstanten:
@@ -361,7 +364,7 @@ Starten eines eigenen Netzwerks:
 ```
 Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
 
-### Webserver
+### Webserver <a name="12"></a>
 Für ESP8266-Webserver gibt es die Library **ESP8266WebServer**.
 
 #### Port setzen
@@ -596,7 +599,7 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
 
 
 
-## Quellen
+## Quellen <a name="13"></a>
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
 [I²C]:https://www.ipd.kit.edu/mitarbeiter/buchmann/microcontroller/i2c.htm
 [Sparkfun]:https://learn.sparkfun.com/tutorials/bmp180-barometric-pressure-sensor-hookup-/all
