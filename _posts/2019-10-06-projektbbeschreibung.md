@@ -36,15 +36,13 @@ Dazu kamen noch einige konstruktionsbedingte Schwachstellen, weshalb wir ihn nie
 
 Der Code ist in den vier Jahren verloren gegangen, basierte aber bis auf das Berechnen des Maximalwerts und dem Blinken der LED auf dem Example Sketch.
 
-Wenn möglich soll der neue Höhenmesser die alten Probleme beheben und mehr können:
+## Funktionen <a name="2"></a>
+Der neue Höhenmesser behebt die alten Probleme und kann noch mehr:
 1. aktuelle Höhe auf Display anzeigen
 2. maximale Höhe möglichst auf unter 1 Meter genau auf Display anzeigen
 3. Temperatur und Druckwerte auf Display anzeigen
 4. Daten drahtlos auf Webserver anzeigen
-5. Geschwindigkeit und Beschleunigung ausrechnen
-6. Flugverlauf grafisch darstellen
-
-## Funktionen <a name="2"></a>
+5. Flugverlauf grafisch darstellen
 
 ## Hardware <a name="3"></a>
 Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende Hardware zurück führen. Deshalb haben wir einige Änderungen vorgenommen.
@@ -84,16 +82,16 @@ I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt,
 * Das Silizium im Drucksensor ist lichtempfindlich, sollte also vor allzu starker Sonneneinstrahlung geschützt werden. [[1]][Sparkfun]
 
 ### OLED-Display <a name="6"></a>
-GM009605 OLED-Display 
+Unser Display ist ein monochromes GM009605 OLED-Display:
 
-0,96′ Bildschirmdiagonale
-Auflösung von 128×64 Pixel
-Monochrom
-SSD1306-Controller
-3-5V Gleichstrom
-Modulgröße: 27 mm x 27 mm x 4,5 mm
-Anschlüsse: GND, VDD, SCK, SDA
-Gemacht für Arduino—Mikrocontroller
+*0,96′ Bildschirmdiagonale
+*Auflösung von 128×64 Pixel
+*Monochrom
+*SSD1306-Controller
+*3-5V Gleichstrom
+*Modulgröße: 27 mm x 27 mm x 4,5 mm
+*Anschlüsse: GND, VDD, SCK, SDA
+*Gemacht für Arduino—Mikrocontroller
 
 Das Display verfügt über einen SSD1306—Controller und muss an eine 3—5V Gleichstromquelle angeschlossen werden (in diesem Fall 3,3Volt).  Daten und Strom werden mithilfe von 4 Anschlüssen vermittelt. 
 
@@ -131,6 +129,13 @@ Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle 
  Serial.println("Datenübertragung gestartet!");
 ```
 Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermeldungen und Zwischenwerte anzuzeigen. Alle anderen Daten werden entweder über das Display oder die Website angezeigt.
+
+Man kann Daten auch als Graph über den seriellen Plotter ausgeben lassen. Diese Funktion ist neu, vor vier Jahren brauchten wir für die graphische Darstellung noch ein extra [Processing](https://processing.org/)-Skript. Das ist jedoch unpraktisch, da man durchgehend eine USB-Verbindung benötigt.
+
+![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Serieller%20Plotter.png?raw=true)
+
+_Blau: Höhe in Meter_
+_Rot: Höhe in feet_
 
 ***
 
