@@ -75,37 +75,17 @@ Sehr geholfen haben uns bei der Installation diesese beiden Tutorials:
 Wenn wir diesen Schritt nicht vergessen hätten, hätte das Hochladen des Programms trotzdem nicht funktioniert, da auf der Hersteller-Website des D1 eine veraltete Boardverwalter-URL angegeben war, was uns nur durch Zufall aufgefallen ist. 
 
 ## 28. August
-Heute konnten wir endlich testen, ob wir den Sensor richtig verkabelt haben. Dafür haben wir das oben erwähnte Example Sketch auf den D1 hochgeladen und die Daten ausgelsen. Das funktioniert so:
+Heute konnten wir testen, ob der Sensor richtig verkabelt ist. Dafür haben wir das oben erwähnte Example Sketch auf den D1 hochgeladen und die Daten ausgelesen. Das funktioniert so:
 
 In Text-Form: _Werkzeuge_ -> _Serieller Monitor_
 
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Serieller%20Monitor.png?raw=true)
-
 Als Graph: _Werkzeuge_ -> _Serieller Plotter_
 
-(Diese Funktion ist neu, vor vier Jahren brauchten wir für die graphische Darstellung noch ein extra Processing-Skript.)
-
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Serieller%20Plotter.png?raw=true)
-
-_Blau: Höhe in Meter_
-_Rot: Höhe in feet_
-
-Die Verkabelung ist also korrekt. Aus Spaß haben wir dann noch das zweite [Example Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino), das eigentlich für Wettermessungen gedacht ist ausprobiert.
-Diesen Beispiel-Code findet man in der Arduino IDE unter: 
-
-_Datei_ -> _Beispiele_ -> _BMP180_ -> _Examples_ -> _SFE_BMP180_example_
-
-Dabei haben wir die vorgegebene Höhe (Boulder, Colorado: 1655 Meter) auf 0 Meter gesetzt, um die gesuchte relative Höhe zu erhalten:
-```c
-#define ALTITUDE 0.0
-```
-Danach wurde uns allerdings erstmal trotz Bewegung dauerhaft die Höhe 0 angezeigt:
-
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Example%20Sketch%202.png?raw=true)
-
-Letzlich lag das daran, dass die Höhe nur in ganzen Zahlen ausgegeben wurde und die Bewegungen kleiner als 1 Meter waren, weshalb keine neue Höhe angezeigt wurde.
-
-Mit dem ersten Example Skecth haben wir dann den Zeitraum gemessen, in dem die Messwerte eine Ungenauigkeit von 2 Metern übersteigen. Der Zeitraum beträgt 18 Minuten. Um sicher zugehen, dass die Abweichung nicht zu groß wird, sollte also etwa alle 10 Minuten eine Rekalibrierung vorgenommen werden, um einen neuen Nullwert zu errechnen.
+Die Verkabelung war korrekt. Mit dem Example Sketch haben wir dann den Zeitraum gemessen, in dem die Messwerte eine Ungenauigkeit von 2 Metern übersteigen. Der Zeitraum beträgt 18 Minuten. Um sicher zugehen, dass die Abweichung nicht zu groß wird, sollte also etwa alle 10 Minuten eine Rekalibrierung vorgenommen werden, um einen neuen Nullwert zu errechnen.
+ 
+Aus Spaß haben wir dann noch das zweite [Example Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino), das eigentlich für Wettermessungen gedacht ist ausprobiert.
+Dabei haben wir die vorgegebene Höhe (Boulder, Colorado: 1655 Meter) auf 0 Meter gesetzt, um die gesuchte relative Höhe zu erhalten.
+Danach wurde uns allerdings erstmal trotz Bewegung dauerhaft die Höhe 0 angezeigt. Letzlich lag das daran, dass die Höhe nur in ganzen Zahlen ausgegeben wurde und die Bewegungen kleiner als 1 Meter waren, weshalb keine neue Höhe angezeigt wurde.
 
 ## 29. August
 Heute haben wir das OLED-Display verkabelt und ein [Testprogramm](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/OLEDtest/OLEDtest.ino) geschrieben.
@@ -183,7 +163,7 @@ Heute sind wir mit der Anpassung fertig geworden und haben den Höhenmesser gete
 Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData` haben wir z.B. von 8 auf 4 Zeilen vereinfacht und mehrfach vorkommende Variablen mit Hilfe von Pointern zu globalen Variablen zusammengefasst.
 
 ## 29.10.2019
-Heute haben wir an der Projektbeschreibung und dem Projekttagebuch weitergeschrieben.
+Heute haben wir das SPIFFS-Dateisystem auf dem Arduino eingerichtet und das Java Script eingebaut, so dass es jetzt auch offline abgerufen werden kann. Dazu haben wir an der Projektbeschreibung und dem Projekttagebuch weitergeschrieben.
 
 ## 5.11.2019
 Heute haben wir eine Übersicht zu den Komponenten und Anschlüssen des D1 mini Pro erstellt und an der Projektbeschreibung weitergeschrieben.
