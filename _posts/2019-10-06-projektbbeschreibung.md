@@ -644,7 +644,7 @@ Für die Folgenden JavaScript-Funktionen benötigen wir folgende Variablen. Bei 
   var time = "";
   
   let graph;
-  ```
+```
   
 ### Funktion addGraph()
 Die Funktion `addGraph` erstellt einen neuen Chart.js-Linien-Graphen mit der Höhe auf der x- und der Zeit auf der y-Achse.
@@ -686,8 +686,8 @@ function addGraph()
       }
     })
   }
-  ```
-  ### Funktion updateGraph
+```
+### Funktion updateGraph
   Die Funktion `updateGraph` aktualisiert den Graphen.
   `push(time)` fügt dabei den neuen Zeitstempel und `push(data)` den neuen Höhenwert hinzu.
  
@@ -708,8 +708,8 @@ function addGraph()
   };
   ```
   
-  ### Update-Intervall
-  Die Update-Geschwindigkeit für das abrufen neuer Daten haben wir auf 333 Millisekunden gesetzt, um auch bei schnellen 
+### Update-Intervall
+ Die Update-Geschwindigkeit für das abrufen neuer Daten haben wir auf 333 Millisekunden gesetzt, um auch bei schnellen 
   Bewegungen noch eine relativ genaue Darstellung zu haben.
 ```js
    setInterval(function() {
