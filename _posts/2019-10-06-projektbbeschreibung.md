@@ -12,11 +12,8 @@ subtitle: Wie funktioniert der Höhenmesser?
 >    - [Höhenmesser](#5)
 >    - [Display](#6)
 >* [Software](#7)
->    - [Serielle Schnittstelle](#8)
->    - [Höhenmessung](#9)
->    - [Anzeige auf Display](#10)
->    - [WLAN-Verbindung oder Access Point](#11)
->    - [Webserver](#12)
+>    - [Arduino-Sketch](#8)
+>    - [Website](#9)
 >* [Quellen](#13)
 
 ## Ziel<a name="1"></a>
@@ -111,91 +108,71 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 Anstelle des D1 mini Pro haben wir hier einen D1 mini genommen, der die gleichen Anschlüsse hat.
 
    
-## Software <a name="7"></a>
-Hier beschreiben wir die einzelnen Komponenten des Programms getrennt, damit die Erklärung nicht zu kompliziert wird.
+## Softwarea <name="7"></a>
+Die Software besteht aus zwei Teilen. Dem [Arduino-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/WebserverTest3/WebserverTest3.ino) und der [Website](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/WebserverTest3/index.h).
 
-***
-### Serielle Schnittstelle <a name="8"></a>
-Für die Übertragung von Daten an den PC nutzen wir die serielle Schnittstelle des Arduino. Diese Überträgt per Micro-USB-Kabel Daten an den PC, die mit dem seriellen Monitor in der Arduino IDE ausgelesen werden können.
+### Arduino-Sketch <a name="8"></a>
+Der Arduino-Sketch ist das "Hauptprogramm" des Höhenmessers. Hierüber läuft alles bis auf die Darstellung der Werte auf der Website.
 
-`Serial.begin()` startet die Übertragung, in diesem Falle mit einer Übertragungsgeschwindigkeit von 115200 Bits pro Sekunde.
-
-`Serial.println("")` schreibt Daten als ASCII-Text und beginnt danach im Gegensatz zu `Serial.Print()` eine neue Zeile. Hier verhindert eine leere Ausgabe Darstellungsfehler zu Beginn der Übertragung.
-
-```c++
- Serial.begin(115200);
- delay(100);
- Serial.println("");
- Serial.println("Datenübertragung gestartet!");
-```
-Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermeldungen und Zwischenwerte anzuzeigen. Alle anderen Daten werden entweder über das Display oder die Website angezeigt.
-
-Man kann Daten auch als Graph über den seriellen Plotter ausgeben lassen. Diese Funktion ist neu, vor vier Jahren brauchten wir für die graphische Darstellung noch ein extra [Processing](https://processing.org/)-Skript. Das ist jedoch unpraktisch, da man durchgehend eine USB-Verbindung benötigt.
-
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Serieller%20Plotter.png?raw=true)
-
-_Blau: Höhe in Meter_
-_Rot: Höhe in feet_
-
-***
-
-### Höhenmessung <a name="9"></a>
-*Bei der Einbindung des Höhenmessers haben wir uns am [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/SFE_BMP180_example/SFE_BMP180_example.ino) von Mike Grusin aus der SFE_BMP180-Library orientiert.*
-
-#### Bibliotheken einbinden
-Für die Benutzung des BMP180 benötigt man zwei Libraries oder auf deutsch Programmbiliotheken:
-* **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
-
-* **Wire** sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.[[¹]][BMP180-Datenblatt] 
-
+#### Libraries
 Libraries enthalten Code-Teile, wie z.B. vorgefertigte Funktionen oder Maschinencode, auf die dann im eigenen Programm einfach zugegriffen werden kann, ohne sie dort selbst schreiben oder einfügen zu müssen.
 
-
+Für unser Projekt benötigen wir folgende Libraries:
 ```c++
-#include <SFE_BMP180.h>
+#include <SFE_BMP180.h>        
 #include <Wire.h>
+#include <SSD1306Ascii.h>
+#include <SSD1306AsciiWire.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <FS.h>
 ```
+- **SFE_BMP180** ist die Library, die den Maschinencode für den Höhenmesser enthält. Damit ermöglicht sie das auslesen und ansteuern des Höhenmessers. 
+- **Wire**  sorgt dafür, dass der Arduino mit dem Höhenmesser kommunizieren kann, da dieser zur Kommunikation das I²C-Protokoll benutzt.
+- **SSD1306Ascii** ermöglicht die einfache Darstellung von Buchstaben und Zahlen auf dem Display
+- **SSD1306AsciiWire** ermöglicht die Kommuniktion mit dem Dispay via I²C.
+- **ESP8266WiFi** ermöglicht Netzwerkverbindungen
+- **ESP8266WebServer** ist eine einfache Webserver-Library, die HTTP-Verbindungen mit maximal einem Client unterstützt
+- **FS** ist die Library für das SPIFFS-Dateisystem
 
-
-#### Objekt erstellen
-Um die Funktionen der SFE_BMP180-Library abrufen zukönnen muss als nächstes ein Objekt für diese Bibliothek erstellt werden. Der Name dieses Objektes ist egal, deshalb haben wir den Namen "pressure" übernommen.
-Objekte sind......
-
+#### Instanzen
+Die Funktionen der Libraries sind jeweils in einer Klasse (z.B. `SFE_BMP180`) gespeichert. Um diese Funktionen abrufen zu können, muss man eine Instanz (hier: `pressure`) der jeweiligen Klasse erstellen.
 ```c++
 SFE_BMP180 pressure;
+SSD1306AsciiWire oled;
+ESP8266WebServer server(80);
 ```
+Der Parameter 80 für die Instanz `server()` gibt in diesem Fall zusätzlich den Port an auf dem der Webserver erreichbar ist. 80 ist der Standard-Port für HTTP-Verbindungen.
 
+#### Funktionen
+##### Druckmessung
+Für die Druckmessung haben wir die Funktion `getPressure()` aus dem 
+Höhenmesser Example-Sketch übernommen. Die Variablen verwenden wir jedoch 
+auch an anderen Stellen des Codes, weshalb wir sie als globale statt 
+lokale Variablen deklarieren.
 
-#### Sensor starten
-Der nächste Schritt ist es, den Sensor zu starten. Dafür wird die Funktion `begin()` aus der Höhenmesser-Library aufgerufen. Da diese Funktion einem Objekt, in diesem Falle `pressure`, zugeordnet ist, handelt es sich genau genommen um eine Methode.
+Zuerst muss eine Temperatur-Messung durchgeführt werden. Mit 
+`pressure.startTemperature()` wird die Messung begonnen. Bei einem Fehler 
+gibt die Funktion den Wert 0, sonst die Zeit, die für die Messung gebraucht
+ wird in Millisekunden aus. Solange wird gewartet. 
+ `pressure.getTemperature(T)` verändert dann den Wert der Variable T, 
+ sodass er dem Temperaturwert entspricht. Ist das erfolgreich gibt die 
+ Funktion den Wert 1, sonst den Wert 0 aus.
 
-`pressure.begin()` startet nun, falls noch nicht geschehen, die Wire-Library und kalibriert den Sensor. Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife wiederholt und das Programm damit gestoppt.
-
-```c++
- if (pressure.begin())
-    Serial.println("BMP180 gestartet!");
-  else
-  {
-    Serial.println("BMP180 fehlt!");
-    while (1);
-  }
-```
-
-
-#### Druck messen
-Zum Messen des Drucks verwenden wir die Funktion `getPressure()`. Nach dem Deklarieren der Variablen muss dazu zuerst eine Temperatur-Messung durchgeführt werden. 
-
-Mit `pressure.startTemperature()` wird die Messung begonnen. Bei einem Fehler gibt die Funktion den Wert 0, sonst die Zeit, die für die Messung gebraucht wird in Millisekunden aus. Solange wird gewartet. `pressure.getTemperature(T)` verändert dann den Wert der Variable T, sodass er dem Temperaturwert entspricht. Ist das erfolgreich gibt die Funktion den Wert 1, sonst den Wert 0 aus.
-
-Jetzt kann der Druck gemessen werden: `pressure.startPressure` beginnt die Messung (in diesem Fall auf Genauigkeitsstufe 3 von 3) und gibt entweder 0 als Fehler oder die Wartezeit in Millisekunden aus. `pressure.getPressure` berechnet dann auf Basis von `T` den Druck `P` in Milibar. Die Temperatur muss eingerechnet werden, da sich nach dem allgemeinen Gasgesetz der Druck bei ändernder Temperatur und gleichbleibendem Volumen ebenfalls verändert.  Ist das erfolgreich gibt die Funktion den Wert 1, sonst den Wert 0 aus. Wird 0 ausgegeben, sendet die Funktion die entsprechende Fehlermeldung seriell an einen Angeschlossenen Computer.
+Jetzt kann der Druck gemessen werden: `pressure.startPressure` beginnt 
+die Messung (in diesem Fall auf Genauigkeitsstufe 3 von 3) und gibt 
+entweder 0 als Fehler oder die Wartezeit in Millisekunden aus. 
+`pressure.getPressure` berechnet dann auf Basis von `T` den Druck `P` in 
+Milibar. Die Temperatur muss eingerechnet werden, da sich nach dem 
+allgemeinen Gasgesetz der Druck bei ändernder Temperatur und 
+gleichbleibendem Volumen ebenfalls verändert.  Ist das erfolgreich gibt 
+die Funktion den Wert 1, sonst den Wert 0 aus. Wird 0 ausgegeben, sendet 
+die Funktion die entsprechende Fehlermeldung seriell an einen 
+angeschlossenen Computer.
 
 ```c++
 double getPressure()
-{
-  // Variablen
-  char status;
-  double T,P,p0,a;
-  
+{ 
   // Temperatur messen
   status = pressure.startTemperature();
   if (status != 0)
@@ -230,12 +207,250 @@ double getPressure()
   else Serial.println("Fehler beim Starten der Temperaturmessung");
 }
 ```
+##### Website senden
+`handleRoot` schickt den HTTP-Code 200 ("OK") und den Code für die
+ Homepage als String `s`. 
+```c++
+void handleRoot() {
+  String s = MAIN_page;
+  server.send(200, "text/html", s);
+}
+```
+Den String `s` könnte man auch als den Code der Homepage in einer Zeile 
+definieren. Das ist aber sehr unübersichtlich. 
+Eleganter ist der Weg aus dem Tutorial "ESP8266 data logging with real time 
+graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/). 
+Dabei enthält die Konstante `MAIN_page` den Code der Website. Diese Konstante ist 
+in der Datei `index.h` definiert, das wir zu Beginn des Programm hinzugefügt
+ haben. Solche Dateien nennt man "header".
+```c++
+#include "index.h"
+```
+Damit die Arduino IDE das header file einem Programm zuordnen kann, muss 
+die Datei im selben Ordner wie die .ino Datei, die den "Hauptcode" enthält
+ gespeichert werden.
+ 
+Den Code enthält das header file in Form einer Konstaten mit dem Namen `MAIN_page`. Da diese Datei zu groß für den Arbeitsspeicher des Boards ist (80 kb), muss diese Datei im Flash-Speicher (16 mb) gespeichert werden. Dafür gibt es den Variablenmodifikator [PROGMEN](https://www.arduino.cc/reference/de/language/variables/utilities/progmem/), der dafür sorgt, dass Daten im Flash gespeichert werden.
+Die Trennzeichen (delimiter) `R"=====()====="` sorgen dafür, dass Sonderzeichen, Absätze usw. keine Syntaxfehler verursachen.
+```c++
+const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
+```
+   
+##### Messwerte senden
+`handleData` sendet die Daten, die auf der Website graphisch dargestellt
+ werden in Form eines Strings. Dieser enthät die aktuelle Zeit 
+ (in Sekunden seit dem Booten) und den Höhenwert. Diese beiden Werte werden 
+ durch ein Semicolon getrennt.
+```c++
+void handleData(){
+  double d = *pointerzwei;
+  double t = millis() / 1000;
+  String teil = String(String(t) + ";");
+  String kombi = String(teil + String(d));
+  server.send(200, "text/plain", kombi);
+}
+```
+   
+##### Unbekannte URLs 
+Wird eine URL aufgerufen, die vorher nicht definiert wurde greift die 
+Funktion `handleWebRequests`. In diesem Fall gibt es zwei Möglichkeiten: 
+* die URL existiert wirklich nicht. In diesem Fall wird der HTTP-Code 404 und eine nachricht, dass nichts gefunden wurde versendet
+* es soll eine Datei aus dem Speicher abgerufen werden. Wenn die URL zu einer im Speicher vorhandenen Datei passt, wird 
+die Funktion `loadFromSpiffs` aufgerufen, die den [MIME-Typ](https://wiki.selfhtml.org/wiki/MIME-Type/%C3%9Cbersicht) der 
+Datei feststellt, sie öffnet, verschickt und dann wieder schließt.
+
+Diese Funktionen sind aus dem Tutorial [ESP8266 jQuery and AJAX Web Server](https://circuits4you.com/2018/03/10/esp8266-jquery-and-ajax-web-server/) übernommen.
+```c++
+void handleWebRequests(){
+  if(loadFromSpiffs(server.uri())) return;
+  String message = "File Not Detected\n\n";
+  message += "URI: ";
+  message += server.uri();
+  message += "\nMethod: ";
+  message += (server.method() == HTTP_GET)?"GET":"POST";
+  message += "\nArguments: ";
+  message += server.args();
+  message += "\n";
+  for (uint8_t i=0; i<server.args(); i++){
+    message += " NAME:"+server.argName(i) + "\n VALUE:" + server.arg(i) + "\n";
+  }
+  server.send(404, "text/plain", message);
+  Serial.println(message);
+}
+}
+```
+```c++
+bool loadFromSpiffs(String path){
+  String dataType = "text/plain";
+  if(path.endsWith("/")) path += "index.htm";
+ 
+  if(path.endsWith(".src")) path = path.substring(0, path.lastIndexOf("."));
+  else if(path.endsWith(".html")) dataType = "text/html";
+  else if(path.endsWith(".htm")) dataType = "text/html";
+  else if(path.endsWith(".css")) dataType = "text/css";
+  else if(path.endsWith(".js")) dataType = "application/javascript";
+  else if(path.endsWith(".png")) dataType = "image/png";
+  else if(path.endsWith(".gif")) dataType = "image/gif";
+  else if(path.endsWith(".jpg")) dataType = "image/jpeg";
+  else if(path.endsWith(".ico")) dataType = "image/x-icon";
+  else if(path.endsWith(".xml")) dataType = "text/xml";
+  else if(path.endsWith(".pdf")) dataType = "application/pdf";
+  else if(path.endsWith(".zip")) dataType = "application/zip";
+  File dataFile = SPIFFS.open(path.c_str(), "r");
+  if (server.hasArg("download")) dataType = "application/octet-stream";
+  if (server.streamFile(dataFile, dataType) != dataFile.size()) {
+  }
+ 
+  dataFile.close();
+  return true;
+}
+```
+
+#### Setup
+Im Setup werden alle Softwarekomponenten einmalig gestartet, sodass sie 
+später im Betrieb funktionieren.
+
+##### Serielle Schnittstelle
+Als erstes starten wir die Übertragung via serieller Schnittstelle, 
+die wir für die Übertragung von Daten an den PC nutzen. Diese Überträgt
+ per Micro-USB-Kabel Daten an den PC, die mit dem seriellen Monitor in 
+ der Arduino IDE ausgelesen werden können.
+
+`Serial.begin()` startet die Übertragung, in diesem Falle mit einer
+ Übertragungsgeschwindigkeit von 115200 Bits pro Sekunde.
+
+`Serial.println("")` schreibt Daten als ASCII-Text und beginnt danach 
+im Gegensatz zu `Serial.Print()` eine neue Zeile. Hier verhindert eine
+ leere Ausgabe Darstellungsfehler zu Beginn der Übertragung.
+
+```c++
+ Serial.begin(115200);
+ delay(100);
+ Serial.println("");
+ Serial.println("Datenübertragung gestartet!");
+```
+Die serielle Schnittstelle des Arduino benutzen wir hauptsächlich, um Fehlermeldungen und Zwischenwerte anzuzeigen. Alle anderen Daten werden entweder über das Display oder die Website angezeigt.
+
+Man kann Daten auch als Graph über den seriellen Plotter ausgeben lassen. Diese Funktion ist neu, vor vier Jahren brauchten wir für die graphische Darstellung noch ein extra [Processing](https://processing.org/)-Skript. Das ist jedoch unpraktisch, da man durchgehend eine USB-Verbindung benötigt.
+
+![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Serieller%20Plotter.png?raw=true)
+
+_Blau: Höhe in Meter_
+_Rot: Höhe in feet_
+
+##### I²C-Setup
+```c++
+Wire.begin();
+Serial.println("I2C gestartet!");
+```
+
+##### Display-Setup
+Zum Ansteuern des Displays muss noch vor dem Setup die I²C-Adresse definiert werden.
+ Beim Höhenmesser tut die Library das für uns, beim Display muss die 
+ Adresse manuell ermittelt werden. Dafür gibt es den 
+ [I²C-Scanner](https://playground.arduino.cc/Main/I2cScanner/), der nach 
+ I²C-Adressen der angeschlossenen Komponenten sucht. Dabei geholfen hat 
+ uns dieses [Tutorial](https://www.instructables.com/id/Monochrome-096-i2c-OLED-display-with-arduino-SSD13/). 
+ Im Falle des Display ist die Adresse 0x3C.
+
+```c++
+#define I2C_ADDRESS 0x3C 
+```
+Dann kann das Display mit `oled.begin()` initialisiert werden. 
+`&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und 
+`I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt 
+den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die 
+Größe der Schriftart. `oled.clear` leert den Bildschirm, um 
+Darstellungsfehler zu verhindern. Dann vergrößern wir die Schriftgröße 
+auf das doppelte und geben "Start" aus. Um den Setupprozess abzuschließen 
+setzten wir die Schriftgröße wieder auf den Standard zurück und leeren 
+nach einer Verzögerung das Display.
+```c++
+  oled.begin(&Adafruit128x64, I2C_ADDRESS);
+  oled.set400kHz();
+  oled.setFont(font5x7);
   
+  Serial.println("Display gestartet!"); 
+
+  oled.clear();
+  oled.set2X();
+  oled.println("START");
+  oled.set1X();
+  delay(500);
+  oled.clear();
+```
+
+##### Senor-Setup
+Der nächste Schritt ist es, den Sensor zu starten: Das tut die 
+Funktion `pressure.begin()` aus der Höhenmesser-Library. 
+Wenn dabei ein Fehler auftreten sollte wird immer wieder eine Schleife 
+wiederholt und das Programm damit gestoppt.
+
+```c++
+ if (pressure.begin())
+    Serial.println("BMP180 gestartet!");
+  else
+  {
+    Serial.println("BMP180 fehlt!");
+    while (1);
+  }
+```
+
+##### Access Point-Setup
+Bevor der Access Point des Höhenmessers gestartet werden kann, muss das Netzwerk konfiguriert werden.
+Wir tun dies, damit die Seite, auf der der Graph der Höhe angezeigt wird eine statische 
+IP-Adresse hat. Dafür muss man ebenfalls man ebenfalls die IP-Adresse des
+Gateways und die Adresse der Subnetzmaske manuell definieren.
+```c++
+  IPAddress ip(192,168,4,22);
+  IPAddress gateway(192,168,4,9);
+  IPAddress subnet(255,255,255,0);
+
+  WiFi.softAPConfig(local_IP, gateway, subnet);
+  WiFi.softAP(ssid, password);
+
+  Serial.println("Access Point getstartet!");
+```
+
+##### Dateisystem-Setup
+Als nächstes wird das Dateisystem SPIFFS gestartet. SPIFFS ist ein einfaches Dateisystem
+, dass speziell für kleine Microcontrollerboards mit wenig Arbeitsspeicher 
+(RAM) entwickelt wurde. Um etwas im über SPIFFS speichern zu können, muss man das
+[ESP8266 filesystem uploader](https://github.com/esp8266/arduino-esp8266fs-plugin)-Plugin installieren. Diese fügt ind der Arduino IDE unter Werkzeuge das
+Tool "ESP8266 Sketch Data Upload" hinzu, dass Datei aus dem im Arduino_Projektordner zu erstellenden Ordner "data" in den SPIFFS-Speicher lädt.
+Tritt dabei ein Fehler auf wird wie beim Sensor-Setup verfahren.
+```c++
+ if(SPIFFS.begin())
+   {
+     Serial.println("SPIFFS gestartet!");
+   }
+   else
+   {
+     Serial.println("SPIFFS nicht gestartet!");
+     while (1);
+    }
+```
+
+##### Webserver-Setup
+Zunächst wird definiert, bei welcher [URI](https://wiki.selfhtml.org/wiki/URI), welche Funktion abgerufen werden
+ soll. Wird keine URI gefunden greift die Funktion `handleWebRequests`.
+ Dann kann der Server gestartet und seine IP-Adresse ausgegeben werden. 
+ ```c++
+  server.on("/", handleRoot);
+  server.on("/readData", handleData);
+  server.onNotFound(handleWebRequests);
+  server.begin();
+
+  Serial.println("HTTP-Server gestartet!"); 
+  Serial.print("IP: ");
+  Serial.println(WiFi.softAPIP()); 
+  ```
   
-  
-#### Ausgangsdruck berechnen 
-Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen  Ausgangsdruck deklarieren wir eine eigene Variable `ausgangsdruck`, das Array `Array` und die Konstante `messungen`.
-Ein Array ist.....KJHGKJHGKJ
+##### Basisdruck
+Der Höhenmesser berechnet seine Höhenangaben aus der Differenz des
+ aktuell gemessenen Drucks und dem Ausgangsdruck. Für diesen 
+ Ausgangsdruck deklarieren wir vor dem Setup eine eigene Variable `ausgangsdruck`, das
+ Array `Array` und die Konstante `messungen`.
 
 ```c++
 const int messungen = 100;
@@ -265,63 +480,75 @@ Wenn die Anzahl der Messungen erreicht ist, wird die Summe aller Messungen durch
 ausgangsdruck = ausgangsdruck / messungen;
 ```
 
-  
-#### Höhe berechnen
-Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen Höhenformel den zurückgelegten Höhenunterschied basierend auf dem aktuellen Druck und dem Ausgangsdruck. Dieses Ergebnis setzten wir dann der Höhenvariable `a` gleich
-
-![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
-
+##### statische Teile der Höhenanzeigen
+Die Teile der Höhenanzeigen, die sich nicht verändern lassen wir schon 
+während des Setups anzeigen. Das bedeutet, dass sie im laufenden Betrieb nicht andauernd neu
+geladen werden müssen, was Übertragungskapazitäten einspart.
 ```c++
-a = pressure.altitude(P, ausgangsdruck);
+  oled.setCursor(0, 3);
+  oled.print("Hoehe:");
+  oled.setCursor(0,5);
+  oled.print("Max:");
+```
+Mit `oled.SetCursor` bestimmt man den Ort auf dem Display, auf dem der Text angezeigt 
+werden soll.
+
+#### Hauptcode
+
+##### Webserver
+Die funktion `server.handleClient` wartet auf HTTP-Anfragen und ruft dann je nach URI eine
+vorher definierte Funktion auf.
+
+##### Höhenberechnung
+Die Methode `pressure.altitude()` berechnet mit Hilfe der Barometrischen 
+Höhenformel den zurückgelegten Höhenunterschied basierend auf dem 
+aktuellen Druck, der durch die Funktion `getPressure()` ausgegeben wird,
+und dem Ausgangsdruck. Dieses Ergebnis setzten wir dann der Höhenvariable
+ `a` gleich. Beide Variablen wurden vor dem Setup deklariert.
+```c++
+double P;
+double a;
 ```
 
-In der Theorie sollte der BMP180 mit dieser Methode eine Genauigkeit von 25 cm erreichen. In der Praxis liegt die Ungenauigkeit bei eitwas über 1 Meter. Die Genauigkeit verschlechtert sich mit der Zeit unter anderem auf grund von Wetterveränderungen, die eine Veränderung des Luftdrucks mit sich bringen. So kann die Ungenauigkeit nach einem Tag 30 Meter betragen. Der Höhenmesser sollte also vor dem Benutzen neugestartet werden, damit ein aktueller Ausgangsdruck gemessen werden kann.[[³]][Höhenformel]
+```c++
+P = getPressure();
 
-#### Maximalwerte berechnen
-Wenn die Höhe `a` größer als die Variable `highest` bzw. kleiner als `lowest` ist, wird dieser Höhenwert übernommen und damit zum neuen Maximum oder Minimum. Das Minimum benötigen wir nicht wirklich, berechnen es aber trotzdem für den Fall, dass es doch gebraucht wird.
+a = pressure.altitude(P, ausgangsdruck);
+```
+Wie gesagt liegt der Berechnung die internationale barometrische Höhenformel zu Grunde:
+![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
+_P_  ist hierbei der aktuelle Druck in hPa und P0 der Basisdruck hPa. 
+Die Konstante 44330 kommt durch die Annahme zu Stande, dass die Temperatur um 6,5°C pro Höhenkilometer sinkt und eine Druckänderung von 1 hPa 
+einen Höhenunterschied von etwa 8 Metern ausmacht.
+In der Theorie sollte der BMP180 mit dieser Methode eine Genauigkeit
+ von 25 cm erreichen. In der Praxis liegt die Ungenauigkeit bei eitwas 
+ über 1 Meter. Die Genauigkeit verschlechtert sich mit der Zeit unter 
+ anderem auf grund von Wetterveränderungen, die eine Veränderung des 
+ Luftdrucks mit sich bringen. So kann die Ungenauigkeit nach einem Tag 
+ 30 Meter betragen. Der Höhenmesser sollte also vor dem Benutzen 
+ neugestartet werden, damit ein aktueller Ausgangsdruck gemessen werden 
+ kann.
 
+##### Maximalwerte berechnen
+Wenn die Höhe `a` größer als die Variable `highest` bzw. kleiner als `lowest`
+ ist, wird dieser Höhenwert übernommen und damit zum neuen Maximum 
+ oder Minimum. Das Minimum benötigen wir nicht wirklich, berechnen es 
+ aber trotzdem für den Fall, dass es doch gebraucht wird.
 ```c++
 if (a < lowest) lowest = a;
 
 if (a > highest) highest = a;
 ```
 
-***
-
-### Anzeige auf Display <a name="10"></a>
-Für das Betreiben des OLED-Displays werden neben der Wire-Library noch zwei weitere Libraries benötigt:
-* **SSD1306Ascii** ermöglicht die einfache Darstellung von Buchstaben und Zahlen auf dem Display
-* **SSD1306AsciiWire** ermöglicht die Kommuniktion mit dem Dispay via I²C.
-
-Wie beim Höhenmesser muss wieder ein Objekt erstellt werden, damit die Funktionen der Library verwendet werden können. In diesem Fall haben wir es `oled` genannt.
-
-```c++
-SSD1306AsciiWire oled;
-```
-
-Zum Ansteuern des Displays muss nun die I²C-Adresse definiert werden. Beim Höhenmesser tut die Library das für uns, beim Display muss die Adresse manuell ermittelt werden. Dafür gibt es den [I²C-Scanner](https://playground.arduino.cc/Main/I2cScanner/), der nach I²C-Adressen der angeschlossenen Komponenten sucht. Dabei geholfen hat uns dieses [Tutorial](https://www.instructables.com/id/Monochrome-096-i2c-OLED-display-with-arduino-SSD13/). Im Falle des Display ist die Adresse 0x3C.
-
-```c++
-#define I2C_ADDRESS 0x3C 
-```
-
-Nun kann das Display-Setup beginnen: Zunächst wird mit `Wire.begin()` die Datenübertragung gestartet, dann kann das Display mit `oled.begin()` initialisiert werden. `&Adafruit128x64` ist der DevType also der allgemeine Typ des Geräts und `I2C_ADDRESS` übergibt die Adresse des Displays. `oled.set400kHZ()` legt den Takt der I²C-Übertragung fest und `oled.setFont(font5x8)` wählt die Größe der Schriftart. `oled.clear` leert den Bildschirm, um Darstellungsfehler zu verhindern. Dann vergrößern wir die Schriftgröße auf das doppelte und geben "Start" aus. Um den Setupprozess abzuschließen setzten wir die Schriftgröße wieder auf den Standard zurück und leeren nach einer Verzögerung das Display.
-
-```c++
-Wire.begin();
-oled.begin(&Adafruit128x64, I2C_ADDRESS);
-oled.set400kHz();
-oled.setFont(font5x7);
-oled.clear();
-oled.set2X();
-oled.println("START");
-oled.set1X();
-delay(500);
-oled.clear();
-```
-
-Die Anzeigen der einzelnen Informationen sind dann alle ähnlich aufgebaut: Erst wird die Fontgröße und dann der Ort, an dem der Text dargestellt werden festgelegt. Die Parameter sind dabei die Spalten und Zeilen.
-Dabei gilt es zu beachten, dass die angegebenen Zahlen negativ sein könnten. Das sieht dann in der Darstellung sehr komisch aus, wenn die Zahlen hin und her springen. Deshalb fügen wir ein Leerzeichen hinzu, wenn die zahl positiv ist.
+##### Anzeige auf Display
+Die Anzeigen der einzelnen Informationen sind dann alle ähnlich 
+aufgebaut: Erst wird die Fontgröße und dann der Ort, an dem der 
+Text dargestellt werden festgelegt. Die Parameter sind dabei die 
+Spalten und Zeilen.
+Dabei gilt es zu beachten, dass die angegebenen Zahlen negativ 
+sein könnten. Das sieht dann in der Darstellung sehr komisch aus, 
+wenn die Zahlen hin und her springen. Deshalb fügen wir ein Leerzeichen
+ hinzu, wenn die zahl positiv ist.
 
 ```c++
 oled.set2X();
@@ -330,129 +557,27 @@ if (a >= 0.0) oled.print(" ");
 oled.print(a);
 oled.print("m");
 ```
-***
 
-### WLAN-Verbindung oder Access Point <a name="11"></a>
-Für das Erstellen eines eigenen WLAN-Access-Points oder das Verbinden mit bestehennden Netzwerken benötigt man die Library **ESP8266WiFi**.
+## Website <a name="9"></a>
+Basis für den Website-Code ist Tutorial "ESP8266 data logging with real
+ time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/)
+Bei der Anpassung an unsere Daten hat uns Nick Lamprecht mit seinen 
+Java Skript-Kenntnissen geholfen. Alle Beiträge sind 
+[hier](https://github.com/JantonDeluxe/luft-waffle/pulls?q=is%3Apr+is%3Aclosed) zu finden.*
 
-Die Zugangsdaten zum jeweiligen Netzwerk definiert man als Konstanten:
-```c++
-const char *ssid = "xyz";  
-const char *password = "xyz";
-```
-Im Setup können dann die benötigten IP-Adressen definiert werden. Das ist von Vorteil, damit das Gerät immer unter der gleichen IP-Adresse erreichbar ist.
-```c++
-IPAddress ip(192, 168, 178, 220);
-IPAddress dns(192, 168, 178, 1);
-IPAddress gateway(192, 168, 178, 1);
-IPAddress subnet(255, 255, 255, 0);
-WiFi.config(ip, dns, gateway, subnet);
-```
-Nach der Konfiguration kann die WLAN-Verbindung bzw. der Access-Point gestartet werden.
-
-Verbindung zu bestehendem Netzwerk:
-```c++
-WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Verbunden mit:");
-  Serial.println(ssid);
-```
-
-Starten eines eigenen Netzwerks:
-```c++
- WiFi.softAP(ssid, password);         
-  Serial.println("AccessPoint gestartet!");   
-```
-Quelle: https://www.xgadget.de/anleitung/esp8266-feste-ip-adresse-vergeben/
-
-### Webserver <a name="12"></a>
-Für ESP8266-Webserver gibt es die Library **ESP8266WebServer**.
-
-#### Port setzen
-Zuerst muss der HTTP-Port gesetzt werden unter dem der Webserver erreichbar ist. Der Standard ist 80.
-
-```c++
-ESP8266WebServer server(80);
-```
-#### Konfiguration
-Wie beim WLAN konfiuriert man zunächst bei welcher URI, welche Funktion abgerufen werden soll. Dann kann der Server gestartet werden.
-```c++
-server.on("/", handleRoot);
-server.on("/readData", handleData);
-server.onNotFound(handleNotFound);
-server.begin();
-```
-
-#### handleData
-`handleData` sendet die Daten, die über chart.js graphisch dargestellt werden in Form eines Strings. Dieser enthät im die aktuelle Zeit (Sekunden seit dem booten) und den Höhenwert. Diese beiden Werte werden durch ein Semicolon getrennt.
-```c++
-void handleData(){
-  double d = *pointerzwei;
-  double t = millis() / 1000;
-  String teil = String(String(t) + ";");
-  String kombi = String(teil + String(d));
-  server.send(200, "text/plain", kombi);
-}
-```
-#### handleNotFound
-Wird eine unbekannte URI aufgerufen greift die Funktion `handleNotFound` und sendet den HTTP-Fehlercode 404.
-```c++
-void handleNotFound(){              
-  server.send(404, "text/plain", "404: Not found"); 
-}
-```
-
-#### handleRoot
-`handleRoot` schickt den HTTP-Code 200 ("OK") und den Code für die Homepage als String `s`. 
-```c++
-void handleRoot() {
-  String s = MAIN_page;
-  server.send(200, "text/html", s);
-}
-```
-
-***
-*Für diesen Teil haben wir uns am Tutorial "ESP8266 data logging with real time graphs" auf [circuits4you.com](https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/) orientiert. Bei der Anpassung an unsere Daten hat uns Nick Lamprecht mit seinen Java Skript-Kenntnissen geholfen. Alle Beiträge sind [hier](https://github.com/JantonDeluxe/luft-waffle/pulls?q=is%3Apr+is%3Aclosed) zu finden.*
-
-***
-
-#### Header
-Den Code für diese Homepage könnte man auch in einer Zeile als String schicken, das ist aber sehr unübersichtlich. Deshalb haverwenden wir das header file `index`, dass den Code der Website enthält. Header sind ..... Damit die Arduino IDE das header file einem Programm zuordnen kann, muss die Datei im selben Ordner wie die .ino Datei, die den "Hauptcode" enthält gespeichert werden.
-```c++
-#include "index.h"
-```
-Den Code enthält das header file in Form einer Konstaten mit dem Namen `MAIN_page`. Da diese Datei zu groß für den Arbeitsspeicher des Boards ist (80 kb), muss diese Datei im Flash-Speicher (16 mb) gespeichert werden. Dafür gibt es den Variablenmodifikator [PROGMEN](https://www.arduino.cc/reference/de/language/variables/utilities/progmem/), der dafür sorgt, dass Daten im Flash gespeichert werden.
-Die Trennzeichen (delimiter) `R"=====()====="` sorgen dafür, dass Sonderzeichen, Absätze usw. keine Syntaxfehler verursachen.
-```c++
-const char MAIN_page[] PROGMEM = R"=====(xyz)=====";
-```
-#### HTML/ JavaScript
-
-Der Grundaufbau der Website ist wie folgt. Zur besseren Verständlichkeit gehen wir Schritt für Schritt vor.
+Der Seitentitel, der z.B. in der Titelleiste eines Browser-Tabs angezeigt wird lautet "Höhenmesser".
 ```html
 <!doctype html>
 <html>
-   
-<head>  
-</head>
-   
-<body>
-</body>
-   
-</html>
-```
-##### Head
-Der Seitentitel, der z.B. in der Titelleiste eines Browser-Tabs angezeigt wird lautet "Höhenmesser".
-```html
+<head>
 <title>H&ouml;henmesser</title>
 ```
-Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine "Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler". Das Skript befindet sich auf einem CDN-Server (CDN = *Content Delivery Network*) von dem aus es abgerufen wird.
+Danach wird das JavaSkript abgerufen, dass für die graphische Darstellung der Messwerte verantwortlich ist. 
+Dafür verwenden wir [chart.js](https://www.chartjs.org/) eine 
+"Open Source-JavaScript-Diagrammbibliothek für Designer und Entwickler". 
+Die Datei hat den Namen "Chart.min.js" und befindet sich im Flash-Speicher des D1 mini Pro.
 ```html
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src = "Chart.min.js"></script>
 ```
 
 Die `user-select`-Eigenschaft von CSS verhindert hier, dass innerhalb der Grafik Text ausgewählt werden kann.
@@ -489,7 +614,10 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
     color: white;
   }
   </style>
+  </head>
 ```
+Dann wird die Überschrift "Höhenmesser" definiert. Der div "chart-container" definiert die Größe und den Canvas des Diagramms, sodass der Ort an dem 
+Chart.js das Diagramm erstellen soll definiert ist. Unter dem Diagramm wird dann die Tabelle eingefügt.
 ```html
 <body>
     <div style="text-align:center;">
@@ -503,25 +631,33 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
     <tr><th>Zeit</th><th>H&ouml;he</th></tr>
   </table>
 </div>
+```
 
+Für die Folgenden JavaScript-Funktionen benötigen wir folgende Variablen. Bei `data` handelt es sich hierbei um ein Array.
+```html
 <script>
   var data = [];
   var time = "";
-
+  
   let graph;
-
-  function addGraph()
+  ```
+  
+### Funktion addGraph()
+Die Funktion `addGraph` erstellt einen neuen Chart.js-Linien-Graphen mit der Höhe auf der x- und der Zeit auf der y-Achse.
+Größe, Farben, Beschriftungen usw. werden hier ebenfalls definiert. Die Variablen hierfür sind vom Chart.js-Skript vorgegeben.
+```js
+function addGraph()
   {
     var ctx = document.getElementById("Chart").getContext('2d');
     graph = new Chart(ctx, {
       type: 'line',
         data: {
-        labels: [time],  //Bottom Labeling
+        labels: [time],  //x-Achse
         datasets: [{
           label: "H\u00f6he",
-          fill: false,  //Try with true
-          backgroundColor: 'rgba( 243, 156, 18 , 1)', //Dot marker color
-          borderColor: 'rgba( 243, 156, 18 , 1)', //Graph Line Color
+          fill: false, 
+          backgroundColor: 'rgba( 243, 156, 18 , 1)', // Punkt-farbe
+          borderColor: 'rgba( 243, 156, 18 , 1)', // Graphlinien-Farbe
           data: null, // Wenn es noch keine Daten gibt wird 'null' angezeigt
         }],
         },
@@ -546,38 +682,43 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
       }
     })
   }
-
-  // Graphen nach erhalt neuer Daten aktualisieren
-  function updateGraph() {
+  ```
+  ### Funktion updateGraph
+  Die Funktion `updateGraph` aktualisiert den Graphen.
+  `push(time)` fügt dabei den neuen Zeitstempel und `push(data)` den neuen Höhenwert hinzu.
+ 
+  ```js
+   function updateGraph() {
     graph.data.labels.push(time);
     graph.data.datasets.forEach((dataset) => {
         dataset.data.push(data);
     });
     graph.update();
   }
-
-  //Beim Starten der Seite Graphen anzeigen
-  window.onload = function() {
+  ```
+  
+  Beim Starten der Website wird nun der Graph unter `addGraph()` definierte Graph angezeigt.
+  ```js
+   window.onload = function() {
     addGraph();
   };
-
-  // Update-Geschwindigkeit (500 ms)
-  setInterval(function() {
+  ```
+  
+  ### Update-Intervall
+  Die Update-Geschwindigkeit für das abrufen neuer Daten haben wir auf 333 Millisekunden gesetzt, um auch bei schnellen 
+  Bewegungen noch eine relativ genaue Darstellung zu haben.
+   ```js
+   setInterval(function() {
     getData();
   }, 333); 
-
-
-  // Graph mit Daten anzeigen
-  function showGraph(data) {
-    graph.data.labels.push(timeStamp);
-    graph.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
-    graph.update();
-  }
-
-  // Daten unter /readData abrufen
-  function getData() {
+    ```
+	
+### Funktion getData
+Die Funktion `getData` sendet einen HTTP-GET-Request an die URI "readData" des Webservers, der dann einen kombinierten String
+zurück schickt. Dieser kann nun dank des ";" als Trennzeichen geteilt werden. Die Variablen `data` und `time` werden dann
+aktualisiert und in die Tabelle geschrieben.
+```js
+function getData() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -596,13 +737,7 @@ Als nächstes wird das Aussehen der Datentabelle unter der Grafik definiert. Daf
     xhttp.open("GET", "readData", true);
     xhttp.send();
   }
-</script>
-</body>
-
-</html>
-
-
-
+```
 
 ## Quellen <a name="13"></a>
 [BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
