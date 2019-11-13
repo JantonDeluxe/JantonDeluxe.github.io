@@ -715,7 +715,7 @@ function addGraph()
    setInterval(function() {
     getData();
   }, 333); 
- ```
+  ```
 	
 ### Funktion getData
 Die Funktion `getData` sendet einen HTTP-GET-Request an die URI "readData" des Webservers, der dann einen kombinierten String
