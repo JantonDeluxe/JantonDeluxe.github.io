@@ -516,10 +516,14 @@ P = getPressure();
 a = pressure.altitude(P, ausgangsdruck);
 ```
 Wie gesagt liegt der Berechnung die internationale barometrische Höhenformel zu Grunde:
+
 ![Barometrische Höhenformel](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Druck.jpg?raw=true)
-_P_  ist hierbei der aktuelle Druck in hPa und P0 der Basisdruck hPa. 
+
+_P_  ist hierbei der aktuelle Druck in hPa und _P0_ der Basisdruck hPa.
+
 Die Konstante 44330 kommt durch die Annahme zu Stande, dass die Temperatur um 6,5°C pro Höhenkilometer sinkt und eine Druckänderung von 1 hPa 
 einen Höhenunterschied von etwa 8 Metern ausmacht.
+
 In der Theorie sollte der BMP180 mit dieser Methode eine Genauigkeit
  von 25 cm erreichen. In der Praxis liegt die Ungenauigkeit bei eitwas 
  über 1 Meter. Die Genauigkeit verschlechtert sich mit der Zeit unter 
@@ -707,11 +711,11 @@ function addGraph()
   ### Update-Intervall
   Die Update-Geschwindigkeit für das abrufen neuer Daten haben wir auf 333 Millisekunden gesetzt, um auch bei schnellen 
   Bewegungen noch eine relativ genaue Darstellung zu haben.
-   ```js
+```js
    setInterval(function() {
     getData();
   }, 333); 
-    ```
+ ```
 	
 ### Funktion getData
 Die Funktion `getData` sendet einen HTTP-GET-Request an die URI "readData" des Webservers, der dann einen kombinierten String
