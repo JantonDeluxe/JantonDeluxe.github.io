@@ -279,6 +279,8 @@ void handleWebRequests(){
 }
 }
 ```
+
+
 ```c++
 bool loadFromSpiffs(String path){
   String dataType = "text/plain";
