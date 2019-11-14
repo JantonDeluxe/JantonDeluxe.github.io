@@ -170,3 +170,10 @@ Heute haben wir eine Übersicht zu den Komponenten und Anschlüssen des D1 mini 
 
 ## 6.11.2019
 Heute haben wir mit [Fritzing](https://fritzing.org/home/) ein Diagramm der Verkabelungen erstellt und an der Projektbeschreibung weitergeschrieben.
+
+## 7.11.2019
+Heute haben wir die Projektbeschreibung weitergeschreieben.
+
+## 12.11.2019
+Heute haben wir die Projektbeschreibung weitergeschreieben.
+
