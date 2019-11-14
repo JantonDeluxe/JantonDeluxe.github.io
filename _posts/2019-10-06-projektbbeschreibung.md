@@ -118,7 +118,7 @@ Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb ha
 Anstelle des D1 mini Pro haben wir hier einen D1 mini genommen, der die gleichen Anschlüsse hat.
 
    
-## Softwarea <name="7"></a>
+## Software <a name="7"></a>
 Die Software besteht aus zwei Teilen. Dem [Arduino-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/WebserverTest3/WebserverTest3.ino) und der [Website](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/WebserverTest3/index.h).
 
 ### Arduino-Sketch <a name="8"></a>
@@ -157,7 +157,7 @@ Der Parameter 80 für die Instanz `server()` gibt in diesem Fall zusätzlich den
 #### Funktionen
 ##### Druckmessung
 Für die Druckmessung haben wir die Funktion `getPressure()` aus dem 
-Höhenmesser Example-Sketch übernommen. Die Variablen verwenden wir jedoch 
+Höhenmesser [Example-Sketch](https://github.com/JantonDeluxe/luft-waffle/blob/master/Code/BMP180_altitude_example/BMP180_altitude_example.ino) übernommen. Die Variablen verwenden wir jedoch 
 auch an anderen Stellen des Codes, weshalb wir sie als globale statt 
 lokale Variablen deklarieren.
 
