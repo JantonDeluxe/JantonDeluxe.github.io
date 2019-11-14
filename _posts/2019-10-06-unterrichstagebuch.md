@@ -166,14 +166,16 @@ Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData
 Heute haben wir das SPIFFS-Dateisystem auf dem Arduino eingerichtet und das Java Script eingebaut, so dass es jetzt auch offline abgerufen werden kann. Dazu haben wir an der Projektbeschreibung und dem Projekttagebuch weitergeschrieben.
 
 ## 5.11.2019
-Heute haben wir eine Übersicht zu den Komponenten und Anschlüssen des D1 mini Pro erstellt und an der Projektbeschreibung weitergeschrieben.
+Heute haben wir die Ladegeschwindigkeit des Java Scripts erhöht, indem wir eine andere Speicher- und Abrufmethode verwendet haben.
 
 ## 6.11.2019
-Heute haben wir mit [Fritzing](https://fritzing.org/home/) ein Diagramm der Verkabelungen erstellt und an der Projektbeschreibung weitergeschrieben.
+Heute haben wir eine Übersicht zu den Komponenten und Anschlüssen des D1 mini Pro erstellt und an der Projektbeschreibung weitergeschrieben.
 
 ## 7.11.2019
-Heute haben wir die Projektbeschreibung weitergeschreieben.
+Heute haben wir mit [Fritzing](https://fritzing.org/home/) ein Diagramm der Verkabelungen erstellt und an der Projektbeschreibung weitergeschrieben.
 
 ## 12.11.2019
 Heute haben wir die Projektbeschreibung weitergeschreieben.
 
+## 14.11.2019
+Heute haben wir die Projektbeschreibung weitergeschreieben.
