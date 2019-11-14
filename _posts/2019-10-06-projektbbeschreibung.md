@@ -42,8 +42,19 @@ Der neue Höhenmesser behebt die alten Probleme und kann noch mehr:
 4. Daten drahtlos auf Webserver anzeigen
 5. Flugverlauf grafisch darstellen
 
+Anzeige:
+
+![Anzeige](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/neues%20layout2.jpg?raw=true)
+
+Screenshot der Website:
+
+![Screenshot Website](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/ScreenshotWebsite.png?raw=true)
+
 ## Hardware <a name="3"></a>
 Viele der Probleme mit dem alten Höhenmesser lassen sich auf die unzureichende Hardware zurück führen. Deshalb haben wir einige Änderungen vorgenommen.
+
+![Höhenmesser auf Breadboard](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/Zusammengesteckt%20auf%20Breadboard1.jpeg?raw=true)
+
 ### Mikrocontroller <a name="4"></a>
 Als Mikrocontroller-Board benutzen wir einen [Wemos D1 mini Pro V1.0.0](https://wiki.wemos.cc/products:retired:d1_mini_pro_v1.0.0) von Aliexpress.
 
@@ -82,16 +93,14 @@ I²C steht für "Inter-Integrated Circuit bus" und ist, wie der Name schon sagt,
 ### OLED-Display <a name="6"></a>
 Unser Display ist ein monochromes GM009605 OLED-Display:
 
-*0,96′ Bildschirmdiagonale
-*Auflösung von 128×64 Pixel
-*Monochrom
-*SSD1306-Controller
-*3-5V Gleichstrom
-*Modulgröße: 27 mm x 27 mm x 4,5 mm
-*Anschlüsse: GND, VDD, SCK, SDA
-*Gemacht für Arduino—Mikrocontroller
-
-Das Display verfügt über einen SSD1306—Controller und muss an eine 3—5V Gleichstromquelle angeschlossen werden (in diesem Fall 3,3Volt).  Daten und Strom werden mithilfe von 4 Anschlüssen vermittelt. 
+* 0,96′ Bildschirmdiagonale
+* Auflösung von 128×64 Pixel
+* Monochrom
+* SSD1306-Controller
+* 3-5V Gleichstrom
+* Modulgröße: 27 mm x 27 mm x 4,5 mm
+* Anschlüsse: GND, VDD, SCK, SDA
+* Gemacht für Arduino—Mikrocontroller
 
 #### Verkabelung
 Das Display benötigt die gleichen Verbindungen wie der Höhenmesser. Deshalb haben wir die beiden Schaltkreise in Reihe geschaltet. Das funktioniert, da das I²C-Protokoll mehrere Geräte über eine Doppelleitung ansteuern kann.
