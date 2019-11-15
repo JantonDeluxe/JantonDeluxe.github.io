@@ -755,8 +755,4 @@ function getData() {
   }
 ```
 
-## Quellen <a name="13"></a>
-[BMP180-Datenblatt]:https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMP180-DS000.pdf
-[I²C]:https://www.ipd.kit.edu/mitarbeiter/buchmann/microcontroller/i2c.htm
-[Sparkfun]:https://learn.sparkfun.com/tutorials/bmp180-barometric-pressure-sensor-hookup-/all
 
