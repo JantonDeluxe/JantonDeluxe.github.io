@@ -1,5 +1,6 @@
----
+﻿---
 layout: page
-title: Projektbeschreibung
+title: Projektbeschreibung 2. Halbjahr
 subtitle: Höhenmesser Teil 2: Die zwei Programmierer
 ---
+
