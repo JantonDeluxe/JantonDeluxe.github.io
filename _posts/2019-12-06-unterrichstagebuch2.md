@@ -12,15 +12,15 @@ subtitle: Was wir an welchem Tag gemacht haben
 >* [18. Dezember](#5)
 >* [19. Dezember](#6)
 >* [Ferien](#7)
->* [28. August](#8)
->* [29. August](#9)
->* [11. September](#10)
->* [12. September](#11)
->* [24. September](#12)
->* [25. September](#13)
->* [26. September](#14)
->* [1. Oktober](#15)
->* [2. Oktober](#16)
+>* [15. Januar](#8)
+>* [16. Januar](#9)
+>* [Daten anpassen bis 31.1](#10)
+>* [22. Januar](#11)
+>* [23. Januar](#12)
+>* [28. Januar](#13)
+>* [4. Februar](#14)
+>* [5. Februar](#15)
+>* [6. Februar](#16)
 >* [Ferien](#17)
 >* [22. Oktober](#18)
 >* [23. Oktober](#19)
@@ -62,25 +62,25 @@ Heute haben wir Stoppmechanismen getestet. Ergebnis: die Kopplung des Stoppmecha
 Des weiteren haben wir versucht die SD-Karte zum Laufen zu bringen, was jedoch nicht funktioniert hat. Wir vermuten, dass für den Betrieb des ganzen Shields die Batterie benötigt wird.
 
 ## Daten anpassen bis 31.1. <a name="10"></a>
-Das Abrufen des headers funktioniert wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
 Website überarbeitet: Navbar, Start-/Stopp-Knopf, About-Page, Start-Page, manuelle Kalibrierung, Übertragung von maximaler Höhe, Temperatur und Timer (Anzeige außerhalb des Graphen), Geschwindigkeit und Beschleunigung im Diagramm standardmäßig ausgeblentet (Übersicht)
 Timer eingebaut, der nach Aktivierung runterzählt und die Messung stoppt.
 
 ## 22. Januar <a name="11"></a>
-
+Heute haben wir unseren Webserver repariert. Das Abrufen des headers funktioniert wieder. Die Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet. Da der D1 mini Pro über vergleichsweise viel Arbeitsspeicher verfügt, funktioniert es auch ohne das Speichern im Flashspeicher.
 
 ## 23. Januar <a name="12"></a>
 
 ## 28. Januar <a name="13"></a>
-Heute war Anton krank, weshalb ich mir möglichenkeiten angeguckt habe ein Gif für das Display beim Starten des Arduinos 
-## 26. September <a name="14"></a>
+Heute war Anton krank, weshalb ich mir Möglichkeiten angeguckt habe, eine animierte Bitmap für das Display beim Starten des Arduinos zu erstellen, allerdings würden vielen der Möglichkeiten den 16Mb Arbeitsspeicher des Arduinos überlasten.
+
+## 4. Februar <a name="14"></a>
 Heute haben wir das neue Layout gebaut. Der baseline-Druck steht weiterhin oben rechts, jetzt aber in einer Reihe und mit der Einheit mbar statt mb. Darunter kommen, immernoch im setup, die Teile der Anzeige, die sich nicht verändern - also "Hoehe:", "Max:" und Platz für sonstigen Text. Die veränderlichen Teile der Anzeige stehen im Hauptteil des Codes.
 
 Die Anzeige sieht jetzt so aus:
 
 ![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/neues%20layout2.jpg?raw=true)
 
-## 1. Oktober <a name="15"></a>
+## 5. Februar <a name="15"></a>
 Heute haben wir mit der Erstellung des Webservers angefangen.
 Zuerst mussten wir die Macadresse des Boards im seriellen Monitor anzeigen lassen, um es dann in iSurf freizuschalten ([Quelle](https://techtutorialsx.com/2017/04/09/esp8266-get-mac-address/)):
 
@@ -94,8 +94,8 @@ Das Ergebnis sieht dann so aus:
 
 Diesen einfachen Webserver haben wir dann in den Code integriert und getestet, ob Kompatibilitätsprobleme auftreten. Das war nicht der Fall. 
 
-## 2. Oktober <a name="16"></a>
-Heute haben wir den Code aus dem Webserver-Beispiel auf das nötigste reduziert. Das Board kann jetzt ebenfals sein eigenes Netzwerk erstellen und ist nicht mehr auf ein bestehendes Netzwerk angewiesen. Außerdem haben wir ein Darstellungsproblem der IP-Adresse auf dem OLED-Display behoben.
+## 6. Februar <a name="16"></a>
+
 
 ## Ferien <a name="17"></a>
 In den Herbstferien haben wir eine Webseite für das Projekt erstellt. Wir verwenden jetzt das GitHub-Template [beautiful jekyll](https://deanattali.com/beautiful-jekyll/) von Dean Attali. Die "Installation" wird in der [Read-Me-Datei](https://github.com/daattali/beautiful-jekyll/blob/master/README.md) des dazugehörigen GitHub-Repositorys beschrieben.
