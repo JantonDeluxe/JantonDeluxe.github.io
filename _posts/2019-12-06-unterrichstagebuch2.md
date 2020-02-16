@@ -1,6 +1,6 @@
 ﻿---
 layout: page
-title: Unterrichtstagebuch 2. Halbjahr
+title: Unterrichtstagebuch 2
 subtitle: Unterrichtstagebuch 2: Angriff der Programmierer
 ---
 
