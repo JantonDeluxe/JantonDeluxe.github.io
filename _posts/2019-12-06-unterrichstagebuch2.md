@@ -73,47 +73,26 @@ Timer eingebaut, der nach Aktivierung runterzählt und die Messung stoppt.
 
 ## 28. Januar <a name="13"></a>
 Heute war Anton krank, weshalb ich mir möglichenkeiten angeguckt habe ein Gif für das Display beim Starten des Arduinos 
-## 26. September <a name="14"></a>
-Heute haben wir das neue Layout gebaut. Der baseline-Druck steht weiterhin oben rechts, jetzt aber in einer Reihe und mit der Einheit mbar statt mb. Darunter kommen, immernoch im setup, die Teile der Anzeige, die sich nicht verändern - also "Hoehe:", "Max:" und Platz für sonstigen Text. Die veränderlichen Teile der Anzeige stehen im Hauptteil des Codes.
 
-Die Anzeige sieht jetzt so aus:
+## 4.Februar <a name="14"></a>
 
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/neues%20layout2.jpg?raw=true)
+## 5.Februar  <a name="15"></a>
 
-## 1. Oktober <a name="15"></a>
-Heute haben wir mit der Erstellung des Webservers angefangen.
-Zuerst mussten wir die Macadresse des Boards im seriellen Monitor anzeigen lassen, um es dann in iSurf freizuschalten ([Quelle](https://techtutorialsx.com/2017/04/09/esp8266-get-mac-address/)):
 
-Dann haben wir eine erste Verbindung mit dem Sketch, der in der [Dokumentation der ESP8266WiFi-Library](https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/readme.html) vorgeschlagen wird hergestellt.
+## 6. Febraur <a name="16"></a>
 
-Das ist natürlich nur eine temporäre Lösung das Board in einem existierenden Netzwerk anzusteuern. Zum einen kann man den Höhenmesser dann nur an Orten mit funktionierender WLAN-Verbindung nutzen (also nicht draußen auf dem Feld!), zum anderen ist das ESP2866-Modul nicht sehr sicher, bietet also ein potentielles Einfallstor an der Firewall vorbei. Das Ziel ist also, dass der Höhenmesser sein eigenes Netzwerk erstellt, mit dem sich der Client dann verbinden kann. Erstmal haben wir dann aber einen Webserver mit Hilfe des Beispiels der Library aufgesetzt.
+## 12.Februar <a name="17"></a>
 
-Das Ergebnis sieht dann so aus:
+Wir haben heute den Loadingscreen an das Setup geknüpft, damit das Display beim Start eine Ladebalkenanimation abspielt. Dafür haben wir festgelegt, das jeder Abschnitt des Setups 
+an ein Ladebalkenbild geknüpft ist.
 
-![alt text](https://github.com/JantonDeluxe/luft-waffle/blob/master/Bilder/WebServer1.png?raw=true)
+## 13. Februar <a name="18"></a>
+Anton: Jugend debattiert
+Jan: zuhause: Erstellen der Loadingscreen-Bilder mit GIMP, Schule: zuschneiden der Loading-Screen-Bilder auf 128x64 Pixel
 
-Diesen einfachen Webserver haben wir dann in den Code integriert und getestet, ob Kompatibilitätsprobleme auftreten. Das war nicht der Fall. 
-
-## 2. Oktober <a name="16"></a>
-Heute haben wir den Code aus dem Webserver-Beispiel auf das nötigste reduziert. Das Board kann jetzt ebenfals sein eigenes Netzwerk erstellen und ist nicht mehr auf ein bestehendes Netzwerk angewiesen. Außerdem haben wir ein Darstellungsproblem der IP-Adresse auf dem OLED-Display behoben.
-
-## Ferien <a name="17"></a>
-In den Herbstferien haben wir eine Webseite für das Projekt erstellt. Wir verwenden jetzt das GitHub-Template [beautiful jekyll](https://deanattali.com/beautiful-jekyll/) von Dean Attali. Die "Installation" wird in der [Read-Me-Datei](https://github.com/daattali/beautiful-jekyll/blob/master/README.md) des dazugehörigen GitHub-Repositorys beschrieben.
-
-Ebenfalls haben wir weiter am Webserver herumgebastelt. So haben wir z.B. Variablen über Buttons auf einer Website geändert und Messwerte mit Hilfe von Poitern als Text ausgegeben.
-Webserver: 
-Variablen über knöpfe ändern
-Dateien speichern https://42project.net/esp8266-flash-dateisystem-spiffs-beispielhaft-benutzen/
-Realtime Graphics https://circuits4you.com/2019/01/11/esp8266-data-logging-with-real-time-graphs/
-Variablen übergeben mit Pointern: https://www.w3schools.com/cpp/cpp_pointers.asp
-
-## 22.10.2019 <a name="18"></a>
-Heute haben wir den Baseline-Wert als Durchschnitt von 100 Messungen definiert. Damit sollte sich die Genauigkeit der Messungen erhöhen. Quelle: https://www.arduinoforum.de/arduino-Thread-Gewichteten-Durchschnitt-berechnen-20-Werte-in-fortlaufender-Variable-speichern
-Zusammen mit Nick haben wir angefangen Probleme beim Anpassen des HTML-/Java Skript-Codes an unseren vorhandenen Code zu beheben.
-
-## 23.10.2019 <a name="19"></a>
-Heute sind wir mit der Anpassung fertig geworden und haben den Höhenmesser getestet. Dafür sind wir die Treppen hoch und runtergelaufen und haben die messwerte kontrolliert. 
-
+## 14. Februar <a name="19"></a>
+Anton: krank, zuhause: Fehlerbehebung beim Kalibriern über die Website und beim Upload auf das Board, 
+Jan: Umwandeln der Loading-Screen-Bilder in das korrekte Bitmap-Format (horizontale Lesrichtung, Farben umkehren), Integration dieser Bitmaps in den Code
 ## 24.10.2019 <a name="20"></a>
 Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData` haben wir z.B. von 8 auf 4 Zeilen vereinfacht und mehrfach vorkommende Variablen mit Hilfe von Pointern zu globalen Variablen zusammengefasst.
 
