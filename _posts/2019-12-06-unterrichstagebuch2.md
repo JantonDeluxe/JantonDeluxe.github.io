@@ -1,7 +1,7 @@
 ﻿---
 layout: page
-title: Unterrichtstagebuch
-subtitle: Was wir an welchem Tag gemacht haben
+title: Unterrichtstagebuch 2. Halbjahr
+subtitle: Unterrichtstagebuch 2: Angriff der Programmierer
 ---
 
 ### Inhaltsverzeichnis
