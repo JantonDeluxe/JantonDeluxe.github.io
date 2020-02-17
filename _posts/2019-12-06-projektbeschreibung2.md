@@ -1,6 +1,8 @@
 ---
 layout: page
-title: Projektbeschreibung 2
-subtitle: Höhenmesser Teil 2: Die zwei Programmierer
+title: Projektbeschreibung
+subtitle: Wie funktioniert der Höhenmesser?
 ---
+
+Test, Test, test
 
