@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Projektbeschreibung
+title: Projektbeschreibung 2
 subtitle: Wie funktioniert der Höhenmesser?
 ---
 
