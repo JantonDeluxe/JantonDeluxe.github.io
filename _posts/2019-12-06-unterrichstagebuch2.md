@@ -67,32 +67,46 @@ Website überarbeitet: Navbar, Start-/Stopp-Knopf, About-Page, Start-Page, manue
 Timer eingebaut, der nach Aktivierung runterzählt und die Messung stoppt.
 
 ## 22. Januar <a name="11"></a>
-
+Anton: krank, Anzeige der Temperatur im Graphen
+Jan: In das Erstellen von Bitmap-Animationen für das Display eingelesen
 
 ## 23. Januar <a name="12"></a>
+Anton: krank, Überarbeitung der Website: Hinzufügen der Start- und About-Seite, Navbar, neue Überschriften + Spacing
+Jan: Ladenbalkenbilder ausgewählt
 
 ## 28. Januar <a name="13"></a>
-Heute war Anton krank, weshalb ich mir möglichenkeiten angeguckt habe ein Gif für das Display beim Starten des Arduinos 
+Anton: krank, Kalibrierungsknopf, Start-/Stopp-Knopf
+Jan: Erstellen der Loadingscreen-Bilder mit GIMP
 
 ## 4.Februar <a name="14"></a>
+Zusammen: Fehler beim Reset des Timers behoben, Anzeige des Timers auf der Website
 
 ## 5.Februar  <a name="15"></a>
-
+Zusammen: Anzeige des Maximums und der jetzigen Temperatur auf der Website nebeneinander in eigenen Boxen
 
 ## 6. Febraur <a name="16"></a>
+Zusammen: Redirect nach stoppen der Messung/ Ablauf des Timers auf Startpage versucht, Schriftart für About-Page verändert
 
 ## 12.Februar <a name="17"></a>
-
-Wir haben heute den Loadingscreen an das Setup geknüpft, damit das Display beim Start eine Ladebalkenanimation abspielt. Dafür haben wir festgelegt, das jeder Abschnitt des Setups 
-an ein Ladebalkenbild geknüpft ist.
+Zusammen: Wir haben heute den Loadingscreen an das Setup geknüpft, damit das Display beim Start eine Ladebalkenanimation abspielt. Dafür haben wir festgelegt, das jeder Abschnitt des Setups 
+an ein (oder mehrere) Ladebalkenbild(er) geknüpft ist.
 
 ## 13. Februar <a name="18"></a>
-Anton: Jugend debattiert
-Jan: zuhause: Erstellen der Loadingscreen-Bilder mit GIMP, Schule: zuschneiden der Loading-Screen-Bilder auf 128x64 Pixel
+Anton: bei Jugend debattiert
+Jan: zuschneiden der einzelnen Loading-Screen-Bilder auf 128x64 Pixel
 
 ## 14. Februar <a name="19"></a>
-Anton: krank, zuhause: Fehlerbehebung beim Kalibriern über die Website und beim Upload auf das Board, 
-Jan: Umwandeln der Loading-Screen-Bilder in das korrekte Bitmap-Format (horizontale Lesrichtung, Farben umkehren), Integration dieser Bitmaps in den Code
+Anton: krank, Fehlerbehebung beim Kalibriern über die Website und beim Upload auf das Board, Löschen der Passwörter aus den Dateien auf GitHub (Danke an Nick für die Hilfe!)
+Jan: Umwandeln der Loading-Screen-Bilder in das korrekte Bitmap-Format (horizontale Lesrichtung, Farben umkehren), Integration dieser Bitmaps in den Code, testen, ob richtig angezeigt wird
+
+Was wir noch machen können:
+- Wechselnder Start/Stopp-Button
+- Speichern der CSV-Datei in SPIFFS
+- Chart.js taucht erst auf, wenn Start gedrückt
+- Schickeres Desgin (Navbar mit neuen Farben, runder (mit Logo), Anzeige-Kästen, CSV-Knopf(button3) mit neuer Farbe, 
+- funktionierender Redirect, wenn timer abgelaufen
+- eigene Platine + Stromversorgung
+
 ## 24.10.2019 <a name="20"></a>
 Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData` haben wir z.B. von 8 auf 4 Zeilen vereinfacht und mehrfach vorkommende Variablen mit Hilfe von Pointern zu globalen Variablen zusammengefasst.
 
