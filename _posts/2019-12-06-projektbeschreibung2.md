@@ -8,6 +8,7 @@ subtitle: Höhenmesser Reloaded
 
 ## Buttons
 Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons. Um diese zu verschönern (Farben, abgerundete Ecken, Schatten usw.) definieren wir Klassen für die Buttons mit CSS (hier die Buttons auf der ChartPage):
+
 ```css
         .button {
             background-color: #4CAF50;
@@ -57,7 +58,50 @@ Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons.
             border: 2px solid #0080ff;
         }
         
-        ```
+```
+
+Mit HTML bauen wir dann die Buttons ein. In diesem Fall wird beim klicken des Buttons die `/Stopp`-URI aufgerufen:
+```html
+<form action="/stopp" class="inline">
+      <button class="button button2">Stopp</button>
+    </form>
+```
+
+void handleStopp() {
+  timer = 200;
+  startstop = false;
+  Serial.println("Messung gestoppt!");
+  server.sendHeader("Location", "/");
+  server.send(303);
+}
+
+```html
+<form action="/start" class="inline">
+     <button class="button button1">Start</button>
+    </form>
+```
+
+void handleStart() {
+  startstop = true;
+  highest = 0;
+  Serial.println("Messung gestartet!");
+  server.sendHeader("Location", "/chart");
+  server.send(303);
+}
+ 
+```html
+<form action="/calibrate" class="inline">
+     <button class="button button2">Kalibrieren</button>
+    </form>
+```
+
+void handleCalibration() {
+  calculateBasePressure();
+  Serial.println("Ausgangsdruck neu berechnet!");
+  server.sendHeader("Location", "/");
+  server.send(303);
+}
+
 
 ## CSV-Export
 Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird.
