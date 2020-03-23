@@ -66,6 +66,7 @@ Jan hat Websites zum Programmieren eines Splashscreens herausgesucht und sich ei
 
 ## 14. Januar <a name="10"></a>
 Heute haben wir uns auf den neuesten Stand der Entwicklungen nach den Ferien gebracht, sowie Fragen und das weitere Vorgehen besprochen.
+Außerdem funktioniert das Abrufen des Headers wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
 
 ## 15. Januar <a name="11"></a>
 Heute haben wir zusammen angefangen, die SD-Karte mit Hilfe des Datalogger-Shields einzzubinden und uns überlegt, wie wir Messreihen darauf spreichern, starten und stoppen wollen.
@@ -73,10 +74,6 @@ Heute haben wir zusammen angefangen, die SD-Karte mit Hilfe des Datalogger-Shiel
 ## 16. Januar<a name="12"></a>
 Heute haben wir zusammen Stoppmechanismen getestet. Ergebnis: die Kopplung des Stoppmechanismus an die Geschwindigkeit (Vorzeichenwechsel bei Überschreiten des Scheitelpunkts der Flugbahn) funktioniert nicht, da die Messabweichung zu groß ist. Ein Timer bzw. ein Start-/Stopp-Knopf auf der Website sind bessere Wege die Messungen zu starten und stoppen.
 Des weiteren haben wir versucht die SD-Karte zum Laufen zu bringen, was jedoch nicht funktioniert hat. Wir vermuten, dass für den Betrieb des ganzen Shields die Batterie benötigt wird.
-
-
-Das Abrufen des Headers funktioniert wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
-Website überarbeitet:Timer (Anzeige außerhalb des Graphen)
 
 ## 22. Januar <a name="13"></a>
 Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet und einen Timer engebaut der nach Aktivierung der Messung runterzähltlt. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen und Entwürfe für die Animation erstellt.
@@ -112,6 +109,7 @@ Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Pr
 Heute haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
 
 ## 13. März <a name="24"></a>
-
+Heute war vorerst der letzte Schultag. Nach der obligatorischen Diskussion der aktuellen Ereignisse, haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet. Außerdem haben wir besprochen, wie wir weiterhin arbeiten wollen.
 
 ## Quarantäne <a name="25"></a>
+Wir stellen das Projekt, sowie die Projektseite und den Stundenblog nun zuhause fertig.
