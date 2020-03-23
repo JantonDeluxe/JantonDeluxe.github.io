@@ -1,7 +1,7 @@
-﻿---
+---
 layout: page
 title: Unterrichtstagebuch 2
-subtitle: Unterrichtstagebuch 2: Angriff der Programmierer
+subtitle: Angriff der Programmierer
 ---
 
 ### Inhaltsverzeichnis
