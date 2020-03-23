@@ -103,10 +103,10 @@ Heute gab es Probleme beim Upload auf das Board. Letztendlich konnten wir den Fe
 Anton war heute krank und hat daheim das Kalibrieren über die Website ermöglicht und eine kompatible Arduino-Firmware herrausgesucht. Dazu hat er die Passwörter aus den Dateien auf der GitHub-Seite gelöscht. Jan hat heute die Bilder für die Ladebildschirmanimation in ein Bitmapformat neu konvertiert. Dafür musste die Leserichtung und die Umkehrung der Farben neu gemacht werden. Anschleißend wurden diese in den Code eingefügt, um es zu testen.
 
 ## 6. März <a name="22"></a>
-Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Projektbeschreibung gekümmert hat.
+Heute haben wir mit Hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) angefangen einen CSV-Export für die Daten einzubauen. Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Projektbeschreibung gekümmert hat.
 
 ## 11. März <a name="23"></a>
-Heute haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
+Heute haben wir den CSV-Export beendet und weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
 
 ## 13. März <a name="24"></a>
 Heute war vorerst der letzte Schultag. Nach der obligatorischen Diskussion der aktuellen Ereignisse, haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet. Außerdem haben wir besprochen, wie wir weiterhin arbeiten wollen.
