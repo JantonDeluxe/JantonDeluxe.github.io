@@ -88,7 +88,7 @@ Anton war heute wieder krank und überarbeitete die Website, indem er eine Start
 Anton war schon wieder krank und fügte zu Hause einen Kalibrierungsknopf und einen Start- und Stopp zur Website hinzu. Jan hatte währenddessen mit GIMP die Ladebalkenilder fertiggestellt auf 128x64 Pixel zurechtgeschnitten.
 
 ## 4.Februar <a name="16"></a>
-Da der Rest des Timers durch den Stopp-Knopf auf der Website fehlerhaft war, haben wir heute den Fehler behoben sowie eine Timeranzeige auf der Website hinzugefügt.
+Da der Reset des Timers durch den Stopp-Knopf auf der Website fehlerhaft war, haben wir heute den Fehler behoben, sowie eine Timeranzeige auf der Website hinzugefügt.
 
 ## 5.Februar  <a name="17"></a>
 Anton hat heute zum Anzeigen des Maximums und der Temperatur Boxen mit HTML und CSS erstellt, die (nebeinander) auf der Website angezeigt werden. Währenddessen hat Jan herausgefunden, warum das Data Logger Shield für den D1 mini Pro nicht funktioniert: Wie bei anderen Benutzern, wurde auch bei unserem Shield ein Widerstand falsch aufgelötet. Mit der fehlerhafen Platine können wir also nicht weiterarbeiten.
