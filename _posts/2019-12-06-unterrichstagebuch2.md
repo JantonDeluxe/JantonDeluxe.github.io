@@ -1,7 +1,7 @@
 ﻿---
 layout: page
-title: Unterrichtstagebuch
-subtitle: Was wir an welchem Tag gemacht haben
+title: Unterrichtstagebuch 2
+subtitle: Unterrichtstagebuch 2: Angriff der Programmierer
 ---
 
 ### Inhaltsverzeichnis
@@ -12,26 +12,25 @@ subtitle: Was wir an welchem Tag gemacht haben
 >* [18. Dezember](#5)
 >* [19. Dezember](#6)
 >* [Ferien](#7)
->* [28. August](#8)
->* [29. August](#9)
->* [11. September](#10)
->* [12. September](#11)
->* [24. September](#12)
->* [25. September](#13)
->* [26. September](#14)
->* [1. Oktober](#15)
->* [2. Oktober](#16)
->* [Ferien](#17)
->* [22. Oktober](#18)
->* [23. Oktober](#19)
->* [24. Oktober](#20)
->* [29. Oktober](#21)
+>* [15. Januar](#8)
+>* [16. Januar](#9)
+>* [Daten anpassen bis 31.1](#10)
+>* [22. Januar](#11)
+>* [23. Januar](#12)
+>* [28. Januar](#13)
+>* [4. Februar](#14)
+>* [5. Februar](#15)
+>* [6. Februar](#16)
+>* [12. Februar](#17)
+>* [13. Februar](#18)
+>* [14. Februar](#19)
+>* [6. März](#20)
+>* [11. März](#21)
 >* [5. November](#22)
 >* [6. November](#23)
 >* [7. November](#24)
 >* [12. November](#25)
 >* [14. November](#26)
-
 
 ## 5. Dezember <a name="1"></a>
 Heute haben wir die Geschwindigkeits- und Beschleunigungsberechnung im Arduino-Sketch hinzugefügt und zur Darstellung in Chart.js hinzugefügt. Dabei haben wir ebenfalls die Update-Frequenz erhöht (jetzt ~100ms) und die Glättung des Graphen reduiziert, damit die Darstellung 
@@ -52,6 +51,7 @@ Heute haben wir mit der neuen Version des Höhenmessers begonnen. Wir haben eine
 Heute haben wir die Anzeige zu Ende geändert und angefangen, das Data-Logger-Shield einzurichten.
 
 ## Ferien <a name="7"></a>
+In den Ferien hat Anton Variablen in Englisch umbenannt und Websites herausgesucht zum Programmieren eines Splashscreens(https://cdn-learn.adafruit.com/downloads/pdf/adafruit-gfx-graphics-library.pdf, http://javl.github.io/image2cpp/).Dazu hat er die Temperaturanzeige auf dem Display verschönert, indem er bei positiven Temperaturen ein Leerzeichen hinzugefügt hat, wodurch die Temeraturanzeige nicht ständig verschiebt/flankert.
 englische Variablen, Splashscreen https://cdn-learn.adafruit.com/downloads/pdf/adafruit-gfx-graphics-library.pdf, http://javl.github.io/image2cpp/, Temparaturannzeigefehler behoben (- verschiebung entfernt)
 
 ## 15. Januar <a name="8"></a>
@@ -67,35 +67,35 @@ Website überarbeitet: Navbar, Start-/Stopp-Knopf, About-Page, Start-Page, manue
 Timer eingebaut, der nach Aktivierung runterzählt und die Messung stoppt.
 
 ## 22. Januar <a name="11"></a>
-Anton: krank, Anzeige der Temperatur im Graphen
-Jan: In das Erstellen von Bitmap-Animationen für das Display eingelesen
+Liebes Unterrichtstagebuch,
+Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen.
+
 
 ## 23. Januar <a name="12"></a>
+Anton war heute wieder krank und überarbeitete die Website, indem er eine Start-und About-Seite, eine Navbar, sowie neue Überschriften hinzugefügt hat. Dazu hat er das Spacing verändert. Jan hatte wiederum passende Ladebilder für eine Animation ausgewählt und Gimp für die Bearbeitung installiert.
 Anton: krank, Überarbeitung der Website: Hinzufügen der Start- und About-Seite, Navbar, neue Überschriften + Spacing
 Jan: Ladenbalkenbilder ausgewählt
 
 ## 28. Januar <a name="13"></a>
-Anton: krank, Kalibrierungsknopf, Start-/Stopp-Knopf
-Jan: Erstellen der Loadingscreen-Bilder mit GIMP
+Anton war schon wieder krank und fügte zu Hause einen Kalibrierungsknopf und einen Start- und Stopp zur Website hinzugefügt. Jan hatte währenddessen die Ladebalken auf 128x64 Pixel zurechtgeschnitten.
 
 ## 4.Februar <a name="14"></a>
+Da der Rest des Timers durch den Stopp-Knopf auf der Website fehlerhaft war, haben wir heute den Fehler behoben sowie eine Timeranzeige der Website hinzugefügt.
 Zusammen: Fehler beim Reset des Timers behoben, Anzeige des Timers auf der Website
 
 ## 5.Februar  <a name="15"></a>
+Heute haben wir zum Anzeigen des Maximums und der Temperatur Boxen auf die Website programmiert.
 Zusammen: Anzeige des Maximums und der jetzigen Temperatur auf der Website nebeneinander in eigenen Boxen
 
 ## 6. Febraur <a name="16"></a>
-Zusammen: Redirect nach stoppen der Messung/ Ablauf des Timers auf Startpage versucht, Schriftart für About-Page verändert
-
-## 12.Februar <a name="17"></a>
-Zusammen: Wir haben heute den Loadingscreen an das Setup geknüpft, damit das Display beim Start eine Ladebalkenanimation abspielt. Dafür haben wir festgelegt, das jeder Abschnitt des Setups 
-an ein (oder mehrere) Ladebalkenbild(er) geknüpft ist.
-
-## 13. Februar <a name="18"></a>
+Da nach Stoppen der Messung der Redirect nicht funktionierte, haben wir uns heute 
+Zusammen: Redirect nach stoppen der MA
+Heute war Anton bei Jugend debatiert, Jan hat währenddessen die Loadingscreenbilder auf 10 Balken mit Gimp reduziert.
 Anton: bei Jugend debattiert
-Jan: zuschneiden der einzelnen Loading-Screen-Bilder auf 128x64 Pixel
+Jan: zuschneiden der einzelnen Loading-Screen-Bilder auf 10 Balken
 
 ## 14. Februar <a name="19"></a>
+Anton war heute krank und hat daheim das Kalibrieren über die Website ermöglicht und eine kompatible Arduino-Firmware herrausgesucht. Dazu hat er die Passwörter für die Website von der GitHub-Seite gelöscht. Jan hat heute die Bilder für die Ladebildschirmanimation in ein Bitmapformat neu konvertiert. Dafür musste die Leserichtung und die Umkehrung der Farben neu gemacht werden. Anschleißend wurde diese in den Code eingefügt, um es zu testen.
 Anton: krank, Fehlerbehebung beim Kalibriern über die Website und beim Upload auf das Board, Löschen der Passwörter aus den Dateien auf GitHub (Danke an Nick für die Hilfe!)
 Jan: Umwandeln der Loading-Screen-Bilder in das korrekte Bitmap-Format (horizontale Lesrichtung, Farben umkehren), Integration dieser Bitmaps in den Code, testen, ob richtig angezeigt wird
 
@@ -107,11 +107,11 @@ Was wir noch machen können:
 - funktionierender Redirect, wenn timer abgelaufen
 - eigene Platine + Stromversorgung
 
-## 24.10.2019 <a name="20"></a>
-Heute haben wir den Code vereinfacht. Die Kombination der Strings in `handleData` haben wir z.B. von 8 auf 4 Zeilen vereinfacht und mehrfach vorkommende Variablen mit Hilfe von Pointern zu globalen Variablen zusammengefasst.
+## 6. März <a name="20"></a>
+Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Projektbeschreibung gekümmert hat.
 
-## 29.10.2019 <a name="21"></a>
-Heute haben wir das SPIFFS-Dateisystem auf dem Arduino eingerichtet und das Java Script eingebaut, so dass es jetzt auch offline abgerufen werden kann. Dazu haben wir an der Projektbeschreibung und dem Projekttagebuch weitergeschrieben.
+## 11. März <a name="21"></a>
+Heute haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
 
 ## 5.11.2019 <a name="22"></a>
 Heute haben wir die Ladegeschwindigkeit des Java Scripts erhöht, indem wir eine andere Speicher- und Abrufmethode verwendet haben.
@@ -127,3 +127,4 @@ Heute haben wir die Projektbeschreibung weitergeschreieben.
 
 ## 14.11.2019 <a name="26"></a>
 Heute haben wir die Projektbeschreibung weitergeschreieben.
+
