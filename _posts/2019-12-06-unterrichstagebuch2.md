@@ -79,7 +79,7 @@ Das Abrufen des Headers funktioniert wieder. Fehlerquelle war der Variablenmodif
 Website überarbeitet:Timer (Anzeige außerhalb des Graphen)
 
 ## 22. Januar <a name="13"></a>
-Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen und Entwürfe für die Animation erstellt.
+Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet und einen Timer engebaut der nach Aktivierung der Messung runterzähltlt. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen und Entwürfe für die Animation erstellt.
 
 ## 23. Januar <a name="14"></a>
 Anton war heute wieder krank und überarbeitete die Website, indem er eine Start-und About-Seite, eine Navbar, sowie neue Überschriften hinzugefügt hat. Dazu hat er das Spacing auf der Website verändert, damit sie nicht so überladen wirkt. Jan hatte wiederum passende Ladebilder für eine Animation ausgewählt und Gimp für die Bearbeitung installiert. Dann hat er mit der Bearbeitung der einzelnen Bilder der Animation begonnen.
