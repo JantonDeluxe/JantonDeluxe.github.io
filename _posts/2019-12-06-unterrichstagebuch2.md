@@ -76,8 +76,7 @@ Des weiteren haben wir versucht die SD-Karte zum Laufen zu bringen, was jedoch n
 
 
 Das Abrufen des Headers funktioniert wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
-Website überarbeitet: Navbar, Start-/Stopp-Knopf, About-Page, Start-Page, manuelle Kalibrierung, Übertragung von maximaler Höhe, Temperatur und Timer (Anzeige außerhalb des Graphen), Geschwindigkeit und Beschleunigung im Diagramm standardmäßig ausgeblentet (Übersicht)
-Timer eingebaut, der nach Aktivierung runterzählt und die Messung stoppt.
+Website überarbeitet:Timer (Anzeige außerhalb des Graphen)
 
 ## 22. Januar <a name="13"></a>
 Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen und Entwürfe für die Animation erstellt.
