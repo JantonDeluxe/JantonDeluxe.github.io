@@ -60,7 +60,7 @@ Heute haben wir zusammen Ideen gesammelt, wie wir den Höhenmesser mit weiteren 
 ## 19. Dezember <a name="8"></a>
 Heute haben wir zusammen die Umstellung der Anzeige zu Ende gebracht. Noch erkennt man außer der schöneren Schriftart nicht viel, allerdings haben wir durch die neue Library nun auch die Möglichkeit Bilder, Animationen usw. anzeigen zu lassen. In China hatten wir schon vor einiger Zeit für unter 1,60€ ein Data-Logger-Shield für den D1 mini Pro bestellt - diese Woche war es angekommen und heute haben wir angefangen, es einzurichten.
 
-## Ferien <a name=9"></a>
+## Ferien <a name="9"></a>
 In den Ferien hat Anton Variablen in Englisch umbenannt, um den allgemeinen Programmier-Konvetionen zu entsprechen. Dazu hat er die Temperaturanzeige auf dem Display verschönert, indem er bei positiven Temperaturen ein Leerzeichen hinzugefügt hat, wodurch die Temeraturanzeige nicht ständig verschiebt/flackert.
 Jan hat Websites zum Programmieren eines Splashscreens herausgesucht und sich eingearbeitet (https://cdn-learn.adafruit.com/downloads/pdf/adafruit-gfx-graphics-library.pdf, http://javl.github.io/image2cpp/).
 
