@@ -59,14 +59,20 @@ Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons.
         }
         
 ```
+Hier einmal ein Beispiel, wie Buttons aussehen, wenn man sie drückt, oder nicht:
+![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/Home-Button%20aus.png)
+![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/Home-Button%20an.PNG)
 
-Mit HTML bauen wir dann die Buttons ein. In diesem Fall wird beim klicken des Buttons die `/Stopp`-URI aufgerufen:
+Mit HTML bauen wir dann die Buttons ein und definieren die URI, die durch den Klick aufgerufen werden soll (beim erstten Beispiel ´/stopp´). Darunter sind die Funktionen aufgeführt, die beim Aufrufen dieser URI ausgeführt werden.
+
+### Stopp-Button
 ```html
 <form action="/stopp" class="inline">
       <button class="button button2">Stopp</button>
     </form>
 ```
 
+```c++
 void handleStopp() {
   timer = 200;
   startstop = false;
@@ -74,13 +80,16 @@ void handleStopp() {
   server.sendHeader("Location", "/");
   server.send(303);
 }
+```
 
+### Start-Button
 ```html
 <form action="/start" class="inline">
      <button class="button button1">Start</button>
     </form>
 ```
 
+```c++
 void handleStart() {
   startstop = true;
   highest = 0;
@@ -88,23 +97,34 @@ void handleStart() {
   server.sendHeader("Location", "/chart");
   server.send(303);
 }
+```
  
+### Kalibrierungs-Button
 ```html
 <form action="/calibrate" class="inline">
      <button class="button button2">Kalibrieren</button>
     </form>
 ```
 
+```c++
 void handleCalibration() {
   calculateBasePressure();
   Serial.println("Ausgangsdruck neu berechnet!");
   server.sendHeader("Location", "/");
   server.send(303);
 }
+```
 
 
 ## CSV-Export
-Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird.
+Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird. Dieses Feature funktioniert nicht in Internet Explorer, da es neuere JavaScript-Versionen nicht unterstützt. Wie bereits im Projekttagebuch erwähnt, haben wir den CSV-Export mit hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) erstellt. Im folgenden werden die einzelnen Komponenten dieses Features kurz erklärt:
+
+
+Export-Button einbauen:
+
+```html
+<button id="btnExportToCsv" type="button" class="button button3">CSV-Export</button>
+```
 
 Definieren der Tabellen-Kopfzeile:
 
@@ -122,14 +142,7 @@ Definieren der Tabellen-Kopfzeile:
     </table>
 ```
 
-Export-Button:
-
-```html
-<button id="btnExportToCsv" type="button" class="button button3">CSV-Export</button>
-```
-
-
-Mit jedem Datenübertragungszyklus (innerhalb von `getData`) werden die Daten via *innerHTML* in die Tabelle eingetragen:
+Mit jedem Datenübertragungszyklus (innerhalb von `getData`) wird eine neue "Tabellen-Zelle" erstellt, in die die Daten via *innerHTML* jeweils eingetragen werden:
 
 ```js
 var table = document.getElementById("dataTable");
@@ -144,7 +157,7 @@ cell3.innerHTML = speed;
 cell4.innerHTML = acceleration;
 ```
 
-Listener für den Fall, dass der Button geklickt wird: CSV-Erstellung starten und Export/Download starten:
+Dies ist ein Listener, der "darauf wartet", dass der Button geklickt wird. Dann werden die Funktionen zur CSV-Erstellung und zum Export/Download ausgefhrt:
 ```js
         btnExportToCsv.addEventListener("click", () => {
             const exporter = new TableCSVExporter(dataTable);
@@ -166,55 +179,53 @@ Listener für den Fall, dass der Button geklickt wird: CSV-Erstellung starten un
         
 ```
 
-HTML-Tabelle auslesen und CSV erstellen:
+Zunächst wird die HTML-Tabelle ausgelesen. Dabei wird auch darauf geachtet, ob die Tabelle eine Kopfzeile hat. Dann
 ```js
-        class TableCSVExporter {
-            constructor(table, includeHeaders = true) {
-                this.table = table;
-                this.rows = Array.from(table.querySelectorAll("tr"));
+class TableCSVExporter {
+    constructor(table, includeHeaders = true) {
+        this.table = table;
+        this.rows = Array.from(table.querySelectorAll("tr"));
         
-                if (!includeHeaders && this.rows[0].querySelectorAll("th").length) {
-                    this.rows.shift();
-                }
+            if (!includeHeaders && this.rows[0].querySelectorAll("th").length) {
+                this.rows.shift();
             }
+    }
+```
+
+```js
+convertToCSV() {
+    const lines = [];
+    const numCols = this._findLongestRowLength();
         
-            convertToCSV() {
-                const lines = [];
-                const numCols = this._findLongestRowLength();
+        for (const row of this.rows) {
+            let line = "";
         
-                for (const row of this.rows) {
-                    let line = "";
-        
-                    for (let i = 0; i < numCols; i++) {
-                        if (row.children[i] !== undefined) {
-                            line += TableCSVExporter.parseCell(row.children[i]);
-                        }
-        
-                        line += (i !== (numCols - 1)) ? "," : "";
-                    }
-        
-                    lines.push(line);
+            for (let i = 0; i < numCols; i++) {
+                if (row.children[i] !== undefined) {
+                    ine += TableCSVExporter.parseCell(row.children[i]);
                 }
         
-                return lines.join("\n");
+                line += (i !== (numCols - 1)) ? "," : "";
             }
         
-            _findLongestRowLength() {
-                return this.rows.reduce((l, row) => row.childElementCount > l ? row.childElementCount : l, 0);
-            }
-        
-            static parseCell(tableCell) {
-                let parsedValue = tableCell.textContent;
-        
-                // Replace all double quotes with two double quotes
-                parsedValue = parsedValue.replace(/"/g, `""`);
-        
-                // If value contains comma, new-line or double-quote, enclose in double quotes
-                parsedValue = /[",\n]/.test(parsedValue) ? `"${parsedValue}"` : parsedValue;
-        
-                return parsedValue;
-            }
+            lines.push(line);
         }
+        
+    return lines.join("\n");
+	}
+	```
+        
+Diese Funktion liest die einzelnen Tabellen-Zellen aus und formatiert sie korrekt und gibt sie dann aus. Dies ist nötig, da z.B. Kommata, als Trennzeichen für CSV-Dateien fungieren und Zahlenwerte mit Komma folglich nicht einfach übernommen werden können. Auch Anführungszeichen oder Zeilenumbrüche müssen in der CSV-Synatx besonders behalndelt werden. Hier schließt sich auch die Klasse `TableCSVExporter` - deshalb die zweite geschlossene Klammer.
+```js
+        
+static parseCell(tableCell) {
+    let parsedValue = tableCell.textContent;   
+    parsedValue = parsedValue.replace(/"/g, `""`)
+    parsedValue = /[",\n]/.test(parsedValue) ? `"${parsedValue}"` : parsedValue;
+        
+    return parsedValue;
+    }
+}            
 
 ## Navbar
 
