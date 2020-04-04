@@ -6,6 +6,16 @@ subtitle: Höhenmesser Reloaded
 
 ## Ladescreen
 
+![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifScreen.gif)
+
+## Neue Seiten auf der Website
+![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifWebsite.gif)
+
+### Start-Seite
+
+### About-Seite
+
+
 ## Buttons
 Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons. Um diese zu verschönern (Farben, abgerundete Ecken, Schatten usw.) definieren wir Klassen für die Buttons mit CSS (hier die Buttons auf der ChartPage):
 
@@ -225,13 +235,67 @@ static parseCell(tableCell) {
         
     return parsedValue;
     }
-}            
+} 
+```           
 
-## Navbar
+## Navigationsleiste
+Um nicht immer den jeweiligen Link in die Adresszeile des Browsers eintippen zu müssen, um auf der Website zu navigieren, haben wir mit CSS und HTML eine Navigationsleiste (Navbar) eingebaut. Die Basis dafür bildet [dieses Tutorial](https://www.w3schools.com/css/css_navbar.asp) von W3Schools. Dies ist der Code der Navbar auf der Startseite.
+
+Mit CSS wird das "Aussehen" der Navbar definiert. Dafür werden die Abmessungen der einzelnen Boxen, die Schatten und andere Parameter angegeben. Für die Farben muss anders, als beim Chart.js-Diagramm ein HEX-Code angegeben werden (statt rgba).
+
+```css
+ ul {
+            list-style-type: none;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #14264f;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        
+        li {
+            float: left;
+        }
+        
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-family: verdana;
+        }
+        
+        li a:hover:not(.active) {
+            background-color: #183754;
+        }
+        
+        .active {
+            background-color: #f39c12;
+        }
+		
+```
+
+Über HTML wird die Navbar in die Seite eingebaut, sowie festgelegt, welcher Reiter "active", also farblich hervorgehoben ist. Ebenfalls werden die jeweils aufzurufenden URIs der einzelnen Reiter festgelegt.
+```html
+ <ul>
+        <li><a class="active" href="/">Home</a></li>
+        <li><a href="/chart">Vorschau</a></li>
+        <li style="float:right"><a href="/about">About</a></li>
+    </ul>
+```
 
 ## Weitere Daten im Diagramm
 
+
 ## Anzeige-Felder
+
+
+## Timer
+Redirect, wenn Timer abgelaufen
 
 ## Reflexion
 - D1 mini Pro 1.0 nicht zu emofehlen wegen der vielen Fehlermöglichkeiten
