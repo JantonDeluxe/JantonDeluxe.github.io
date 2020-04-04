@@ -60,12 +60,13 @@ Heute haben wir zusammen Ideen gesammelt, wie wir den Höhenmesser mit weiteren 
 ## 19. Dezember <a name="8"></a>
 Heute haben wir zusammen die Umstellung der Anzeige zu Ende gebracht. Noch erkennt man außer der schöneren Schriftart nicht viel, allerdings haben wir durch die neue Library nun auch die Möglichkeit Bilder, Animationen usw. anzeigen zu lassen. In China hatten wir schon vor einiger Zeit für unter 1,60€ ein Data-Logger-Shield für den D1 mini Pro bestellt - diese Woche war es angekommen und heute haben wir angefangen, es einzurichten.
 
-## Ferien <a name=9"></a>
+## Ferien <a name="9"></a>
 In den Ferien hat Anton Variablen in Englisch umbenannt, um den allgemeinen Programmier-Konvetionen zu entsprechen. Dazu hat er die Temperaturanzeige auf dem Display verschönert, indem er bei positiven Temperaturen ein Leerzeichen hinzugefügt hat, wodurch die Temeraturanzeige nicht ständig verschiebt/flackert.
 Jan hat Websites zum Programmieren eines Splashscreens herausgesucht und sich eingearbeitet (https://cdn-learn.adafruit.com/downloads/pdf/adafruit-gfx-graphics-library.pdf, http://javl.github.io/image2cpp/).
 
 ## 14. Januar <a name="10"></a>
 Heute haben wir uns auf den neuesten Stand der Entwicklungen nach den Ferien gebracht, sowie Fragen und das weitere Vorgehen besprochen.
+Außerdem funktioniert das Abrufen des Headers wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
 
 ## 15. Januar <a name="11"></a>
 Heute haben wir zusammen angefangen, die SD-Karte mit Hilfe des Datalogger-Shields einzzubinden und uns überlegt, wie wir Messreihen darauf spreichern, starten und stoppen wollen.
@@ -73,10 +74,6 @@ Heute haben wir zusammen angefangen, die SD-Karte mit Hilfe des Datalogger-Shiel
 ## 16. Januar<a name="12"></a>
 Heute haben wir zusammen Stoppmechanismen getestet. Ergebnis: die Kopplung des Stoppmechanismus an die Geschwindigkeit (Vorzeichenwechsel bei Überschreiten des Scheitelpunkts der Flugbahn) funktioniert nicht, da die Messabweichung zu groß ist. Ein Timer bzw. ein Start-/Stopp-Knopf auf der Website sind bessere Wege die Messungen zu starten und stoppen.
 Des weiteren haben wir versucht die SD-Karte zum Laufen zu bringen, was jedoch nicht funktioniert hat. Wir vermuten, dass für den Betrieb des ganzen Shields die Batterie benötigt wird.
-
-
-Das Abrufen des Headers funktioniert wieder. Fehlerquelle war der Variablenmodifikator PROGMEM, der nach dem Flashen der neuen Firmware nicht mehr funktioniert. Eigentlich werden so Teile des Codes im Flashspeicher gespeichert, was den Arbeitsspeicher entlastet.
-Website überarbeitet:Timer (Anzeige außerhalb des Graphen)
 
 ## 22. Januar <a name="13"></a>
 Anton war leider krank, hatte aber daheim an der Anzeige der Temperatur im Graphen weitergearbeitet und einen Timer engebaut der nach Aktivierung der Messung runterzähltlt. Jan hatte sich währenddessen in das Erstellen von Bitmap-Animationen für das Display eingelesen und Entwürfe für die Animation erstellt.
@@ -106,12 +103,13 @@ Heute gab es Probleme beim Upload auf das Board. Letztendlich konnten wir den Fe
 Anton war heute krank und hat daheim das Kalibrieren über die Website ermöglicht und eine kompatible Arduino-Firmware herrausgesucht. Dazu hat er die Passwörter aus den Dateien auf der GitHub-Seite gelöscht. Jan hat heute die Bilder für die Ladebildschirmanimation in ein Bitmapformat neu konvertiert. Dafür musste die Leserichtung und die Umkehrung der Farben neu gemacht werden. Anschleißend wurden diese in den Code eingefügt, um es zu testen.
 
 ## 6. März <a name="22"></a>
-Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Projektbeschreibung gekümmert hat.
+Heute haben wir mit Hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) angefangen einen CSV-Export für die Daten einzubauen. Jan hat heute am Projekttagebuch weitergearbeitet, während Anton sich um die Projektbeschreibung gekümmert hat.
 
 ## 11. März <a name="23"></a>
-Heute haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
+Heute haben wir den CSV-Export beendet und weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet.
 
 ## 13. März <a name="24"></a>
-
+Heute war vorerst der letzte Schultag. Nach der obligatorischen Diskussion der aktuellen Ereignisse, haben wir weiterhin an der Dokumentation des Projekts gearbeitet. Jan hat dabei die Notizen des Projekttagebuchs ausformuliert und Anton hat an der Projektbeschreibung weitergearbeitet. Außerdem haben wir besprochen, wie wir weiterhin arbeiten wollen.
 
 ## Quarantäne <a name="25"></a>
+Wir stellen das Projekt, sowie die Projektseite und den Stundenblog nun zuhause fertig.
