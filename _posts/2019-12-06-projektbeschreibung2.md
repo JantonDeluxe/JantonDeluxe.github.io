@@ -8,15 +8,28 @@ subtitle: Höhenmesser Reloaded
 
 ![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifScreen.gif)
 
-## Neue Seiten auf der Website
+## Data-Logger Shield
+Auf Aliexpress gibt es für einen sehr sehr günstigen Preis viele Shields für den D1 mini Pro (teilweise direkt aus der Fabrik), also kleine Platinen, die man oben auf das Board draufstecken kann. Damit werden dann neue Funktionen möglich. 
+Wir haben uns also so ein Shield besorgt, mit dem man Daten auf eine Micro-SD-Karte speichern und die genaue Uhrzeit anzeigen können soll. 
+
+![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/mitShield.jpeg)
+
+Das hat nur leider nicht geklappt. Wir haben mehrere Tage lang versucht, dieses Shield zum Laufen zu bringen: 
+Der Code war bereits fertig (in mehreren Versionen, um alle möglichen Software-Fehler auszuschließen), wir haben die Pin-Belegungen des D1 mini Pro verändert, um Doppelbelegungen auszuschließen, 
+SD-Karten getauscht und verschieden formatiert, die Spannung der benötigten Knopfzellen-Batterie überprüft, ein D1 mini statt dem D1 mini Pro verwendet und noch ein paar Dinge mehr, aber nichts hat die Fehler beheben können. Der SD-Karten-Slot wird gar nicht erkannt, die Real-Time-Clock (RTC) jedoch schon. Sie lässt sich aber nicht auslesen oder umstellen.
+
+Letztendlich muss also die Hardware defekt sein. Über dieses Problem mit genau dem gleichen Board gibt es online auch einige Berichte - wir können also nicht empfehlen off-brand Elektronikteile aus China zu bestellen. Als Asuweichlösung zum Speichern der Daten haben wir deshalb später einen CSV-Export über die Website eingebaut (mehr dazu weiter unten).
+
+## Website-Erweiterung
+Die meisten Änderungen haben wir an der Website des Höhenmessers vorgenommen. 
+Auf der alten Website, die nur das Diagramm mit den Höhen-Messwerten angezeigt hat, wurde es schnell sehr unüberichtlich, da schnell sehr viele Messwerte auflaufen. Deshalb haben wir eine Startseite eingebaut: Solange keine Messung angezeigt werden soll, werden auch keine Daten abgerufen und auch nicht angezeigt. Das geschieht erst, wenn man den Start-Knopf betätigt und auf die entsprechende Seite weitergeleitet wird. Ebenfalls haben wir einen Kalibrierungs-Knopf eingebaut, um den Höhenmesser auf einen neuen Nulldruck kalobrieren zu können. Sonst kommt nach spätestens einer Stunde zu erheblichen Ungenauigkeiten (siehe Projektbeschreibung 1. Halbjahr). 
+Betätigt man den Start-Konpf, wird man auf die "ChartPage", also die Seite mit dem Diagramm weitergeleitet. Dort wird weiterhin das Diagramm (jetzt mit zusätzlichen Messwerten) angezeigt. Hinzu kommen Boxen, die den Temperatur und Höchstwert anzeigen, sowie ein Timer, der die Messung nach der jeweils eingestellten Zeit wieder stoppt und auf den Nutzer wieder die Startseite bringt. Die Messung kann man aber ebenfalls manuell stoppen. Wenn man die genauen Flugdaten als CSV-datein benötigt, sollte man vvorher jedoch über den entsprechenden Button den Export der Daten starten. Zusätzlich haben wir noch eine Seite hinzugefügt, auf der unsere Projektseite, die verwendete Hardware und die Dislcaimer angegeben sind. Die Funktionsweise der gesamten Website haben wir hier noch einmal als gif zusammengestellt:
+
 ![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifWebsite.gif)
 
-### Start-Seite
+Nun erläutern wir die Umsetzung der neuen Features:
 
-### About-Seite
-
-
-## Buttons
+### Buttons
 Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons. Um diese zu verschönern (Farben, abgerundete Ecken, Schatten usw.) definieren wir Klassen für die Buttons mit CSS (hier die Buttons auf der ChartPage):
 
 ```css
@@ -69,13 +82,10 @@ Um die neuen Funktionen der Website aufrufen zu können, benötigen wir Buttons.
         }
         
 ```
-Hier einmal ein Beispiel, wie Buttons aussehen, wenn man sie drückt, oder nicht:
-![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/Home-Button%20aus.png)
-![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/Home-Button%20an.PNG)
 
 Mit HTML bauen wir dann die Buttons ein und definieren die URI, die durch den Klick aufgerufen werden soll (beim erstten Beispiel ´/stopp´). Darunter sind die Funktionen aufgeführt, die beim Aufrufen dieser URI ausgeführt werden.
 
-### Stopp-Button
+#### Stopp-Button
 ```html
 <form action="/stopp" class="inline">
       <button class="button button2">Stopp</button>
@@ -84,10 +94,10 @@ Mit HTML bauen wir dann die Buttons ein und definieren die URI, die durch den Kl
 
 ```c++
 void handleStopp() {
-  timer = 200;
+  timer = 200; // Reset des Timers
   startstop = false;
   Serial.println("Messung gestoppt!");
-  server.sendHeader("Location", "/");
+  server.sendHeader("Location", "/"); // Weiterleitung auf die Startseite
   server.send(303);
 }
 ```
@@ -102,9 +112,9 @@ void handleStopp() {
 ```c++
 void handleStart() {
   startstop = true;
-  highest = 0;
+  highest = 0; // Um nicht einen noch gespeicherten Maximalwert anzuzeigen
   Serial.println("Messung gestartet!");
-  server.sendHeader("Location", "/chart");
+  server.sendHeader("Location", "/chart"); // Weiterleitung auf die ChartPage
   server.send(303);
 }
 ```
@@ -118,7 +128,7 @@ void handleStart() {
 
 ```c++
 void handleCalibration() {
-  calculateBasePressure();
+  calculateBasePressure(); // Funktion zur Nulldruckberechnung
   Serial.println("Ausgangsdruck neu berechnet!");
   server.sendHeader("Location", "/");
   server.send(303);
@@ -136,7 +146,7 @@ Export-Button einbauen:
 <button id="btnExportToCsv" type="button" class="button button3">CSV-Export</button>
 ```
 
-Definieren der Tabellen-Kopfzeile:
+Definieren der HTML-Tabellen-Kopfzeile:
 
 ```html
 <table id="dataTable" class="table"  style="display: none">
