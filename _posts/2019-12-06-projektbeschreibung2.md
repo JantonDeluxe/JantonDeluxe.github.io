@@ -3,12 +3,24 @@ layout: page
 title: Projektbeschreibung 2
 subtitle: Höhenmesser Reloaded
 ---
+### Inhaltsverzeichnis
+>* [Ladescreen](#1)
+>* [Data-Logger-Shield](#2)
+>* [Websiteerweiterung](#3)
+>    - [Buttons](#4)
+>    - [CSV-Export](#5)
+>    - [Navbar](#6)
+>    - [Weitere Daten](#7)
+>    - [Timer](#8)
+>    - [Anzeigefelder](#9)
+>* [Reflexion](#10)
+
 
 ## Ladescreen
 
 ![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifScreen.gif)
 
-## Data-Logger Shield
+## Data-Logger-Shield
 Auf Aliexpress gibt es für einen sehr sehr günstigen Preis viele Shields für den D1 mini Pro (teilweise direkt aus der Fabrik), also kleine Platinen, die man oben auf das Board draufstecken kann. Damit werden dann neue Funktionen möglich. 
 Wir haben uns also so ein Shield besorgt, mit dem man Daten auf eine Micro-SD-Karte speichern und die genaue Uhrzeit anzeigen können soll. 
 
@@ -18,7 +30,7 @@ Das hat nur leider nicht geklappt. Wir haben mehrere Tage lang versucht, dieses 
 Der Code war bereits fertig (in mehreren Versionen, um alle möglichen Software-Fehler auszuschließen), wir haben die Pin-Belegungen des D1 mini Pro verändert, um Doppelbelegungen auszuschließen, 
 SD-Karten getauscht und verschieden formatiert, die Spannung der benötigten Knopfzellen-Batterie überprüft, ein D1 mini statt dem D1 mini Pro verwendet und noch ein paar Dinge mehr, aber nichts hat die Fehler beheben können. Der SD-Karten-Slot wird gar nicht erkannt, die Real-Time-Clock (RTC) jedoch schon. Sie lässt sich aber nicht auslesen oder umstellen.
 
-Letztendlich muss also die Hardware defekt sein. Über dieses Problem mit genau dem gleichen Board gibt es online auch einige Berichte - wir können also nicht empfehlen off-brand Elektronikteile aus China zu bestellen. Als Asuweichlösung zum Speichern der Daten haben wir deshalb später einen CSV-Export über die Website eingebaut (mehr dazu weiter unten).
+Letztendlich muss also die Hardware defekt sein. Über dieses Problem mit genau dem gleichen Board gibt es online auch einige Berichte - wir können also nicht empfehlen off-brand Elektronikteile aus China zu bestellen. Als Asuweichlösung zum Speichern der Daten haben wir deshalb später einen CSV-Export über die Website eingebaut (mehr dazu weiter unten). Immerhin haben wir im Zuge unserer vielen Versuche den Code aufgeräumt: Z.B. haben wir vieles in eigene Funktionen ausgelagert und die Variablen Englisch benannt.
 
 ## Website-Erweiterung
 Die meisten Änderungen haben wir an der Website des Höhenmessers vorgenommen. 
@@ -108,7 +120,7 @@ void handleStopp() {
 }
 ```
 
-### Start-Button
+#### Start-Button
 ```html
 <form action="/start" class="inline">
      <button class="button button1">Start</button>
@@ -125,7 +137,7 @@ void handleStart() {
 }
 ```
  
-### Kalibrierungs-Button
+#### Kalibrierungs-Button
 ```html
 <form action="/calibrate" class="inline">
      <button class="button button2">Kalibrieren</button>
@@ -142,7 +154,7 @@ void handleCalibration() {
 ```
 
 
-## CSV-Export
+### CSV-Export
 Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird. Dieses Feature funktioniert nicht in Internet Explorer, da es neuere JavaScript-Versionen nicht unterstützt. Wie bereits im Projekttagebuch erwähnt, haben wir den CSV-Export mit Hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) erstellt und den Code für unsere Zwecke angepasst und vereinfacht. Im folgenden werden die einzelnen Komponenten dieses Features kurz erklärt:
 
 
@@ -216,6 +228,7 @@ Die folgenden Funktionen befinden sich alle in der Klasse `TableCSVExporter`:
     }
 ```
 
+Für jede Tabellenzeile (line) wird ein String erstellt und diese lines werden dann mit Absatz (line break) zusammengefügt 
 ```js
 convertToCSV() {
     const lines = [];  // unetrschiedliche viele Zeilen
@@ -237,9 +250,10 @@ convertToCSV() {
         
     return lines.join("\n");
 	}
-	```
+```
         
 Diese Funktion liest die einzelnen Tabellen-Zellen aus und formatiert sie korrekt und gibt sie dann aus. Dies ist nötig, da z.B. Kommata, als Trennzeichen für CSV-Dateien fungieren und Zahlenwerte mit Komma folglich nicht einfach übernommen werden können. Auch Zeilenumbrüche müssen in der CSV-Synatx besonders behalndelt werden.
+
 ```js
         
 static parseCell(tableCell) {
@@ -249,9 +263,20 @@ static parseCell(tableCell) {
     return parsedValue;
     }
 } 
-```           
+```     
 
-## Navigationsleiste
+Eine exportierte CSV-Datei sieht dann etwa so aus (die Zeit sind die Millisekunden nach dem Booten):
+
+| Zeit      | Hoehe | Geschwindigkeit | Beschleunigung |
+|-----------|-------|-----------------|----------------|
+| 145738.00 | 0.99  | 7.41            | 137.26         |
+| 145405.00 | 0.19  | 2.74            | 50.36          |
+| 145178.00 | -0.08 | -2.81           | -52.56         |
+| 144955.00 | -0.26 | -7.05           | -132.97        |
+
+
+
+### Navigationsleiste
 Um nicht immer den jeweiligen Link in die Adresszeile des Browsers eintippen zu müssen, um auf der Website zu navigieren, haben wir mit CSS und HTML eine Navigationsleiste (Navbar) eingebaut. Die Basis dafür bildet [dieses Tutorial](https://www.w3schools.com/css/css_navbar.asp) von W3Schools. Dies ist der Code der Navbar auf der Startseite.
 
 Mit CSS wird das "Aussehen" der Navbar definiert. Dafür werden die Abmessungen der einzelnen Boxen, die Schatten und andere Parameter angegeben. Für die Farben muss anders, als beim Chart.js-Diagramm ein HEX-Code angegeben werden (statt rgba).
@@ -301,7 +326,7 @@ Mit CSS wird das "Aussehen" der Navbar definiert. Dafür werden die Abmessungen 
     </ul>
 ```
 
-## Weitere Daten im Diagramm
+### Weitere Daten im Diagramm
 Zusätzlich zur Höhe in Metern  berechnen wir neue Werte und zeigen Sie im Diagramm an.
 
 Für die Berechnung der Geschwindigkeit und Beschleunigung benötigen wir jeweils die Zeit eines Messzyklus und die darin zurückgelegte Strecke. Dabei legen wir folgende Formeln zu grunde: v = Δs/Δt und a = 2Δs/Δt^2. Wir berechnen also nur die Durchschnittsgeschwindigkeit während eines Messzyklus und nehmen an, dass es sich innerhalb eines Messzyklus um eine gleichmäßig beschleunigte, geradlinige Bewegung handelt. Dazu kommt, dass die berechneten Werte aufgrund der schankenden Höhen-Werte sehr ungenau sind. Sie bieten also nicht mehr als eine grobe Einschätzung, in welchem Bereich sich die wirklichen Werte bewegen.
@@ -364,7 +389,7 @@ void handleData() {
 
 Dieser String wird dann von der Funktion `getData` wie im [Projekttagebuch vom 1. Halbjahr](https://jantondeluxe.github.io/2019-10-06-projektbbeschreibung/#9) beschrieben abgerufen und wieder in die einzelnen Werte aufgeteilt. Diese werden dann wie die Höhe im Diagramm angezeigt. Standardmäßig sind jedoch alle Werte außer der Höhe ausgeblendet. So wird das Diagramm nicht unübersichtlich.
 
-## Timer
+### Timer
 Um nicht endlos Daten zu speichern ist ein Stoppmechanismus notwendig. Wir haben uns nach einigen Versuchen für einen Timer entschieden. Dieser Timer richtet sich nach der Anzahl der Messzyklen und lässt sich variabel einstellen. Gestartet wird er durch drücken des Start-Knopfes (also aufrufen der URI /start): Dadurch wird unsere "Schaltervariable" (Boolean) `startstop` von false auf true gesetzt und damit der Timer (im loop) freigegeben. Wenn der Timer abgelaufen ist, wird `startstop` wieder auf false gesetzt.
 ```c++
  // Messung gestartet
@@ -396,7 +421,7 @@ void handleStopp() {
 }
 ```
 
-## Anzeige-Felder
+### Anzeige-Felder
 Die maximale Höhe die aktuelle Temperatur und der Timer lassen sich im Diagramm nicht optimal auslesen. Deshalb haben wir Anzeige-Felder erstellt, die immer den aktuellen Wert groß anzeigen. Zunächst haben wir mit CSS die drei Boxen erstellt:
 
 ```css
@@ -457,4 +482,5 @@ Mit HTML werden die Boxen dann eingebaut:
 
 ## Reflexion
 - D1 mini Pro 1.0 nicht zu empfehlen wegen der vielen Fehlermöglichkeiten
+- auf Qualität bei chinesischer Elektronik achten
 - 
