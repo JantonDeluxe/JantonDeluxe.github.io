@@ -22,8 +22,14 @@ Letztendlich muss also die Hardware defekt sein. Über dieses Problem mit genau 
 
 ## Website-Erweiterung
 Die meisten Änderungen haben wir an der Website des Höhenmessers vorgenommen. 
-Auf der alten Website, die nur das Diagramm mit den Höhen-Messwerten angezeigt hat, wurde es schnell sehr unüberichtlich, da schnell sehr viele Messwerte auflaufen. Deshalb haben wir eine Startseite eingebaut: Solange keine Messung angezeigt werden soll, werden auch keine Daten abgerufen und auch nicht angezeigt. Das geschieht erst, wenn man den Start-Knopf betätigt und auf die entsprechende Seite weitergeleitet wird. Ebenfalls haben wir einen Kalibrierungs-Knopf eingebaut, um den Höhenmesser auf einen neuen Nulldruck kalobrieren zu können. Sonst kommt nach spätestens einer Stunde zu erheblichen Ungenauigkeiten (siehe Projektbeschreibung 1. Halbjahr). 
-Betätigt man den Start-Konpf, wird man auf die "ChartPage", also die Seite mit dem Diagramm weitergeleitet. Dort wird weiterhin das Diagramm (jetzt mit zusätzlichen Messwerten) angezeigt. Hinzu kommen Boxen, die den Temperatur und Höchstwert anzeigen, sowie ein Timer, der die Messung nach der jeweils eingestellten Zeit wieder stoppt und auf den Nutzer wieder die Startseite bringt. Die Messung kann man aber ebenfalls manuell stoppen. Wenn man die genauen Flugdaten als CSV-datein benötigt, sollte man vvorher jedoch über den entsprechenden Button den Export der Daten starten. Zusätzlich haben wir noch eine Seite hinzugefügt, auf der unsere Projektseite, die verwendete Hardware und die Dislcaimer angegeben sind. Die Funktionsweise der gesamten Website haben wir hier noch einmal als gif zusammengestellt:
+
+Auf der alten Website, die nur das Diagramm mit den Höhen-Messwerten angezeigt hat, wurde es schnell sehr unübersichtlich, da schnell sehr viele Messwerte auflaufen. Deshalb haben wir eine Startseite eingebaut: Solange keine Messung angezeigt werden soll, werden auch keine Daten abgerufen und auch nicht angezeigt. Das geschieht erst, wenn man den Start-Knopf betätigt und auf die entsprechende Seite weitergeleitet wird. Ebenfalls haben wir einen Kalibrierungs-Knopf eingebaut, um den Höhenmesser auf einen neuen Nulldruck kalibrieren zu können. Sonst kommt nach spätestens einer Stunde zu erheblichen Ungenauigkeiten (siehe Projektbeschreibung 1. Halbjahr). 
+
+Betätigt man den Start-Konpf, wird man auf die "ChartPage", also die Seite mit dem Diagramm weitergeleitet. Dort wird weiterhin das Diagramm (jetzt mit zusätzlichen Messwerten) angezeigt. Hinzu kommen Boxen, die den Temperatur- und Höchstwert anzeigen, sowie ein Timer, der die Messung nach der jeweils eingestellten Zeit wieder stoppt und auf den Nutzer wieder die Startseite bringt. Die Messung kann man aber ebenfalls manuell stoppen. Wenn man die genauen Flugdaten als CSV-Dateien benötigt, sollte man vorher jedoch über den entsprechenden Button den Export der Daten starten. 
+
+Zusätzlich haben wir noch eine Seite hinzugefügt, auf der unsere Projektseite, die verwendete Hardware und die Dislcaimer angegeben sind. 
+
+Die Funktionsweise der gesamten Website haben wir hier noch einmal als gif zusammengestellt:
 
 ![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifWebsite.gif)
 
@@ -90,8 +96,8 @@ Mit HTML bauen wir dann die Buttons ein und definieren die URI, die durch den Kl
 <form action="/stopp" class="inline">
       <button class="button button2">Stopp</button>
     </form>
-```
-
+``` 
+---
 ```c++
 void handleStopp() {
   timer = 200; // Reset des Timers
@@ -108,7 +114,7 @@ void handleStopp() {
      <button class="button button1">Start</button>
     </form>
 ```
-
+---
 ```c++
 void handleStart() {
   startstop = true;
@@ -125,7 +131,7 @@ void handleStart() {
      <button class="button button2">Kalibrieren</button>
     </form>
 ```
-
+---
 ```c++
 void handleCalibration() {
   calculateBasePressure(); // Funktion zur Nulldruckberechnung
@@ -137,7 +143,7 @@ void handleCalibration() {
 
 
 ## CSV-Export
-Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird. Dieses Feature funktioniert nicht in Internet Explorer, da es neuere JavaScript-Versionen nicht unterstützt. Wie bereits im Projekttagebuch erwähnt, haben wir den CSV-Export mit hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) erstellt. Im folgenden werden die einzelnen Komponenten dieses Features kurz erklärt:
+Zum Speichern der Flugdaten ist der Export der Daten unerlässlich. Das Dateiformat, was sich für diese Daten am einfachen erstellen lässt, ist [CSV](https://de.wikipedia.org/wiki/CSV_(Dateiformat)). Das direkte Erstellen einer CSV-Datei mit JavaScript aus den unter '/readData' abrufbaren Daten stellte sich als kompliziert heraus, weshalb wir als ersten Schritt eine unsichtbare HTML-Tabelle erstellen, aus der die Daten für die CSV-Datei abgerufen werden, wenn der entsprechende Export-Button gedrückt wird. Dieses Feature funktioniert nicht in Internet Explorer, da es neuere JavaScript-Versionen nicht unterstützt. Wie bereits im Projekttagebuch erwähnt, haben wir den CSV-Export mit Hilfe dieses [Tutorials](https://www.youtube.com/watch?v=cpHCv3gbPuk) erstellt und den Code für unsere Zwecke angepasst und vereinfacht. Im folgenden werden die einzelnen Komponenten dieses Features kurz erklärt:
 
 
 Export-Button einbauen:
@@ -194,28 +200,26 @@ Dies ist ein Listener, der "darauf wartet", dass der Button geklickt wird. Dann 
         
             setTimeout(() => {
                 URL.revokeObjectURL(blobUrl);
-            }, 500);
+            }, 500); // wenn der Export zu lange dauert, wird er abgebrochen
         });
         
 ```
 
 Zunächst wird die HTML-Tabelle ausgelesen. Dabei wird auch darauf geachtet, ob die Tabelle eine Kopfzeile hat. Dann
+Die folgenden Funktionen befinden sich alle in der Klasse `TableCSVExporter`:
+
+
 ```js
-class TableCSVExporter {
     constructor(table, includeHeaders = true) {
-        this.table = table;
-        this.rows = Array.from(table.querySelectorAll("tr"));
-        
-            if (!includeHeaders && this.rows[0].querySelectorAll("th").length) {
-                this.rows.shift();
-            }
+        this.table = table; 
+        this.rows = Array.from(table.querySelectorAll("tr"));  // Array aus allen Tabelleninhalten
     }
 ```
 
 ```js
 convertToCSV() {
-    const lines = [];
-    const numCols = this._findLongestRowLength();
+    const lines = [];  // unetrschiedliche viele Zeilen
+    const numCols = 4; // immer 4 Spalten
         
         for (const row of this.rows) {
             let line = "";
@@ -235,12 +239,11 @@ convertToCSV() {
 	}
 	```
         
-Diese Funktion liest die einzelnen Tabellen-Zellen aus und formatiert sie korrekt und gibt sie dann aus. Dies ist nötig, da z.B. Kommata, als Trennzeichen für CSV-Dateien fungieren und Zahlenwerte mit Komma folglich nicht einfach übernommen werden können. Auch Anführungszeichen oder Zeilenumbrüche müssen in der CSV-Synatx besonders behalndelt werden. Hier schließt sich auch die Klasse `TableCSVExporter` - deshalb die zweite geschlossene Klammer.
+Diese Funktion liest die einzelnen Tabellen-Zellen aus und formatiert sie korrekt und gibt sie dann aus. Dies ist nötig, da z.B. Kommata, als Trennzeichen für CSV-Dateien fungieren und Zahlenwerte mit Komma folglich nicht einfach übernommen werden können. Auch Zeilenumbrüche müssen in der CSV-Synatx besonders behalndelt werden.
 ```js
         
 static parseCell(tableCell) {
-    let parsedValue = tableCell.textContent;   
-    parsedValue = parsedValue.replace(/"/g, `""`)
+    let parsedValue = tableCell.textContent; // Inhalt aus der HTML-Tabelle auslesen (noch als Roh-Text)
     parsedValue = /[",\n]/.test(parsedValue) ? `"${parsedValue}"` : parsedValue;
         
     return parsedValue;
@@ -299,14 +302,159 @@ Mit CSS wird das "Aussehen" der Navbar definiert. Dafür werden die Abmessungen 
 ```
 
 ## Weitere Daten im Diagramm
+Zusätzlich zur Höhe in Metern  berechnen wir neue Werte und zeigen Sie im Diagramm an.
 
+Für die Berechnung der Geschwindigkeit und Beschleunigung benötigen wir jeweils die Zeit eines Messzyklus und die darin zurückgelegte Strecke. Dabei legen wir folgende Formeln zu grunde: v = Δs/Δt und a = 2Δs/Δt^2. Wir berechnen also nur die Durchschnittsgeschwindigkeit während eines Messzyklus und nehmen an, dass es sich innerhalb eines Messzyklus um eine gleichmäßig beschleunigte, geradlinige Bewegung handelt. Dazu kommt, dass die berechneten Werte aufgrund der schankenden Höhen-Werte sehr ungenau sind. Sie bieten also nicht mehr als eine grobe Einschätzung, in welchem Bereich sich die wirklichen Werte bewegen.
+```c++
+v = deltaS / deltaT;
+a = (2 * deltaS) / (deltaT * deltaT);
+```
 
-## Anzeige-Felder
+Zum Bestimmen der Dauer eines Messzyklus starten wir mit jeder Wiederholung des loops im Hauptcode einen Timer: Es wird die Anzahl der Milisekunden, die seit dem Booten des Boards vergangen sind `millis()` als `T0` gespeichert. Dieser Wert wird dann gegen Ende des Messzyklus vom dann neuen `millis()`-Wert abgezogen. Die Differenz wird dann durch 1000 geteilt, um Δt in Sekunden zu erhalten.
+```c++
+// Zeitmessung starten
+T0 = millis();
 
+// Zeitmessung stoppen
+deltaT = millis() - T0;
+deltaT = deltaT / 1000;
+```
+
+Das Berechnen von Δs läuft sehr ähnlich: Vor dem Berechnen des nächsten Höhenwerts setzten wird den vorherigen Höhenwert (die bis dahin zurückgelegte Strecke) als Variable `S1`. Nach der Berechnung des neuen Höhenwertes setzten wir diesen als Variable `S2`. Δs ist nun wie der Name schon sagt die Differenz der beiden Werte.
+```c++
+// Ausgangsstrecke
+S1 = h;
+
+// Höhenunterschied
+h = pressure.altitude(P, P0);
+
+// Streckenberechnung
+S2 = h;
+deltaS = S2 - S1; 
+ ```
+ 
+ Nun wo die Zwischenwerte vorliegen, können Geschwindigkeit und Beschleunigung berechnet werden:
+ 
+```c++
+// Geschwindigkeit und Beschleunigung ausrechnen
+v = deltaS / deltaT;
+a = (2 * deltaS) / (deltaT * deltaT);
+```
+
+Diese beiden Werte und die Temperatur geben wir nun auch an die Website weiter: Dafür werden Sie nun durch `handleData`auch zum Übertragungs-String `kombi` hinzugefügt.
+```c++
+// Datenübertragung
+void handleData() {
+  double t = millis();
+  String teil1 = String(String(t) + ";");
+  String teil2 = String(teil1 + String(h));
+  String teil3 = String(teil2 + ";");
+  String teil4 = String(teil3 + String(v));
+  String teil5 = String(teil4 + ";");
+  String teil6 = String(teil5 + String(a));
+  String teil7 = String(teil6 + ";");
+  String teil8 = String(teil7 + String(highest));
+  String teil9 = String(teil8 + ";");
+  String teil10 = String(teil9 + String(Temp));
+  String teil11 = String(teil10 + ";");
+  String kombi = String(teil11 + String(timer / 100 / 6));
+  server.send(200, "text/plain", kombi);
+}
+```
+
+Dieser String wird dann von der Funktion `getData` wie im [Projekttagebuch vom 1. Halbjahr](https://jantondeluxe.github.io/2019-10-06-projektbbeschreibung/#9) beschrieben abgerufen und wieder in die einzelnen Werte aufgeteilt. Diese werden dann wie die Höhe im Diagramm angezeigt. Standardmäßig sind jedoch alle Werte außer der Höhe ausgeblendet. So wird das Diagramm nicht unübersichtlich.
 
 ## Timer
-Redirect, wenn Timer abgelaufen
+Um nicht endlos Daten zu speichern ist ein Stoppmechanismus notwendig. Wir haben uns nach einigen Versuchen für einen Timer entschieden. Dieser Timer richtet sich nach der Anzahl der Messzyklen und lässt sich variabel einstellen. Gestartet wird er durch drücken des Start-Knopfes (also aufrufen der URI /start): Dadurch wird unsere "Schaltervariable" (Boolean) `startstop` von false auf true gesetzt und damit der Timer (im loop) freigegeben. Wenn der Timer abgelaufen ist, wird `startstop` wieder auf false gesetzt.
+```c++
+ // Messung gestartet
+  if (startstop == true) {
+    timer = timer - 1;
+    if (timer == 0) {
+      startstop = false;
+    }
+```
+
+Wenn der Timer abgelaufen ist, wird die URI /stopp aufgerufen, um die Übertragung zu stoppen. Der Timer wird dabei kurzzeitig auf 1 gesetzt, um den redirect wirklich nur einmal und nicht mehrfach auszuführen:
+```js
+// Beenden einer Messuung
+if (timer == 0) {
+    window.location.replace("stopp");
+    timer = 1;
+}
+```
+
+Durch aufrufen von /stopp wird der Timer zurückgesetzt und der Nutzer auf die Startseite weitergeleitet. Von dort aus kann eine neue Messung erfolgen. Der Höhenmesser selbst misst permanent, speichert und überträgt diese Werte jedoch nur, wenn die ChartPage geöffnet ist.
+```c++
+// Messung stoppen, Redirect auf StartPage
+void handleStopp() {
+  timer = 200;
+  startstop = false;
+  Serial.println("Messung gestoppt!");
+  server.sendHeader("Location", "/");
+  server.send(303);
+}
+```
+
+## Anzeige-Felder
+Die maximale Höhe die aktuelle Temperatur und der Timer lassen sich im Diagramm nicht optimal auslesen. Deshalb haben wir Anzeige-Felder erstellt, die immer den aktuellen Wert groß anzeigen. Zunächst haben wir mit CSS die drei Boxen erstellt:
+
+```css
+        .box {
+            height: 65px;
+            width: 175px;
+            line-height: 65px;  
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            vertical-align: baseline;
+        }
+
+        .box1{
+          background-color: #f39c12;
+        }
+        
+        .box2{
+          background-color: grey;
+        }
+        
+```
+Diese sollen neben- und nicht untereinander linksbündig sein:
+
+```css
+        .floated {
+             float:left;
+             margin-right:15px;
+        }
+```
+
+Die Werte werden ja bereits übertragen über *innerHTML* wird für diese Werte eine ID erstellt. Über diese können dann die Werte abgerufen und angezeigt werden. 
+```js
+document.getElementById("highest").innerHTML = response[4];
+document.getElementById("temp").innerHTML = response[5];
+document.getElementById("timer").innerHTML = response[6];
+```
+
+Mit HTML werden die Boxen dann eingebaut: 
+
+```html
+     <div style="font-family:verdana;text-align:left;padding-top:10px">
+      <div class="box box1 floated">
+      Max.     <b style="font-size:150%;"><span id="highest">0</span> m</b>
+      </div>
+
+      <div class="box box2 floated">
+      Temp.     <b style="font-size:150%;"><span id="temp">0</span> C</b>
+      </div>
+  
+      <div class="box floated">
+      Timer     <b style="font-size:150%;"><span id="timer">0</span></b>
+      </div>
+    </div>
+```
+	 
 
 ## Reflexion
-- D1 mini Pro 1.0 nicht zu emofehlen wegen der vielen Fehlermöglichkeiten
+- D1 mini Pro 1.0 nicht zu empfehlen wegen der vielen Fehlermöglichkeiten
 - 
