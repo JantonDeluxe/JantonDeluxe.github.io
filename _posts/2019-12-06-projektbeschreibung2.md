@@ -481,6 +481,7 @@ Mit HTML werden die Boxen dann eingebaut:
 	 
 
 ## Reflexion
+Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann zuverlässig angezeigt werden und die Höhe mit einigen Abweichungen auch. Legendlich Geschindigkeit und Beschleunigung sind ungenau, was aber vor allem an der Technik liegt.
 - D1 mini Pro 1.0 nicht zu empfehlen wegen der vielen Fehlermöglichkeiten
 - auf Qualität bei chinesischer Elektronik achten
-- 
+- leider keinen Praxistest
