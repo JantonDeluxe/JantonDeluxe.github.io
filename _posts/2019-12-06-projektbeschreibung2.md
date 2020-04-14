@@ -18,6 +18,35 @@ subtitle: Höhenmesser Reloaded
 
 ## Ladescreen
 Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die 1Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir den Converter auf der Website http://javl.github.io/image2cpp/ genutzt. 
+
+Die Größe der Bilder festzulegen, haben wir diesen Code benutzt
+```
+#define imageWidth 128
+#define imageHeight 64
+```
+Das Bild loadingscreen1 (Bitmapcode nicht vollständig) wurde beispielsweise mit dieser Zeile definiert:
+```
+static const unsigned char PROGMEM loadingscreen1[] =
+{
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ..............., 0x00
+};
+
+
+```
+Um diesen das nach dem Setup anzuzeigen, benutzten wird den Code
+```
+  drawLoadingscreen1();
+```
+Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart
+```
+void drawLoadingscreen1()
+{
+  display.clearDisplay();
+  display.drawBitmap(0, 0, loadingscreen1, imageWidth, imageHeight, 1);
+  display.display();
+}
+```
 ![alt text](https://raw.githubusercontent.com/JantonDeluxe/luft-waffle/master/Bilder/gifScreen.gif)
 
 ## Data-Logger-Shield
