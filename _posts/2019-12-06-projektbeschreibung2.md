@@ -18,6 +18,7 @@ subtitle: Höhenmesser Reloaded
 
 ## Ladescreen
 Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die 1Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir den Converter auf der Website http://javl.github.io/image2cpp/ genutzt. 
+Als Grundlagewurde die Libary Adafruit_GFX.h verwendet.
 
 Die Größe der Bilder festzulegen, haben wir diesen Code benutzt
 ```
@@ -509,9 +510,9 @@ Mit HTML werden die Boxen dann eingebaut:
 ```
 	 
 
-## Reflexion
+## Reflexion des Projekts
 Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann zuverlässig angezeigt werden und die Höhe mit einigen Abweichungen auch. Legendlich Geschindigkeit und Beschleunigung sind ungenau, was aber vor allem an der Technik liegt. Vor allem die Website funktioniert dank der vielen Fehlerbehebungen sehr gut.
-Allerdings ist der Mikrocontroller D1 mini Pro 1.0 nicht zu empfehlen, wegen der vielen Fehlermöglichkeiten. Dazu ist die Qualität der etwas älteren chinesischen Elektronik nicht die Beste, gerade der Arduino hatte oft Abweichungen bei Messen des Luftdrucks. Leider ist auch noch nicht dazu gekommen, dass wir den Arduino in einer Wasserrakete testen konnten, denn wir hatten Angst, dass das Gerät kaputt geht. Hinzu wäre es schwierig, den Arduino mit Storm zu versorgen
+Allerdings ist der Mikrocontroller D1 mini Pro 1.0 nicht zu empfehlen, wegen der vielen Fehlermöglichkeiten. Dazu ist die Qualität der etwas älteren chinesischen Elektronik nicht die Beste, gerade der Arduino hatte oft Abweichungen bei Messen des Luftdrucks. Leider ist auch noch nicht dazu gekommen, dass wir den Arduino in einer Wasserrakete testen konnten, denn wir hatten Angst, dass das Gerät kaputt geht. Hinzu wäre es schwierig, den Arduino mit Storm zu versorgen.
 - D1 mini Pro 1.0 nicht zu empfehlen wegen der vielen Fehlermöglichkeiten
 - auf Qualität bei chinesischer Elektronik achten
 - leider keinen Praxistest
