@@ -20,16 +20,18 @@ Das GitHub-Repository mit dem gesamten Code befindet sich [hier](https://github.
 Eine Visualisierung, was im Vergleich zum ersten Halbjahr geändert wurde findet man [hier](https://github.com/JantonDeluxe/luft-waffle/commit/df8d6524784648471993c7fd53f1e173786c8a93#diff-ed584a8e97e5cea76f82e28d0b6793d9).
 
 ## Ladescreen
-Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden oder dahin geschreiben wurden, wo noch Teile ergänzt werden können. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir einen [Onlineconverter](http://javl.github.io/image2cpp/) genutzt. 
-Als Grundlagen wurde die Library Adafruit_GFX.h für die Funktionen und die Library Adafruit_SSD1306.h für die Verknüpfung mit dem Screen verwendet.
+Der Ladescreen erscheint bei jedem Start des Höhenmessers auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die jeweils nach dem Abschluss einer Setup-Komponente angezeigt werden (4 "Slots" sind noch frei für eventuelle Erweiterungen). Natürlich sieht das gut aus, aber viel wichtiger ist, dass man nun erkennen kann, an welchem Punkt das Setup sich befindet. Funktioniert das Setup also nicht reibungslos, muss man nun den Höhenmesser nicht mehr per microUSB-Kabel anschleißen, um über den seriellen Monitor der Arduino IDE den Fehler auszulesen. 
 
-Die Größe der Bilder festzulegen, haben wir diesen Code benutzt
+Ein Ursprungsbild wurde mit Hilfe von GIMP auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden jeweils die Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann ausgelesen und von oben nach unten angezeigt. Für die Umwandlung vom .jpg ins Bitmapformat haben wir einen [Onlineconverter](http://javl.github.io/image2cpp/) genutzt. 
+Als Grundlagen wurde die Library Adafruit_GFX.h für die Funktionen und die Library Adafruit_SSD1306.h für die Verknüpfung mit dem Screen verwendet (durch die neuen Libraries können wir ebenfalls eine schönere Schriftart für die Anzeige verwenden). So funktioniert die Darstellung der Bitmaps:
+
+Als erstes muss man die Größe der Bilder/ des Displays definieren:
 ```c++
 #define imageWidth 128
 #define imageHeight 64
 ```
 
-Zusätzlich muss nun dank der neuen Libraries ein Reset-oin definiert werden. Da unser Display keinen hat, geben wir -1 an.
+Zusätzlich muss nun dank der neuen Libraries ein Reset-pin (Hardware) definiert werden. Da unser Display keinen hat, geben wir -1 an.
 ```c++
 #define OLED_RESET -1
 ```
@@ -65,7 +67,7 @@ static const unsigned char PROGMEM loadingscreen1[] =
 ```
 00x0 steht für einen schwarzen Pixel.
 
-Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. draw.Bitmap beschreibt, wie das Bild aussieht. Es startet bei 0,0 ,gehört zur Datei loadingscreen1, Größe und Weite wurden vorher in Variablen zusammengefasst und die 1 gibt die Hintergrundfarbe an. Display.display fordert nun den Screen auf, das Bild anzuzeigen.
+Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. `draw.Bitmap` beschreibt, wie das Bild aussieht. Es startet bei den Koordinaten 0,0 und stellt die Bitmap `loadingscreen1` dar. Größe und Weite wurden vorher in Variablen zusammengefasst und die 1 gibt die Hintergrundfarbe an. `Display.display` sorgt nun dafür, dass das vorher definierte Bild angezeigt wird.
 
 ```
 void drawLoadingscreen1()
@@ -538,5 +540,5 @@ Mit HTML werden die Boxen dann eingebaut:
 	 
 
 ## Reflexion des Projekts
-Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann zuverlässig angezeigt werden und die Höhe mit einigen Abweichungen auch. Legendlich Geschindigkeit und Beschleunigung sind ungenau, was aber vor allem an der Technik liegt. Vor allem die Website funktioniert dank der vielen Fehlerbehebungen sehr gut.
-Allerdings ist der Mikrocontroller D1 mini Pro 1.0 nicht zu empfehlen, wegen der vielen Fehlermöglichkeiten. Dazu ist die Qualität der etwas älteren chinesischen Elektronik nicht die Beste, gerade der Arduino hatte oft Abweichungen bei Messen des Luftdrucks. Leider ist auch noch nicht dazu gekommen, dass wir den Arduino in einer Wasserrakete testen konnten, denn wir hatten Angst, dass das Gerät kaputt geht. Hinzu wäre es schwierig, den Arduino mit Storm zu versorgen. Das hätten gehenen können in dem wir ein Gehäuse zum Schutz, eine Platine zum Verweiden von Wackelkontakten, sowie eine Batterie für Stromversorgung.
+Im ersten Halbjahr haben wir zunächst einen ersten Protyp entwickelt, dessen Software wir nun im zweiten Halbjahr verfeinert haben. Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann sehr zuverlässig angezeigt werden und die Höhe mit einigen Hardware-bedingten Abweichungen auch. Lediglich die Geschindigkeit und Beschleunigung sind etwas ungenau. Vor allem die Website funktioniert dank der vielen Fehlerbehebungen nun ebenfalls sehr zuverlässig, ist schöner gestaltet und hat einige neue Funktionen.
+Die Softwareentwicklung ist also mehr oder weniger abgesschlossen. Als nächstes müsste man die Hardware in einen flugbereiten Zustand bringen. Dafür müssen die einzelnen Komponenten auf eine Platine gelötet, eine Batterieversorgung eingerichtet und ein Gehäuse gebaut werden. Durch die Covid-19-Pandemie konnten wir damit jedoch nicht beginnen. Allerdings ist der Mikrocontroller D1 mini Pro 1.0 wegen der vielen Hard- und Software-Fehlermöglichkeiten nicht wirklich zu empfehlen.
