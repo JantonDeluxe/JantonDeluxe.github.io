@@ -62,7 +62,8 @@ static const unsigned char PROGMEM loadingscreen1[] =
 ```
 00x0 steht für einen schwarzen Pixel.
 
-Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. 
+Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. draw.Bitmap beschreibt, wie das Bild aussieht. Es startet bei 0,0 ,gehört zur Datei loadingscreen1, Größe und Weite wurden vorher in Variablen zusammengefasst und die 1 gibt die Hintergrundfarbe an.
+
 ```
 void drawLoadingscreen1()
 {
@@ -534,5 +535,5 @@ Mit HTML werden die Boxen dann eingebaut:
 	 
 
 ## Reflexion des Projekts
-Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann zuverlässig angezeigt werden und die Höhe mit einigen Abweichungen auch. Lediglich die Geschwindigkeit und Beschleunigung sind ungenau, was aber vor allem an der Technik liegt. Die Website funktioniert dank der vielen Fehlerbehebungen jetzt zuverlässig. Anzeige und Website sind ebenfalls deutlich ansprechender gestaltet, als im letzten Halbjahr.
-Allerdings ist der Mikrocontroller D1 mini Pro 1.0 nicht zu empfehlen, wegen der vielen Hardware- und Software-Fehlermöglichkeiten. Dazu ist die Qualität der etwas älteren chinesischen Elektronik nicht die Beste, der BMP180 hat z.B. relativ hohe Abweichungen beim Messen des Luftdrucks. Leider ist auch noch nicht dazu gekommen, dass wir den Höhenmesser nicht in einer Wasserrakete testen konnten, da wir die Komponenten wegen der Corona-krise nicht verlöten konnten. Ebenfalls hätte wir noch keine Lösung, den Arduino mit Storm zu versorgen. 
+Insgesamt sind wir sehr zufrieden mit dem Ergebnis des Informatikprojekts. Die Temperatur kann zuverlässig angezeigt werden und die Höhe mit einigen Abweichungen auch. Legendlich Geschindigkeit und Beschleunigung sind ungenau, was aber vor allem an der Technik liegt. Vor allem die Website funktioniert dank der vielen Fehlerbehebungen sehr gut.
+Allerdings ist der Mikrocontroller D1 mini Pro 1.0 nicht zu empfehlen, wegen der vielen Fehlermöglichkeiten. Dazu ist die Qualität der etwas älteren chinesischen Elektronik nicht die Beste, gerade der Arduino hatte oft Abweichungen bei Messen des Luftdrucks. Leider ist auch noch nicht dazu gekommen, dass wir den Arduino in einer Wasserrakete testen konnten, denn wir hatten Angst, dass das Gerät kaputt geht. Hinzu wäre es schwierig, den Arduino mit Storm zu versorgen. Das hätten gehenen können in dem wir ein Gehäuse zum Schutz, eine Platine zum Verweiden von Wackelkontakten, sowie eine Batterie für Stromversorgung.
