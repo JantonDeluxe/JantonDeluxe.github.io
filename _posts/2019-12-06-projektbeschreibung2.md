@@ -15,6 +15,8 @@ subtitle: Höhenmesser Reloaded
 >    - [Anzeigefelder](#9)
 >* [Reflexion](#10)
 
+Das GitHub-Repository mit dem gesamten Code befindet sich [hier](https://github.com/JantonDeluxe/luft-waffle).
+Eine Visualisierung, was im Vergleich zum ersten Halbjahr geändert wurde findet man [hier](https://github.com/JantonDeluxe/luft-waffle/commit/df8d6524784648471993c7fd53f1e173786c8a93#diff-ed584a8e97e5cea76f82e28d0b6793d9).
 
 ## Ladescreen
 Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden oder dahin geschreiben wurden, wo noch Teile ergänzt werden können. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir einen [Onlineconverter](http://javl.github.io/image2cpp/) genutzt. 
