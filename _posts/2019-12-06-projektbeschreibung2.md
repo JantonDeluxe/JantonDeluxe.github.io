@@ -17,15 +17,15 @@ subtitle: Höhenmesser Reloaded
 
 
 ## Ladescreen
-Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir einen [Onlineconverter](http://javl.github.io/image2cpp/) genutzt. 
-Als Grundlagewurde die Libary Adafruit_GFX.h verwendet.
+Der Ladescreen erscheint bei jedem Start des Arduino auf dem Bildschirm. Er besteht aus 11 einzelnen Bildern, die an Teile des Startcodes gebunden wurden oder dahin geschreiben wurden, wo noch Teile ergänzt werden können. Für den Ladescreen wurde ein Bild mit Hilfe von Gimp auf die Größe von 128x64 Pixeln zurechtgeschnitten, anschließend wurden die Ladebalken eingefügt. Für den Code mussten die Bilder nun noch in ein Bitmap-Format umgewandelt werden. Dabei werden die einzelnen Pixel in Code umgewandelt. Die einzelnen Codes werden dann vom Arduino gelesen und von oben nach unten in den Ladescreen eingefügt. Für die Umwandlung vom mp4. in Bitmapformat haben wir einen [Onlineconverter](http://javl.github.io/image2cpp/) genutzt. 
+Als Grundlagen wurde die Libary Adafruit_GFX.h für die Funktionen und die Libary Adafruit_SSD1306.h für die Verknüpfung mit dem Screen verwendet.
 
 Die Größe der Bilder festzulegen, haben wir diesen Code benutzt
 ```
 #define imageWidth 128
 #define imageHeight 64
 ```
-Das Bild loadingscreen1 (Bitmapcode nicht vollständig) wurde beispielsweise mit dieser Zeile definiert:
+Das Bild loadingscreen1 (Bitmapcode nicht vollständig) wurde beispielsweise so definiert:
 ```
 static const unsigned char PROGMEM loadingscreen1[] =
 {
@@ -35,11 +35,7 @@ static const unsigned char PROGMEM loadingscreen1[] =
 ```
 00x0 steht für einen schwarzen Pixel.
 
-Um diesen das nach dem Setup anzuzeigen, benutzten wird den Code
-```
-  drawLoadingscreen1();
-```
-Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart
+Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. 
 ```
 void drawLoadingscreen1()
 {
