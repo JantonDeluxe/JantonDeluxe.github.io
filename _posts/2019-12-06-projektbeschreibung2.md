@@ -62,7 +62,7 @@ static const unsigned char PROGMEM loadingscreen1[] =
 ```
 00x0 steht für einen schwarzen Pixel.
 
-Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. draw.Bitmap beschreibt, wie das Bild aussieht. Es startet bei 0,0 ,gehört zur Datei loadingscreen1, Größe und Weite wurden vorher in Variablen zusammengefasst und die 1 gibt die Hintergrundfarbe an.
+Vor dem Starten eines Bildes des Loadingscreen wurde zuerst das Display gecleart. draw.Bitmap beschreibt, wie das Bild aussieht. Es startet bei 0,0 ,gehört zur Datei loadingscreen1, Größe und Weite wurden vorher in Variablen zusammengefasst und die 1 gibt die Hintergrundfarbe an. Display.display fordert nun den Screen auf, das Bild anzuzeigen.
 
 ```
 void drawLoadingscreen1()
